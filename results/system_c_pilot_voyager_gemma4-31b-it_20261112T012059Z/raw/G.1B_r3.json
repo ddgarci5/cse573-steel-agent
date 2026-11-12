@@ -1,0 +1,26 @@
+{
+  "id": "G.1B",
+  "kind": "strength",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W24x62 rolled W-shape is used as a beam. What is the LRFD design shear strength of the web, phi_v*Vn, in kips?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design shear strength ($\\phi_v V_n$) of a W24x62 beam per AISC 360-22, we follow these steps:\n\n**1. Identify Section Properties for W24x62:**\n*   Depth ($d$) $\\approx 23.6$ in.\n*   Web thickness ($t_w$) $\\approx 0.350$ in.\n*   Steel Grade: ASTM A992 ($F_y = 50$ ksi).\n\n**2. Calculate Nominal Shear Strength ($V_n$):**\nAccording to AISC 360-22, Chapter G, for most rolled I-shapes with $h/t_w \\le 2.24\\sqrt{E/F_y}$, the shear strength is governed by the yielding of the web:\n$$V_n = 0.6 F_y A_w$$\nWhere $A_w$ (area of the web) $= d \\times t_w$.\n\n$$A_w = 23.6 \\text{ in.} \\times 0.350 \\text{ in.} = 8.26 \\text{ in}^2$$\n$$V_n = 0.6 \\times 50 \\text{ ksi} \\times 8.26 \\text{ in}^2 = 30 \\times 8.26 = 247.8 \\text{ kips}$$\n\n**3. Determine Resistance Factor ($\\phi_v$):**\nFor rolled I-shapes meeting the criteria of Section G2.1(a) (which W24x62 does), the resistance factor $\\phi_v$ is $1.00$.\n\n**4. Calculate Design Shear Strength ($\\phi_v V_n$):**\n$$\\phi_v V_n = 1.00 \\times 247.8 \\text{ kips} = 247.8 \\text{ kips}$$\n\nFINAL ANSWER: 247.8 kip",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 454,
+  "eval_seconds": 40.11,
+  "prompt_eval_count": 158,
+  "usage": {
+    "co2_g": 1.543845,
+    "completion_tokens": 454,
+    "energy_wh": 4.581141,
+    "prompt_tokens": 158,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 612
+  },
+  "wall_seconds": 40.1,
+  "finished_utc": "2026-11-12T01:36:50.923060+00:00"
+}

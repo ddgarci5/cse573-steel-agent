@@ -1,0 +1,26 @@
+{
+  "id": "F.1-1B",
+  "kind": "strength",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. The beam is continuously braced laterally (Lb = 0). Cb = 1. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design flexural strength ($\\phi_b M_n$) for the W18x50 beam, we follow the provisions of ANSI/AISC 360-22.\n\n**1. Identify Section Properties**\nFrom the AISC Manual (or standard steel tables) for a W18x50 shape:\n*   Plastic section modulus, $Z_x = 98.3 \\text{ in}^3$\n*   Elastic section modulus, $S_x = 88.9 \\text{ in}^3$\n*   Flange width, $b_f = 7.50 \\text{ in}$\n*   Flange thickness, $t_f = 0.510 \\text{ in}$\n*   Web thickness, $t_w = 0.335 \\text{ in}$\n*   Depth, $d = 17.99 \\text{ in}$\n*   Web height, $h = d - 2t_f = 17.99 - 2(0.510) = 16.97 \\text{ in}$\n\n**2. Determine Limiting Lateral Spacing**\nThe beam is continuously braced ($L_b = 0$). Therefore, the limit state of Lateral-Torsional Buckling (LTB) does not govern. The nominal strength is determined by either Yielding or Flange Local Buckling.\n\n**3. Check Flange Local Buckling**\nWe must determine if the flange is compact, non-compact, or slender.\nThe limiting width-to-thickness ratio for a flange in compression is:\n$$ \\lambda_p = 0.38 \\sqrt{\\frac{F_y}{F_u}} \\times \\frac{b_f}{2t_f} \\text{ (Wait, the formula is } \\lambda_p = 0.38 \\sqrt{\\frac{E}{F_y}} \\text{ for flanges? No, for flanges it is } \\lambda_p = 0.38 \\sqrt{\\frac{E}{F_y}} \\text{ is incorrect. Let's use the standard AISC Table B4.1a.)} $$\n\nAccording to AISC Table B4.1a for Flanges of I-Shapes in Compression:\n$$ \\lambda_p = 0.38 \\sqrt{\\frac{E}{F_y}} $$\n$$ \\lambda_p = 0.38 \\sqrt{\\frac{29,000}{50}} = 0.38 \\sqrt{580} \\approx 0.38 \\times 24.08 = 9.15 $$\n\nThe actual width-to-thickness ratio of the flange is:\n$$ \\lambda = \\frac{b_f}{2t_f} = \\frac{7.50}{2(0.510)} = \\frac{7.50}{1.02} \\approx 7.35 $$\n\nSince $\\lambda (7.35) < \\lambda_p (9.15)$, the flange is **Compact**.\n\n**4. Check Web Local Buckling**\nAlthough the web is not in compression for pure bending, we check for completeness.\nFor webs in I-shapes in flexure (AISC Table B4.1b):\n$$ \\lambda_p = 1.49 \\sqrt{\\frac{E}{F_y}} = 1.49 \\sqrt{\\frac{29,000}{50}} = 1.49 \\times 24.08 \\approx 35.9 $$\nActual ratio:\n$$ \\lambda = \\frac{h}{t_w} = \\frac{16.97}{0.335} \\approx 50.7 $$\nWait, $\\lambda > \\lambda_p$. Let's check $\\lambda_r$.\n$$ \\lambda_r = 2.24 \\sqrt{\\frac{E}{F_y}} = 2.24 \\times 24.08 \\approx 53.9 $$\nSince $\\lambda_p (35.9) < \\lambda (50.7) < \\lambda_r (53.9)$, the web is **Non-Compact**.\n\nHowever, for rolled I-shapes, the nominal moment strength is governed by the most critical limit state. Since the flange is compact, the section can develop the full plastic moment capacity $M_p$ unless the web local buckling reduces the capacity.\n\nLet's look at the interaction. For a non-compact web, the nominal strength $M_n$ is calculated based on the web local buckling limit state if it governs over yielding.\nThe limit state of web local buckling for non-compact webs in flexure is given by:\n$$ M_n = M_p - \\frac{M_p - M_y}{\\left( \\frac{\\lambda - \\lambda_p}{\\lambda_r - \\lambda_p} \\right)^2 } \\le M_p $$\nWhere $M_y = F_y S_x$.\n\nLet's calculate $M_p$ and $M_y$:\n$$ M_p = F_y Z_x = 50 \\text{ ksi} \\times 98.3 \\text{ in}^3 = 4915 \\text{ kip-in} $$\n$$ M_y = F_y S_x = 50 \\text{ ksi} \\times 88.9 \\text{ in}^3 = 4445 \\text{ kip-in} $$\n\nNow, calculate the reduction factor for the non-compact web:\n$$ \\text{Ratio} = \\frac{\\lambda - \\lambda_p}{\\lambda_r - \\lambda_p} = \\frac{50.7 - 35.9}{53.9 - 35.9} = \\frac{14.8}{18.0} \\approx 0.822 $$\n$$ \\text{Denominator Term} = (0.822)^2 \\approx 0.676 $$\n$$ M_n = 4915 - \\frac{4915 - 4445}{0.676} = 4915 - \\frac{470}{0.676} = 4915 - 695.3 = 4219.7 \\text{ kip-in} $$\n\nWait, is the web local buckling limit state actually governing?\nLet's re-evaluate the classification.\n$\\lambda = 50.7$.\n$\\lambda_p = 35.9$.\n$\\lambda_r = 53.9$.\nYes, it is non-compact.\n\nHowever, there is a nuance. For rolled shapes, if the flange is compact, the section is often considered to have a nominal strength of $M_p$ unless the web is slender.",
+  "thinking": null,
+  "done_reason": "length",
+  "eval_count": 1500,
+  "eval_seconds": 43.41,
+  "prompt_eval_count": 181,
+  "usage": {
+    "co2_g": 0.335527,
+    "completion_tokens": 1500,
+    "energy_wh": 0.995629,
+    "prompt_tokens": 181,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1681
+  },
+  "wall_seconds": 43.4,
+  "finished_utc": "2026-11-12T01:43:13.654397+00:00"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "D.1-yield",
+  "kind": "strength",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W8x21 rolled W-shape is used as a tension member. What is the LRFD design tensile strength for yielding on the gross section, phi_t*Pn, in kips?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design tensile strength for yielding on the gross section ($\\phi_t P_n$), we use the following parameters and formulas from ANSI/AISC 360-22:\n\n**1. Given Data:**\n*   Shape: W8x21\n*   Steel Grade: ASTM A992 ($F_y = 50 \\text{ ksi}$, $F_u = 65 \\text{ ksi}$)\n*   Gross Area ($A_g$): For a W8x21, the gross area is $6.17 \\text{ in}^2$.\n*   Resistance Factor for Yielding ($\\phi_t$): $0.90$\n\n**2. Formula for Yielding on the Gross Section:**\nAccording to AISC 360-22, Chapter D, the nominal strength $P_n$ for yielding is:\n$$P_n = F_y A_g$$\n\n**3. Calculation:**\n*   Nominal Strength: $P_n = 50 \\text{ ksi} \\times 6.17 \\text{ in}^2 = 308.5 \\text{ kips}$\n*   Design Strength: $\\phi_t P_n = 0.90 \\times 308.5 \\text{ kips}$\n*   $\\phi_t P_n = 277.65 \\text{ kips}$\n\nFINAL ANSWER: 277.65 kips",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 329,
+  "eval_seconds": 11.32,
+  "prompt_eval_count": 160,
+  "usage": {
+    "co2_g": 0.521713,
+    "completion_tokens": 329,
+    "energy_wh": 1.548109,
+    "prompt_tokens": 160,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 489
+  },
+  "wall_seconds": 11.3,
+  "finished_utc": "2026-11-12T01:33:03.259054+00:00"
+}

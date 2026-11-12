@@ -1,0 +1,22 @@
+,local qwen3.5:9b,voyager qwen38-27b,voyager gemma4-31b-it
+Backend / model,ollama / qwen3.5:9b,voyager / qwen38-27b,voyager / gemma4-31b-it
+Thinking / reasoning mode,think=false sent to Ollama; reasoning output in 0/17 runs,chat_template_kwargs.enable_thinking=false sent; reasoning output in 0/39 runs,no flag sent (model default); reasoning output in 0/39 runs
+Runs scored (13 problems x repeats),17,39,39
+PRIMARY | Strength runs with a parsed numeric answer (error stats below cover only these),6 of 13,16 of 27,24 of 27
+PRIMARY | Strength: median |error| % vs AISC,4.06,1.13,0.53
+PRIMARY | Strength: mean |error| %,5.08,5.95,7.1
+PRIMARY | Strength: max |error| %,11.19,46.63,54.69
+PRIMARY | Strength: correct (within 1% of AISC),3 of 13 (23%),8 of 27 (30%),14 of 27 (52%)
+PRIMARY | Strength: within 5% of AISC,3 of 13 (23%),14 of 27 (52%),15 of 27 (56%)
+PRIMARY | Strength: overestimate > 1% (unsafe direction),0 of 13,5 of 27,5 of 27
+PRIMARY | Selection: exact match to AISC section,0 of 4,0 of 12,9 of 12
+PRIMARY | Selection: section fails System A re-check (unsafe),0 of 4,0 of 12,0 of 12
+PRIMARY | Selection: hallucinated section (not in AISC database),0 of 4,0 of 12,0 of 12
+Refusals (regex; flagged outputs read by hand),2 of 17,0 of 39,0 of 39
+No parseable final answer (incl. refusals),11 of 17,22 of 39,3 of 39
+"Truncated outputs (hit 1,500-token cap)",11 of 17,22 of 39,3 of 39
+"SECONDARY | Wrong limit state, inferred from the value (answer matches another limit state's value)",0 of 13,1 of 27,0 of 27
+SECONDARY |   ...which problems,none,F.1-3B x1,none
+"SECONDARY | Wrong limit state stated in working, beams only (heuristic text match)",2 of 2 runs that state one (4 beam runs),3 of 12 runs that state one (12 beam runs),5 of 12 runs that state one (12 beam runs)
+Mean output tokens,1247.0,1215.0,774.0
+Determinism at temperature 0: problems with identical text across repeats,4 of 4 problems with >= 2 repeats,0 of 13 problems with >= 2 repeats,1 of 13 problems with >= 2 repeats

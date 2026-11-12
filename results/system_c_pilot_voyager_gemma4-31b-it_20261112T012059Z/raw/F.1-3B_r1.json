@@ -1,0 +1,26 @@
+{
+  "id": "F.1-3B",
+  "kind": "strength",
+  "repeat": 1,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 17.5 ft. Cb = 1.3. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $d = 18.0 \\text{ in}$\n*   $b_f = 7.50 \\text{ in}$\n*   $t_f = 0.570 \\text{ in}$\n*   $t_w = 0.355 \\text{ in}$\n*   $I_x = 889 \\text{ in}^4$\n*   $S_x = 99.1 \\text{ in}^3$\n*   $Z_x = 111 \\text{ in}^3$\n*   $r_y = 1.64 \\text{ in}$\n*   $J = 2.44 \\text{ in}^4$\n*   $C_w = 3,440 \\text{ in}^6$\n\n**2. Plastic Moment ($M_p$):**\n$M_p = F_y Z_x = 50 \\text{ ksi} \\times 111 \\text{ in}^3 = 5,550 \\text{ kip-in} = 462.5 \\text{ kip-ft}$\n\n**3. Lateral Torsional Buckling (LTB) Analysis:**\nUnbraced length $L_b = 17.5 \\text{ ft} = 210 \\text{ in}$.\nCalculate $L_p$ (limiting length for plastic behavior):\n$L_p = 1.76 r_y \\sqrt{E/F_y} = 1.76 \\times 1.64 \\times \\sqrt{29000/50} = 2.886 \\times 24.08 \\approx 69.5 \\text{ in} \\approx 5.79 \\text{ ft}$.\nSince $L_b > L_p$, the beam is not fully plastic.\n\nCalculate $L_r$ (limiting length for inelastic LTB):\n$L_r = 1.95 r_{ts} \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x F_y}}$ where $r_{ts} = \\sqrt{\\sqrt{I_x/S_x} \\cdot r_y} \\approx \\sqrt{\\sqrt{8.97} \\cdot 1.64} \\approx 1.87 \\text{ in}$.\nAlternatively, using the standard formula for W18x50: $L_r \\approx 14.5 \\text{ ft}$.\nSince $L_p < L_b < L_r$ ($5.79 \\text{ ft} < 17.5 \\text{ ft}$ is false; $L_b$ is actually greater than $L_r$).\n*Correction:* For W18x50, $L_r$ is typically around $14.5\\text{--}15 \\text{ ft}$. Since $L_b = 17.5 \\text{ ft}$, $L_b > L_r$. The beam is in the **elastic LTB** range.\n\n**4. Elastic Critical Moment ($M_{cr}$):**\n$F_{cr} = \\frac{C_b \\pi^2 E}{(L_b/r_{ts})^2} \\sqrt{1 + 0.078 \\frac{J c}{(r_{ts} L_b)^2}}$ (Simplified AISC approach)\n$M_{cr} = \\frac{C_b \\pi^2 E I_x}{L_b^2} \\sqrt{1 + \\frac{L_b^2 G J}{E S_x^2} \\dots}$\nUsing the standard $M_{cr}$ formula for $L_b = 17.5 \\text{ ft}$:\n$M_{cr} \\approx \\frac{C_b \\pi^2 E}{L_b^2} \\sqrt{G J + \\frac{\\pi^2 E I_x C_w}{L_b^2}}$\n$G = 11,200 \\text{ ksi}$.\n$GJ = 11200 \\times 2.44 = 27,328 \\text{ kip-in}^2$.\n$\\frac{\\pi^2 E I_x C_w}{L_b^2} = \\frac{\\pi^2 \\times 29000 \\times 889 \\times 3440}{210^2} = \\frac{8.75 \\times 10^{10}}{44100} = 1,984,127 \\text{ kip-in}^2$.\n$M_{cr} = \\frac{1.3 \\times \\pi^2 \\times 29000}{210^2} \\sqrt{27328 + 1984127} = 8.46 \\times \\sqrt{2011455} = 8.46 \\times 1418.2 \\approx 11,997 \\text{ kip-in}$.\n$M_{cr} \\approx 999.7 \\text{ kip-ft}$.\n\n**5. Design Strength ($\\phi_b M_n$):**\nFor $L_b > L_r$, $M_n = F_{cr} S_x \\leq M_p$.\n$M_n = \\frac{C_b \\pi^2 E I_x}{L_b^2} \\sqrt{1 + \\dots}$ (Wait, $M_{cr}$ calculated above is the total moment).\n$M_n = M_{cr} = 999.7 \\text{ kip-ft}$? No, $M_n$ cannot exceed $M_p$.\nRe-evaluating $M_{cr}$ for $C_b=1.0$: $M_{cr(1.0)} \\approx 769 \\text{ kip-ft}$.\nWith $C_b = 1.3$, $M_{cr} = 1.3 \\times 769 = 999 \\text{ kip-ft}$.\nSince $M_{cr} > M_p$ ($999 > 462.5$), the strength is governed by $M_p$ or inelastic LTB.\nIf $L_b$ is actually between $L_p$ and $L_r$:\n$M_n = C_b \\left[ M_p - (M_p - 0.7 F_y S",
+  "thinking": null,
+  "done_reason": "length",
+  "eval_count": 1500,
+  "eval_seconds": 60.95,
+  "prompt_eval_count": 187,
+  "usage": {
+    "co2_g": 3.213248,
+    "completion_tokens": 1500,
+    "energy_wh": 9.534862,
+    "prompt_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1687
+  },
+  "wall_seconds": 60.9,
+  "finished_utc": "2026-11-12T01:25:07.009167+00:00"
+}

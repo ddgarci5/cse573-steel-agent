@@ -1,0 +1,18 @@
+{
+  "timestamp_utc": "20261112T004145Z",
+  "git_hash": "94336581683b85f75254a241bcec23ee1084d5a5",
+  "ollama_version": "0.40.16",
+  "model": "qwen3.5:9b",
+  "model_digest": "56671c2ab9385f9cfcb404638e32cd62d88e3501d44822208363c010179a3c90",
+  "options": {
+    "temperature": 0,
+    "seed": 573,
+    "num_ctx": 4096,
+    "num_predict": 1500
+  },
+  "think": false,
+  "repeats": 3,
+  "n_problems": 13,
+  "tools": null,
+  "retrieval": null
+}

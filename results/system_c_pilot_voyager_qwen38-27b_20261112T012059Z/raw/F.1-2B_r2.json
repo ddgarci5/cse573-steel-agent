@@ -1,0 +1,26 @@
+{
+  "id": "F.1-2B",
+  "kind": "strength",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 11.667 ft. Cb = 1.01. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design flexural strength $\\phi_b M_n$ for the W18x50 beam, we follow the procedure outlined in ANSI/AISC 360-22 (Chapter F).\n\n### 1. Section Properties\nFrom standard AISC manual data for a **W18x50**:\n*   Plastic section modulus, $Z_x = 98.3 \\text{ in}^3$\n*   Elastic section modulus, $S_x = 88.9 \\text{ in}^3$\n*   Radius of gyration about the weak axis, $r_y = 1.99 \\text{ in}$\n*   Flange width, $b_f = 7.50 \\text{ in}$\n*   Flange thickness, $t_f = 0.510 \\text{ in}$\n*   Web thickness, $t_w = 0.335 \\text{ in}$\n*   Depth, $d = 17.99 \\text{ in}$\n\n### 2. Material Properties\n*   Yield stress, $F_y = 50 \\text{ ksi}$\n*   Resistance factor for flexure, $\\phi_b = 0.90$\n\n### 3. Determine Limiting Unbraced Lengths\n\n**A. Yielding Limit ($L_p$)**\nThe limit for noncompact or compact sections to yield without lateral-torsional buckling is:\n$$ L_p = 1.76 r_y \\sqrt{\\frac{E}{F_y}} $$\n$$ L_p = 1.76 (1.99) \\sqrt{\\frac{29,000}{50}} $$\n$$ L_p = 3.5024 \\sqrt{580} $$\n$$ L_p = 3.5024 (24.083) \\approx 84.35 \\text{ in} $$\n$$ L_p = \\frac{84.35}{12} \\approx 7.03 \\text{ ft} $$\n\n**B. Inelastic Lateral-Torsional Buckling Limit ($L_r$)**\nFirst, calculate the flange slenderness ratio to check compactness:\n$$ \\lambda = \\frac{b_f}{2t_f} = \\frac{7.50}{2(0.510)} = \\frac{7.50}{1.02} \\approx 7.35 $$\nLimit for compact flange: $1.76 \\sqrt{\\frac{E}{F_y}} = 1.76(24.083) \\approx 42.4$.\nSince $7.35 < 42.4$, the flange is **compact**.\n\nFor a compact section, $L_r$ is calculated as:\n$$ L_r = 1.95 r_y \\frac{E}{F_y} \\left[ \\frac{J c}{S_x (h_o)} + \\sqrt{\\left(\\frac{J c}{S_x (h_o)}\\right)^2 + 6.76 \\left(\\frac{F_y}{E}\\right)^2} \\right] $$\n\nWe need the torsional constant $J$ and the distance $h_o$.\n*   $J \\approx 1.24 \\text{ in}^4$ (Standard value for W18x50)\n*   $h_o = d - t_f = 17.99 - 0.510 = 17.48 \\text{ in}$\n*   $c = 1.0$ (for doubly symmetric I-shapes)\n\nCalculate the term inside the bracket:\n$$ \\frac{J c}{S_x h_o} = \\frac{1.24 (1.0)}{88.9 (17.48)} = \\frac{1.24}{1554.0} \\approx 0.000798 $$\n$$ \\frac{F_y}{E} = \\frac{50}{29,000} \\approx 0.001724 $$\n$$ 6.76 \\left(\\frac{F_y}{E}\\right)^2 = 6.76 (0.001724)^2 \\approx 6.76 (2.972 \\times 10^{-6}) \\approx 2.009 \\times 10^{-5} $$\n$$ \\left(\\frac{J c}{S_x h_o}\\right)^2 \\approx (0.000798)^2 \\approx 6.37 \\times 10^{-7} $$\n$$ \\sqrt{6.37 \\times 10^{-7} + 2.009 \\times 10^{-5}} = \\sqrt{2.073 \\times 10^{-5}} \\approx 0.004553 $$\n\nNow, calculate $L_r$:\n$$ L_r = 1.95 (1.99) \\frac{29,000}{50} [ 0.000798 + 0.004553 ] $$\n$$ L_r = 3.8805 (580) [ 0.005351 ] $$\n$$ L_r = 2250.7 (0.005351) \\approx 12.04 \\text{ ft} $$\n\n### 4. Determine the Governing Failure Mode\nGiven:\n*   $L_b = 11.667 \\text{ ft}$\n*   $L_p = 7.03 \\text{ ft}$\n*   $L_r = 12.04 \\text{ ft}$\n\nSince $L_p < L_b < L_r$, the beam is in the **Inelastic Lateral-Torsional Buckling** range.\n\n### 5. Calculate Nominal Moment Strength ($M_n$)\nThe formula for inelastic LTB is:\n$$ M_n = C_b \\left[ M_p - (M_p - 0.7 F_y S_x) \\frac{L_b - L_p}{L_r - L_p} \\right] \\le M_p $$\n\nFirst, calculate $M_p$ and $0.7 F_y S_x$:\n$$ M_p = F_y Z_x = 50 \\text{ ksi} \\times 98.3 \\text{ in}^3 = 4915 \\text{ kip-in} $$\n$$ 0.7 F_y S_x = 0.7 (50) (88.9) = 35 \\times 88.9 = 3111",
+  "thinking": null,
+  "done_reason": "length",
+  "eval_count": 1500,
+  "eval_seconds": 49.06,
+  "prompt_eval_count": 185,
+  "usage": {
+    "co2_g": 0.50121,
+    "completion_tokens": 1500,
+    "energy_wh": 1.487269,
+    "prompt_tokens": 185,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1685
+  },
+  "wall_seconds": 49.1,
+  "finished_utc": "2026-11-12T01:34:46.710681+00:00"
+}

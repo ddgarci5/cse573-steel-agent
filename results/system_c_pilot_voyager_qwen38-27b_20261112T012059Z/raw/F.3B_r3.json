@@ -1,0 +1,26 @@
+{
+  "id": "F.3B",
+  "kind": "strength",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W21x48 rolled W-shape is used as a beam bent about its major axis. The beam is continuously braced laterally (Lb = 0). Cb = 1. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design flexural strength ($\\phi_b M_n$) for the W21x48 beam, we follow the provisions of ANSI/AISC 360-22.\n\n**1. Identify Section Properties**\nFor a W21x48 shape (ASTM A992 Steel):\n*   Plastic section modulus, $Z_x = 111 \\text{ in}^3$\n*   Elastic section modulus, $S_x = 98.0 \\text{ in}^3$\n*   Flange width, $b_f = 8.25 \\text{ in}$\n*   Flange thickness, $t_f = 0.550 \\text{ in}$\n*   Web thickness, $t_w = 0.330 \\text{ in}$\n*   Depth, $d = 20.8 \\text{ in}$\n*   Web height, $h = d - 2t_f = 20.8 - 2(0.550) = 19.7 \\text{ in}$\n\n**2. Determine Limiting States**\nSince the beam is continuously braced ($L_b = 0$), lateral-torsional buckling (LTB) does not govern. The nominal moment strength $M_n$ is determined by the lesser of:\n1.  Yielding: $M_p = F_y Z_x$\n2.  Flange Local Buckling: $M_{nf}$\n3.  Web Local Buckling: $M_{nw}$\n\n**3. Check Flange Local Buckling**\nCalculate the flange slenderness ratio $\\lambda$:\n$$ \\lambda = \\frac{b_f}{2t_f} = \\frac{8.25}{2(0.550)} = \\frac{8.25}{1.10} = 7.5 $$\n\nDetermine the limiting slenderness ratios for compactness (AISC Table B4.1b):\n*   Limit for non-slender (compact): $\\lambda_p = 0.38 \\sqrt{\\frac{E}{F_y}} = 0.38 \\sqrt{\\frac{29000}{50}} = 0.38 \\sqrt{580} \\approx 9.15$\n*   Limit for slender: $\\lambda_r = 1.0 \\sqrt{\\frac{E}{F_y}} = 1.0 \\sqrt{580} \\approx 24.1$\n\nSince $\\lambda = 7.5 < \\lambda_p = 9.15$, the flange is **compact**.\nTherefore, the flange local buckling strength is equal to the plastic moment:\n$$ M_{nf} = M_p $$\n\n**4. Check Web Local Buckling**\nCalculate the web slenderness ratio $\\lambda$:\n$$ \\lambda = \\frac{h}{t_w} = \\frac{19.7}{0.330} \\approx 59.7 $$\n\nDetermine the limiting slenderness ratios for the web (AISC Table B4.1a):\n*   Limit for non-slender (compact): $\\lambda_p = 2.24 \\sqrt{\\frac{E}{F_y}} = 2.24 \\sqrt{580} \\approx 54.0$\n*   Limit for slender: $\\lambda_r = 6.76 \\sqrt{\\frac{E}{F_y}} = 6.76 \\sqrt{580} \\approx 163$\n\nSince $\\lambda_p < \\lambda < \\lambda_r$ ($54.0 < 59.7 < 163$), the web is **slender** (specifically, it is in the transition range between compact and slender). We must calculate the nominal moment strength due to web local buckling, $M_{nw}$.\n\nAccording to AISC 360-22 Section F2.2, for a web with $\\lambda_p < \\lambda \\le \\lambda_r$:\n$$ M_{nw} = M_p - \\frac{M_p - M_y}{\\left( \\frac{\\lambda_r}{\\lambda} - \\frac{\\lambda_p}{\\lambda} \\right)^2} \\left( \\frac{\\lambda}{\\lambda_p} - 1 \\right) $$\n\nFirst, calculate $M_p$ and $M_y$:\n$$ M_p = F_y Z_x = 50 \\text{ ksi} \\times 111 \\text{ in}^3 = 5550 \\text{ kip-in} $$\n$$ M_y = F_y S_x = 50 \\text{ ksi} \\times 98.0 \\text{ in}^3 = 4900 \\text{ kip-in} $$\n\nNow, substitute values into the $M_{nw}$ equation:\n*   $\\lambda = 59.7$\n*   $\\lambda_p = 54.0$\n*   $\\lambda_r = 163$\n\nTerm 1 (Denominator part):\n$$ \\frac{\\lambda_r}{\\lambda} - \\frac{\\lambda_p}{\\lambda} = \\frac{163}{59.7} - \\frac{54.0}{59.7} = 2.730 - 0.905 = 1.825 $$\n$$ \\left( 1.825 \\right)^2 = 3.331 $$\n\nTerm 2 (Numerator part):\n$$ \\frac{\\lambda}{\\lambda_p} - 1 = \\frac{59.7}{54.0} - 1 = 1.106 - 1 = 0.106 $$\n\nCalculate the reduction factor:\n$$ \\text{Reduction} = \\frac{M_p - M_y}{3.331} \\times 0.106 = \\frac{5550 - 4900}{3.331} \\times 0.106 = \\frac{650}{3.331} \\times 0.106 \\approx 195.1 \\times 0.106 \\approx 20.7 \\text{ kip-in} $$\n\nCalculate $M_{nw}$:\n$$ M_{nw} = 5550 - 20.7 = 5529.3 \\text{ kip-in} $$\n\n**5. Determine Nominal Strength $M_n$**\n$$ M_n = \\min(M_p, M_{nf}, M_{nw}) $$\n$$ M_n = \\min(5550, 5550, 5529.3) = 5529.3 \\text{ kip-in",
+  "thinking": null,
+  "done_reason": "length",
+  "eval_count": 1500,
+  "eval_seconds": 51.67,
+  "prompt_eval_count": 181,
+  "usage": {
+    "co2_g": 0.400932,
+    "completion_tokens": 1500,
+    "energy_wh": 1.18971,
+    "prompt_tokens": 181,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1681
+  },
+  "wall_seconds": 51.7,
+  "finished_utc": "2026-11-12T01:45:28.696282+00:00"
+}

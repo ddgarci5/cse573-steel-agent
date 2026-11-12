@@ -1,0 +1,26 @@
+{
+  "id": "F.1-2B",
+  "kind": "strength",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 11.667 ft. Cb = 1.01. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $d = 18.0 \\text{ in}$\n*   $b_f = 7.50 \\text{ in}$\n*   $t_f = 0.570 \\text{ in}$\n*   $t_w = 0.355 \\text{ in}$\n*   $I_x = 889 \\text{ in}^4$\n*   $S_x = 99.1 \\text{ in}^3$\n*   $Z_x = 111 \\text{ in}^3$\n*   $r_y = 1.76 \\text{ in}$\n*   $J = 2.44 \\text{ in}^4$\n*   $h_o = d - 2t_f = 18.0 - 1.14 = 16.86 \\text{ in}$\n\n**2. Yielding Limit State:**\n$M_n = M_p = F_y Z_x = 50 \\text{ ksi} \\times 111 \\text{ in}^3 = 5550 \\text{ kip-in}$\n$\\phi_b M_n = 0.9 \\times 5550 = 4995 \\text{ kip-in} = 416.25 \\text{ kip-ft}$\n\n**3. Lateral-Torsional Buckling (LTB):**\nUnbraced length $L_b = 11.667 \\text{ ft} = 140 \\text{ in}$.\nCalculate $L_p$:\n$L_p = 1.76 r_y \\sqrt{E/F_y} = 1.76 \\times 1.76 \\times \\sqrt{29000/50} = 3.0976 \\times 24.08 \\approx 74.6 \\text{ in}$\nSince $L_b > L_p$, the beam is not in the plastic range.\n\nCalculate $L_r$:\n$L_r = 1.95 r_{ts} \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x F_y}}$ where $r_{ts} = \\sqrt{\\frac{\\sqrt{I_x \\rho} J}{S_x}}$ or approx $1.3 r_y$ for W-shapes.\nUsing standard formula for $L_r$:\n$L_r = 1.95 r_{ts} \\frac{E}{0.7 F_y} \\sqrt{\\frac{J}{S_x F_y} \\left( \\frac{1}{1 + \\frac{1}{2} \\frac{J}{S_x h_o} \\right)}$\nFor W18x50, $r_{ts} \\approx 2.24 \\text{ in}$.\n$L_r \\approx 1.95 \\times 2.24 \\times \\frac{29000}{35} \\sqrt{\\frac{2.44}{99.1 \\times 50}} \\approx 3624 \\times 0.070 \\approx 254 \\text{ in}$.\nSince $L_p < L_b < L_r$, the beam is in the inelastic LTB range.\n\n**4. Inelastic LTB Strength:**\n$M_n = C_b \\left[ M_p - (M_p - 0.7 F_y S_x) \\left( \\frac{L_b - L_p}{L_r - L_p} \\right) \\right] \\le M_p$\n$0.7 F_y S_x = 0.7 \\times 50 \\times 99.1 = 3468.5 \\text{ kip-in}$\n$M_p - 0.7 F_y S_x = 5550 - 3468.5 = 2081.5 \\text{ kip-in}$\n$\\frac{L_b - L_p}{L_r - L_p} = \\frac{140 - 74.6}{254 - 74.6} = \\frac{65.4}{179.4} \\approx 0.3645$\n$M_n = 1.01 \\times [5550 - (2081.5 \\times 0.3645)] = 1.01 \\times [5550 - 758.7] = 1.01 \\times 4791.3 = 4839.2 \\text{ kip-in}$\n$\\phi_b M_n = 0.9 \\times 4839.2 = 4355.3 \\text{ kip-in}$\n\n**5. Conversion to kip-ft:**\n$\\phi_b M_n = 4355.3 / 12 = 362.9 \\text{ kip-ft}$\n\nFINAL ANSWER: 362.9 kip-ft",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 1197,
+  "eval_seconds": 30.28,
+  "prompt_eval_count": 190,
+  "usage": {
+    "co2_g": 1.301099,
+    "completion_tokens": 1197,
+    "energy_wh": 3.860829,
+    "prompt_tokens": 190,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1387
+  },
+  "wall_seconds": 30.3,
+  "finished_utc": "2026-11-12T01:29:40.837542+00:00"
+}

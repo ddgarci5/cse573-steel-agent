@@ -1,5 +1,111 @@
 # Session summary (newest first)
 
+## System C pilot, 2026-11-12: local qwen3.5:9b vs ASU Voyager qwen38-27b and gemma4-31b-it
+
+**What was run.** The same 13 Dataset C problems (9 strength checks, 4 section selections), the same prompt text, parser, token cap (1,500 output tokens), temperature 0 and seed 573, no tools and no retrieval. Raw outputs are saved separately per model:
+- local: `results/system_c_pilot_20261112T004145Z/` (Ollama, qwen3.5:9b, digest 56671c2ab938). **Snapshot of 17 runs, not 39**: repeat 1 is complete (13) plus 4 problems of repeat 2. I stopped the run because the CPU needs about 260 s per problem; the 4 repeated problems were byte-identical to repeat 1, so repeats add little at temperature 0. Resume with `eval/system_c_pilot.py run --model qwen3.5:9b --repeats 3 --run-dir results/system_c_pilot_20261112T004145Z`.
+- `results/system_c_pilot_voyager_qwen38-27b_20261112T012059Z/`: 39 runs (13 problems x 3 repeats).
+- `results/system_c_pilot_voyager_gemma4-31b-it_20261112T012059Z/`: 39 runs.
+Final comparison tables: `results/system_c_comparison_20261112T015638Z/` (all repeats) and `results/system_c_comparison_20261112T015639Z/` (repeat 1 only, 13 runs each, apples-to-apples). Hand-check sheet: `results/system_c_review_sheet.csv`.
+
+**Thinking / reasoning mode (recorded per model).**
+| Model | Mode used | How | Evidence in outputs |
+|---|---|---|---|
+| local qwen3.5:9b | off | `think=false` sent to Ollama | reasoning output in 0 of 17 runs |
+| voyager qwen38-27b | off | `chat_template_kwargs.enable_thinking=false` sent. The model **thinks by default**: in a 1-prompt probe the reasoning used all 1,500 tokens and the answer was empty | reasoning output in 0 of 39 runs |
+| voyager gemma4-31b-it | off (model default) | no flag sent; the probe showed no reasoning with or without the flag | reasoning output in 0 of 39 runs, no think tags |
+Thinking-on results were not run for any model. The four probe calls used to learn this are not saved as results.
+
+### Primary metric: numerical error vs AISC's published answers
+Strength problems only (the AISC value is the reference). Error statistics cover **only runs that produced a parseable final answer**; the count is the first row. The 1,500-token cap truncated many outputs (see below), so these statistics are on a survivor subset and are not comparable across models without that row.
+
+All repeats that exist (local = 17-run snapshot):
+| | local qwen3.5:9b | voyager qwen38-27b | voyager gemma4-31b-it |
+|---|---|---|---|
+| Strength runs with a parsed numeric answer | 6 of 13 | 16 of 27 | 24 of 27 |
+| Median absolute error | 4.06% | 1.13% | 0.53% |
+| Mean absolute error | 5.08% | 5.95% | 7.10% |
+| Max absolute error | 11.19% | 46.63% | 54.69% |
+| Correct (within 1% of AISC), of all strength runs | 3 of 13 (23%) | 8 of 27 (30%) | 14 of 27 (52%) |
+| Within 5% of AISC, of all strength runs | 3 of 13 (23%) | 14 of 27 (52%) | 15 of 27 (56%) |
+| Overestimates by more than 1% (unsafe direction) | 0 of 13 | 5 of 27 | 5 of 27 |
+| Selection: exact match to AISC section | 0 of 4 | 0 of 12 | 9 of 12 |
+| Selection: answers parsed at all | 0 of 4 | 1 of 12 | 12 of 12 |
+| Selection: proposed section fails System A re-check (unsafe) | 0 of 4 | 0 of 12 | 0 of 12 |
+| Selection: section not in AISC database | 0 of 4 | 0 of 12 | 0 of 12 |
+
+Repeat 1 only (13 runs per model):
+| | local qwen3.5:9b | voyager qwen38-27b | voyager gemma4-31b-it |
+|---|---|---|---|
+| Strength runs with a parsed numeric answer | 4 of 9 | 6 of 9 | 8 of 9 |
+| Median / mean / max absolute error | 4.06 / 4.83 / 11.19% | 1.09 / 1.67 / 4.52% | 0.50 / 4.99 / 19.02% |
+| Within 1% / within 5% of AISC (of 9) | 2 / 2 | 3 / 6 | 5 / 5 |
+| Overestimates by more than 1% | 0 of 9 | 2 of 9 | 2 of 9 |
+| Selection exact match (of 4) | 0 | 0 | 3 |
+
+Median absolute error by strength problem, all repeats, `(parsed answers / runs)`:
+| Problem | local qwen3.5:9b | voyager qwen38-27b | voyager gemma4-31b-it |
+|---|---|---|---|
+| D.1-yield | 11.19% (2/2) | 1.70% (3/3) | 0.23% (3/3) |
+| D.1-rupture | 0.00% (2/2) | 0.14% (3/3) | 0.14% (3/3) |
+| E.1C | no answer (0/2) | 0.56% (3/3) | 0.76% (3/3) |
+| E.1D | no answer (0/2) | 0.49% (3/3) | 0.17% (3/3) |
+| F.1-1B | 0.92% (1/1) | 2.74% (1/3) | 0.07% (3/3) |
+| F.1-2B | no answer (0/1) | no answer (0/3) | 15.75% (2/3) |
+| F.1-3B | no answer (0/1) | 39.06% (2/3) | 54.69% (1/3) |
+| F.3B | no answer (0/1) | 4.52% (1/3) | 7.41% (3/3) |
+| G.1B | 7.19% (1/1) | no answer (0/3) | 19.02% (3/3) |
+
+### Refusals and missing answers
+- Regex flagged 2 local runs as refusals (E.1C repeats 1 and 2). I read both: the model writes "Since I cannot access external tables or software, I will derive..." and then continues the calculation until the token cap cuts it off. **Both are false positives; confirmed refusals are 0 for all three models.** The regex was not changed (frozen scorer), so the automated table row still shows 2 of 17 for local.
+- Every run without a parseable answer ended at the 1,500-token cap (no answer and no truncation never coincide): local 11 of 17, qwen38-27b 22 of 39, gemma4-31b-it 3 of 39. Mean output length 1,247 / 1,215 / 774 tokens. Qwen and the local model write long working, so this confounds every comparison above. In particular **Qwen's and local's selection zeros mostly mean "no answer", not "wrong answer"**: Qwen truncated 11 of 12 selection runs (its one parsed answer, F.4 repeat 3, was W21X62: passes System A, 7 lb/ft heavier than W24X55); local truncated all 4. Raising the cap would be a different experiment from the local run, so I did not do it.
+
+### Secondary metric: wrong limit state (heuristic; hand-check sheet provided)
+| | local qwen3.5:9b | voyager qwen38-27b | voyager gemma4-31b-it |
+|---|---|---|---|
+| Inferred from the value: the wrong answer matches another limit state's value from System A (all 9 strength problems) | 0 of 13 | 1 of 27 (F.1-3B repeat 2: 378.7 kip-ft, which is about phi*Mp, so LTB ignored; +31%) | 0 of 27 |
+| Stated in the working, beam problems F.1-1B, F.1-2B, F.1-3B, F.3B only (wrong / runs that state one) | 2 of 2 (4 beam runs) | 3 of 12 | 5 of 12 |
+Repeat 1 only, stated-wrong: local 2 of 2, qwen38 1 of 4, gemma 2 of 4. The most common error: the classifier labels all 7 F.3B outputs (W21x48, published governing state flange local buckling; gemma 3, qwen38 3, local 1) as plastic yielding, and the three I read in full (one per model, repeat 1) all call the flange compact. In those three the reasoning follows from misremembered section properties (for example Zx about 114 in^3 and bf 6.5 in. for W21x48), not from a misunderstanding of the provisions. Likewise Gemma's G.1B answer (247.8 kips vs 306) comes from tw = 0.350 in. for W24x62. The dominant failure mode without tools or tables is therefore section-property recall.
+Classifier agreement on the 28 beam rows in the sheet: agrees 16, disagrees 10, nothing stated 2. Known weakness: "last statement wins", so a hedge at the end of a truncated output can flip the label (Gemma F.1-3B repeat 1 says "elastic LTB" and later hedges "if Lb is between Lp and Lr", labeled inelastic). Column problems (E.1C, E.1D) are not text-scored because Gemma states the governing axis only implicitly (it computes max KL/r without saying which axis); a wrong axis would show up in the value-based check.
+
+### Other observations
+- Determinism at temperature 0: local repeats were byte-identical on 4 of 4 repeated problems; Voyager was not (qwen38-27b 0 of 13 problems identical across 3 repeats, gemma4-31b-it 1 of 13), even with a fixed seed. Repeat-to-repeat spread on Voyager is real and is why the 3-repeat numbers differ from repeat 1.
+- Selection: Gemma proposed the published section on E.1A, F.1-1A and F.4 in all 3 repeats and W21X50 (2 lb/ft heavier than W21X48, passes) on F.3A in all 3. No selected section from any model failed a System A check.
+- Section-property recall also explains the large single errors: Gemma F.1-3B repeat 2 = 130.5 kip-ft vs 288 (-54.7%), Qwen F.1-3B repeat 2 = 378.7 (+31.5%).
+
+### Scoring changes made AFTER seeing outputs (full record) and the final scorer
+All three runs were re-scored with the final scorer, `eval/system_c_pilot.py` sha256 `c8e7959deb92...` (recorded in each run's `summary.json` and in `inputs.json` of each comparison). Thresholds (1% correct, 5%, alternative-limit-state match within 1%), the `FINAL ANSWER` parser, unit rules, the System A re-check for selections and the prompt text were NOT changed after any output was seen. Before any pilot output was read I had only made design-time fixes: prompt numbers use 3 decimals (U = 0.908 had rounded to 0.91) and the prompts omit the governing limit state (the Dataset C descriptions name it, e.g. "elastic LTB"); refusal detection and the value-based wrong-limit-state check were written after the 4-call thinking probe but before any run was scored.
+| # | Change after seeing outputs | Why | Kind |
+|---|---|---|---|
+| 1 | Added a text classifier for the limit state the model states (4 beam problems) | After reading Gemma's F.3B output (flange called compact, yielding governs) I saw the value-based check could not detect a wrong limit state when the number matches no alternative | new secondary metric |
+| 2 | Tried a text classifier for the governing column axis, then removed it | Gemma never says which axis governs (only the max KL/r), so every column run came back "not stated"; the value-based check already covers a wrong axis | removed before final scoring |
+| 3 | Added yielding phrasings ("Limit State: Yielding", "flange and web are compact", "local buckling does not govern/control/reduce", "based on/governed by yielding") | Gemma F.1-1B outputs came back unclassified | classifier tuning |
+| 4 | Fixed regex: "non-slender flanges" was read as a slender flange | Qwen F.1-1B repeat 2 was mislabeled flange local buckling | classifier bug fix |
+| 5 | Added the phrasing "local buckling limit state does not govern/control/reduce" | Qwen F.1-1B repeat 2 wording | classifier tuning |
+| 6 | `compare --max-repeat` and moving the summary into `summarize()` | the local run had only repeat 1 complete, so a like-for-like view was needed | reporting |
+| 7 | `summarize()` crashed when a model never produced a parseable selection answer; missing score columns are now created empty | local scoring crashed on its own outputs | bug fix |
+| 8 | Comparison loader reads the older local `meta.json` format (`think=false`); per-problem table lists all 9 problems with "no answer"; row labels no longer embed per-model run counts (rows had split with blanks); the "identical text across repeats" metric counts only problems with 2 or more repeats (it had counted single-repeat problems as identical, showing 13 for local) | table bugs found while building the comparison | reporting |
+| 9 | Review-sheet path bug (relative path error) | sheet writer crashed | bug fix |
+| 10 | Table reordered: numerical error first, limit-state rows labeled SECONDARY | requested | reporting |
+Effect: changes 1 to 5 affect only the secondary stated-limit-state numbers; changes 6 to 10 do not change any computed score. The primary numerical-error numbers are unchanged by anything done after outputs were seen.
+Not validated: the stated-limit-state classifier has not been checked against a hand-labeled set; that is what `results/system_c_review_sheet.csv` is for (columns `reviewer_label`, `reviewer_notes` are blank for you). While developing it I read key passages (excerpts, not full texts) of roughly 15 raw outputs, mostly repeat 1 of the four beam problems for each model; that is a development check, not a held-out test.
+
+### Review sheet
+`results/system_c_review_sheet.csv` (utf-8 with BOM for Excel): 95 rows = 39 + 39 + 17, one per model x problem x repeat, sorted by problem. For every problem it gives System A's governing state in words, the model's published/parsed answer and error, the model's own last "governs/controls/critical/limit state" lines, and the final answer line. For the four beam problems it also gives the classifier label, the label System A expects, whether they agree, and the matched text. `raw_output_file` points to the saved response.
+
+### Open questions
+1. The 1,500-token cap was inherited from the local run and truncates most Qwen and local outputs. Do you want a Voyager rerun with a higher cap (for example 4,000), reported as a separate experiment next to this one?
+2. Run Qwen with thinking ON? It will use far more tokens; the probe showed it does not finish inside 1,500.
+3. Finish the local run (22 more runs, about 1.5 hours of CPU) or accept the 17-run snapshot?
+4. Dataset C has only 13 problems, so the percentages above rest on 9 strength and 4 selection problems; treat them as pilot evidence.
+
+
+## Ollama setup, 2026-11-12
+Installed Ollama 0.40.16 with `scoop install ollama` (user-level). Verified `ollama serve` answers `/api/version`; no models pulled yet (0 installed), server stopped afterwards.
+Machine: Intel i5-11400 (6 cores), 15.6 GB RAM, Intel UHD 730 only (no NVIDIA GPU), 153 GB free on C:. Models will run on CPU, so expect slow generation for 7-8B models.
+Model check (Ollama library pages read 2026-11-12 through a summarizing fetch tool; relative dates only): newest general-purpose Qwen is qwen3.8, 27b only (18 GB, does not fit in RAM). Newest with 4-9b sizes: qwen3.5 (4b 3.3 GB, 9b 6.6 GB, "updated 4 weeks ago", text+image, tools, thinking). Older fallback: qwen3:8b 5.2 GB. Llama/Gemma second model not looked up yet.
+Pulled `qwen3.5:9b` (id 56671c2ab938, 6.6 GB). Smoke test (1 prompt, think=false, temperature 0, seed 573, num_predict 80): coherent one-sentence answer; 100% CPU, default context 4096; model load 22.8 s; prompt 12.9 tok/s; generation 4.11 tok/s (44 tokens, 35.8 s total). One sample only. Thinking mode was not timed; it will be slower.
+
 ## Task 4, 2026-11-12: Dataset B generator + System B quick baseline
 Code: `ml/dataset_b.py`, `ml/system_b_baseline.py`; tests `steelagent/tests/test_dataset_b.py` (23 tests total, all pass).
 Outputs: `results/dataset_b_20261112T001016Z/manifest.json`, `results/system_b_baseline_20261112T001158Z/` (`metrics.json`, `shortlist_*.csv`, `row_metrics_*.csv`, `log.txt`, `meta.json`, `system_b_baseline.png`; figure copy in `presentation/`). Git hash in `meta.json` is the Nov 11 initial commit with a dirty tree (task 4 files not committed yet). Seed 573.

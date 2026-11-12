@@ -1,0 +1,26 @@
+{
+  "id": "F.1-2B",
+  "kind": "strength",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 11.667 ft. Cb = 1.01. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $d = 18.0 \\text{ in}$\n*   $b_f = 7.50 \\text{ in}$\n*   $t_f = 0.570 \\text{ in}$\n*   $t_w = 0.355 \\text{ in}$\n*   $I_x = 889 \\text{ in}^4$\n*   $S_x = 99.1 \\text{ in}^3$\n*   $Z_x = 111 \\text{ in}^3$\n*   $r_y = 1.64 \\text{ in}$\n*   $J = 2.44 \\text{ in}^4$\n*   $h_o = d - 2t_f = 18.0 - 1.14 = 16.86 \\text{ in}$\n\n**2. Yielding Limit State:**\n$M_n = M_p = F_y Z_x = 50 \\text{ ksi} \\times 111 \\text{ in}^3 = 5550 \\text{ kip-in}$\n$\\phi_b M_n = 0.9 \\times 5550 = 4995 \\text{ kip-in} = 416.25 \\text{ kip-ft}$\n\n**3. Lateral-Torsional Buckling (LTB):**\nUnbraced length $L_b = 11.667 \\text{ ft} = 140 \\text{ in}$.\nCalculate $L_p$:\n$L_p = 1.76 r_y \\sqrt{E/F_y} = 1.76 \\times 1.64 \\times \\sqrt{29000/50} = 2.886 \\times 24.08 \\approx 69.5 \\text{ in}$\nSince $L_b > L_p$, the beam is not in the plastic range.\n\nCalculate $L_r$:\n$L_r = 1.95 r_{ts} \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x F_y}}$ where $r_{ts} = \\sqrt{\\frac{\\sqrt{I_x \\rho} J}{S_x}}$ or approx $1.3 \\times r_y$ for W-shapes.\nUsing standard formula for $L_r$:\n$L_r \\approx 11.5 \\text{ ft} \\approx 138 \\text{ in}$ (for W18x50).\nSince $L_b \\approx 140 \\text{ in}$, $L_b$ is slightly greater than $L_r$. We use the elastic buckling formula.\n\nCalculate $F_{cr}$:\n$F_{cr} = \\frac{C_b \\pi^2 E}{6.56 \\frac{L_b}{r_{ts}} \\sqrt{\\frac{F_y}{E}}}$ is for the inelastic range. For $L_b > L_r$, we use:\n$F_{cr} = \\frac{C_b \\pi^2 E}{6.56 \\frac{L_b}{r_{ts}}}$ (simplified) or $M_n = \\frac{C_b \\pi^2 E I_x}{L_b^2} \\sqrt{\\frac{1}{1 + \\frac{\\pi^2 E S_x}{L_b^2 G J} \\frac{1}{1 + \\frac{L_b^2 G J}{\\pi^2 E S_x} \\frac{1}{r_0^2}}}$\nAlternatively, using the AISC formula for $L_b > L_r$:\n$M_n = F_{cr} S_x$ where $F_{cr} = \\frac{C_b \\pi^2 E}{6.56 \\frac{L_b}{r_{ts}}} \\sqrt{1 + \\dots}$\nFor W18x50 at $L_b = 11.667 \\text{ ft}$, $M_n$ is typically governed by elastic buckling.\n$M_{cr} \\approx \\frac{C_b \\pi^2 E I_x}{L_b^2} \\times (\\text{torsional factor}) \\approx 340 \\text{ kip-ft}$ (approximate for this section).\n\nChecking $L_r$ more precisely: $L_r$ for W18x50 is $11.4 \\text{ ft}$.\nSince $L_b = 11.667 \\text{ ft} > L_r$, we use:\n$M_n = F_{cr} S_x$ where $F_{cr} = \\frac{C_b \\pi^2 E}{6.56 \\frac{L_b}{r_{ts}}}$.\n$r_{ts} = 1.84 \\text{ in}$ for W18x50.\n$F_{cr} = \\frac{1.01 \\times \\pi^2 \\times 29000}{6.56 \\times (140 / 1.84)} = \\frac{288,444}{498.26} = 578.9 \\text{ psi} \\times \\text{correction} \\dots$\nActually, for $L_b$ just over $L_r$, $M_n$ is very close to $M_{LTB}$ at $L_r$.\nAt $L_r$, $M_n = 0.7 F_y S_x = 0.7 \\times 50 \\times 99.1 / 12 = 289.6 \\text{ kip-ft}$.\nWith $C_b = 1.01$ and $L_b$ slightly above $L_r$, $M_n \\approx 285 \\text{ kip-ft}$.\n$\\phi_b M_n = 0.9 \\times 285 = 256.5 \\text{ kip-ft}$.\n\nRefining $M_{cr}$ for $L_b = 11.667 \\text{ ft}$:\n$M_{cr} \\approx 280 \\text{ kip-ft}$.\n$\\phi_b M_n = 0.9 \\times 1.01 \\times 280 \\approx 254.5 \\text{ kip-",
+  "thinking": null,
+  "done_reason": "length",
+  "eval_count": 1500,
+  "eval_seconds": 52.66,
+  "prompt_eval_count": 190,
+  "usage": {
+    "co2_g": 2.453251,
+    "completion_tokens": 1500,
+    "energy_wh": 7.279677,
+    "prompt_tokens": 190,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1690
+  },
+  "wall_seconds": 52.7,
+  "finished_utc": "2026-11-12T01:35:14.047083+00:00"
+}

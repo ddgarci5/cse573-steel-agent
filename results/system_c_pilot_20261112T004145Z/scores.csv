@@ -1,0 +1,18 @@
+id,kind,repeat,truncated,eval_tokens,wall_seconds,reasoning_present,published,parsed,unit,no_answer,unit_ok,err_pct,within_1pct,within_5pct,overestimate_gt_1pct,refusal,wrong_limit_state,expected_limit_state,stated_limit_state,wrong_limit_state_stated
+D.1-rupture,strength,1,False,656,139.3,False,211,211.0,kips,False,True,0.0,True,True,False,False,,,,
+D.1-rupture,strength,2,False,656,139.3,False,211,211.0,kips,False,True,0.0,True,True,False,False,,,,
+D.1-yield,strength,1,False,768,173.2,False,277,246.0,kips,False,True,-11.191335740072201,False,False,False,False,,,,
+D.1-yield,strength,2,False,768,157.4,False,277,246.0,kips,False,True,-11.191335740072201,False,False,False,False,,,,
+E.1A,selection,1,True,1500,309.6,False,W14X132,,,True,,,,,,False,,,,
+E.1C,strength,1,True,1500,306.3,False,892,,,True,,,,,,True,,,,
+E.1C,strength,2,True,1500,307.2,False,892,,,True,,,,,,True,,,,
+E.1D,strength,1,True,1500,298.3,False,927,,,True,,,,,,False,,,,
+E.1D,strength,2,True,1500,326.6,False,927,,,True,,,,,,False,,,,
+F.1-1A,selection,1,True,1500,296.2,False,W18X50,,,True,,,,,,False,,,,
+F.1-1B,strength,1,False,1111,227.6,False,379,382.5,kip-ft,False,True,0.9234828496042217,True,True,False,False,,plastic yielding,,
+F.1-2B,strength,1,True,1500,312.6,False,304,,,True,,,,,,False,,inelastic LTB,elastic LTB,True
+F.1-3B,strength,1,True,1500,299.7,False,288,,,True,,,,,,False,,elastic LTB,,
+F.3A,selection,1,True,1500,293.5,False,W21X48,,,True,,,,,,False,,,,
+F.3B,strength,1,True,1500,307.3,False,398,,,True,,,,,,False,,flange local buckling,plastic yielding,True
+F.4,selection,1,True,1500,293.7,False,W24X55,,,True,,,,,,False,,,,
+G.1B,strength,1,False,733,154.6,False,306,284.0,kips,False,True,-7.189542483660131,False,False,False,False,,,,

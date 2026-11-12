@@ -1,0 +1,57 @@
+{
+  "runs": 17,
+  "problems": 13,
+  "repeats": 2,
+  "truncated_outputs": 11,
+  "mean_eval_tokens": 1246.5882352941176,
+  "mean_wall_seconds": 255.4352941176471,
+  "refusals": 2,
+  "no_final_answer": 11,
+  "runs_with_reasoning_output": 0,
+  "strength": {
+    "runs": 13,
+    "no_final_answer": 7,
+    "within_1pct": 3,
+    "within_5pct": 3,
+    "overestimate_gt_1pct": 0,
+    "unit_mismatch": 0,
+    "median_abs_err_pct": 4.056512666632177,
+    "mean_abs_err_pct": 5.082616135568126,
+    "max_abs_err_pct": 11.191335740072201,
+    "wrong_limit_state": 0,
+    "limit_state_applicable_runs": 4,
+    "limit_state_stated_runs": 2,
+    "wrong_limit_state_stated": 2,
+    "wrong_limit_state_by_problem": {}
+  },
+  "selection": {
+    "runs": 4,
+    "no_final_answer": 4,
+    "exact_match_published": 0,
+    "hallucinated_section": 0,
+    "system_a_pass": 0,
+    "unsafe_recommendation": 0,
+    "mean_weight_gap_lb_ft_when_exists": null
+  },
+  "problems_with_identical_text_across_repeats": 4,
+  "problems_with_2plus_repeats": 4,
+  "scorer_sha256": "c8e7959deb9291e4116ac77dd7235d47a24a2897c33d1e12fc04635b0aa20100"
+}
+         id  repeat published  parsed  err_pct unit_ok  wrong_limit_state  expected_limit_state stated_limit_state  refusal
+D.1-rupture       1       211   211.0     0.00    True                NaN                   NaN                NaN    False
+D.1-rupture       2       211   211.0     0.00    True                NaN                   NaN                NaN    False
+  D.1-yield       1       277   246.0   -11.19    True                NaN                   NaN                NaN    False
+  D.1-yield       2       277   246.0   -11.19    True                NaN                   NaN                NaN    False
+       E.1A       1   W14X132     NaN      NaN     NaN                NaN                   NaN                NaN    False
+       E.1C       1       892     NaN      NaN     NaN                NaN                   NaN                NaN     True
+       E.1C       2       892     NaN      NaN     NaN                NaN                   NaN                NaN     True
+       E.1D       1       927     NaN      NaN     NaN                NaN                   NaN                NaN    False
+       E.1D       2       927     NaN      NaN     NaN                NaN                   NaN                NaN    False
+     F.1-1A       1    W18X50     NaN      NaN     NaN                NaN                   NaN                NaN    False
+     F.1-1B       1       379   382.5     0.92    True                NaN      plastic yielding                NaN    False
+     F.1-2B       1       304     NaN      NaN     NaN                NaN         inelastic LTB        elastic LTB    False
+     F.1-3B       1       288     NaN      NaN     NaN                NaN           elastic LTB                NaN    False
+       F.3A       1    W21X48     NaN      NaN     NaN                NaN                   NaN                NaN    False
+       F.3B       1       398     NaN      NaN     NaN                NaN flange local buckling   plastic yielding    False
+        F.4       1    W24X55     NaN      NaN     NaN                NaN                   NaN                NaN    False
+       G.1B       1       306   284.0    -7.19    True                NaN                   NaN                NaN    False

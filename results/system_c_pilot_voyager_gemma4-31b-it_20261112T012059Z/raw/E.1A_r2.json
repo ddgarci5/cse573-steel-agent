@@ -1,0 +1,26 @@
+{
+  "id": "E.1A",
+  "kind": "selection",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: Lightest W14 column for a factored axial load of 840 kip, effective length 30 ft about both axes. Select the lightest W-shape that satisfies every required strength check.\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: W<depth>X<weight>",
+  "response": "**Design Parameters:**\n*   Factored Load ($P_u$) = 840 kip\n*   Effective Length ($KL$) = 30 ft = 360 in.\n*   Material: ASTM A992 ($F_y = 50$ ksi, $E = 29,000$ ksi)\n*   Method: LRFD ($\\phi_c = 0.90$)\n\n**1. Required Nominal Strength:**\n$P_n = P_u / \\phi_c = 840 / 0.90 \\approx 933.3$ kip\n\n**2. Trial Selection:**\nFor $KL = 30$ ft, we expect a significant reduction due to slenderness.\nTry **W14x90**:\n*   $A_g = 26.5 \\text{ in}^2$\n*   $r_y \\approx 3.70 \\text{ in}$ (Typical for W14x90)\n*   $KL/r_y = 360 / 3.70 \\approx 97.3$\n\n**3. Column Strength Calculation (W14x90):**\n*   Elastic Buckling Stress ($F_e$):\n    $F_e = \\frac{\\pi^2 E}{(KL/r)^2} = \\frac{\\pi^2 (29,000)}{(97.3)^2} \\approx \\frac{286,217}{9,467} \\approx 30.2 \\text{ ksi}$\n*   Determine $F_{cr}$:\n    Since $KL/r = 97.3$, we check the limit $4.71\\sqrt{E/F_y} = 4.71\\sqrt{29,000/50} \\approx 4.71(24.08) \\approx 113.4$.\n    Since $97.3 \\le 113.4$, the column is in the inelastic range.\n    $F_{cr} = [0.658^{F_y/F_e}] F_y = [0.658^{50/30.2}] \\times 50 = [0.658^{1.655}] \\times 50 \\approx 0.51 \\times 50 \\approx 25.5 \\text{ ksi}$\n*   Nominal Strength ($P_n$):\n    $P_n = F_{cr} A_g = 25.5 \\times 26.5 \\approx 675.7 \\text{ kip}$\n    $675.7 < 933.3$ (**Fail**)\n\n**4. Trial Selection (Heavier):**\nTry **W14x132**:\n*   $A_g = 38.8 \\text{ in}^2$\n*   $r_y \\approx 3.77 \\text{ in}$\n*   $KL/r_y = 360 / 3.77 \\approx 95.5$\n*   $F_e = \\frac{286,217}{(95.5)^2} \\approx 31.3 \\text{ ksi}$\n*   $F_{cr} = [0.658^{50/31.3}] \\times 50 = [0.658^{1.597}] \\times 50 \\approx 0.53 \\times 50 \\approx 26.5 \\text{ ksi}$\n*   $P_n = 26.5 \\times 38.8 \\approx 1,028 \\text{ kip}$\n*   $\\phi P_n = 0.9 \\times 1,028 \\approx 925 \\text{ kip}$\n    $925 > 840$ (**Pass**)\n\n**5. Check Intermediate Shape (W14x117):**\n*   $A_g = 34.4 \\text{ in}^2$\n*   $r_y \\approx 3.73 \\text{ in}$\n*   $KL/r_y = 360 / 3.73 \\approx 96.5$\n*   $F_e = \\frac{286,217}{(96.5)^2} \\approx 30.7 \\text{ ksi}$\n*   $F_{cr} = [0.658^{50/30.7}] \\times 50 = [0.658^{1.628}] \\times 50 \\approx 0.52 \\times 50 \\approx 26.0 \\text{ ksi}$\n*   $P_n = 26.0 \\times 34.4 \\approx 894 \\text{ kip}$\n*   $\\phi P_n = 0.9 \\times 894 \\approx 805 \\text{ kip}$\n    $805 < 840$ (**Fail**)\n\nThe lightest W14 that satisfies the load is the W14x132.\n\nFINAL ANSWER: W14X132",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 1206,
+  "eval_seconds": 45.98,
+  "prompt_eval_count": 160,
+  "usage": {
+    "co2_g": 2.228144,
+    "completion_tokens": 1206,
+    "energy_wh": 6.611703,
+    "prompt_tokens": 160,
+    "prompt_tokens_details": {
+      "cached_tokens": 128,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1366
+  },
+  "wall_seconds": 46.0,
+  "finished_utc": "2026-11-12T01:31:42.227957+00:00"
+}

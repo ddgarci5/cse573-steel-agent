@@ -1,0 +1,7 @@
+{
+  "max_repeat": null,
+  "scorer_sha256": "c8e7959deb9291e4116ac77dd7235d47a24a2897c33d1e12fc04635b0aa20100",
+  "local qwen3.5:9b": "results/system_c_pilot_20261112T004145Z",
+  "voyager qwen38-27b": "results/system_c_pilot_voyager_qwen38-27b_20261112T012059Z",
+  "voyager gemma4-31b-it": "results/system_c_pilot_voyager_gemma4-31b-it_20261112T012059Z"
+}

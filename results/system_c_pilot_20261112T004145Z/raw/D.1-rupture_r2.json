@@ -1,0 +1,14 @@
+{
+  "id": "D.1-rupture",
+  "kind": "strength",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W8x21 rolled W-shape is used as a tension member. Net area An = 4.76 in^2 and shear lag factor U = 0.908. What is the LRFD design tensile strength for rupture on the effective net area, phi_t*Pn, in kips?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design tensile strength for rupture ($\\phi_t P_n$), we follow the provisions of ANSI/AISC 360-22 (Section D.2).\n\n**1. Identify Material Properties and Given Data:**\n*   Steel Grade: ASTM A992\n*   Yield Strength ($F_y$): $50 \\text{ ksi}$\n*   Ultimate Tensile Strength ($F_u$): $65 \\text{ ksi}$\n*   Modulus of Elasticity ($E$): $29,000 \\text{ ksi}$\n*   Net Area ($A_n$): $4.76 \\text{ in}^2$\n*   Shear Lag Factor ($U$): $0.908$\n*   Resistance Factor for Tension Rupture ($\\phi_t$): $0.75$ (per AISC 360-22 Table D2.1)\n\n**2. Calculate the Effective Net Area ($A_e$):**\nThe effective net area accounts for shear lag effects:\n$$A_e = A_n \\times U$$\n$$A_e = 4.76 \\text{ in}^2 \\times 0.908$$\n$$A_e = 4.32208 \\text{ in}^2$$\n\n**3. Calculate the Nominal Tensile Strength for Rupture ($P_n$):**\nAccording to AISC 360-22 Section D2, the nominal strength for rupture is:\n$$P_n = F_u \\times A_e$$\n$$P_n = 65 \\text{ ksi} \\times 4.32208 \\text{ in}^2$$\n$$P_n = 280.9352 \\text{ kips}$$\n\n*(Note: While yielding on the gross area is another limit state, the problem specifically asks for the strength \"for rupture on the effective net area\". Even if we checked yielding, $P_n$ would be $F_y A_g$. For a W8x21, $A_g \\approx 6.16 \\text{ in}^2$, so $P_{n,yield} = 50 \\times 6.16 = 308 \\text{ kips}$. Since $280.9 < 308$, rupture governs.)*\n\n**4. Calculate the LRFD Design Strength ($\\phi_t P_n$):**\nApply the resistance factor $\\phi_t = 0.75$:\n$$\\phi_t P_n = 0.75 \\times 280.9352 \\text{ kips}$$\n$$\\phi_t P_n = 210.7014 \\text{ kips}$$\n\nRounding to three significant figures (standard for structural engineering design outputs):\n$$\\phi_t P_n \\approx 211 \\text{ kips}$$\n\nFINAL ANSWER: 211 kips",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 656,
+  "eval_seconds": 131.991693999,
+  "prompt_eval_count": 184,
+  "wall_seconds": 139.3,
+  "finished_utc": "2026-11-12T01:43:34.147353+00:00"
+}

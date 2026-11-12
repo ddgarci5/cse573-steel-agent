@@ -1,0 +1,26 @@
+{
+  "id": "E.1C",
+  "kind": "strength",
+  "repeat": 1,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W14x132 rolled W-shape is used as a column. Effective length about the x axis = 30 ft; about the y axis = 30 ft. What is the LRFD design compressive strength, phi_c*Pn, in kips?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W14x132):**\n*   Area ($A_g$) = $38.8 \\text{ in}^2$\n*   Radius of gyration ($r_x$) = $6.28 \\text{ in}$\n*   Radius of gyration ($r_y$) = $3.70 \\text{ in}$\n\n**2. Slenderness Ratio:**\nThe column is equally long in both axes ($L = 30 \\text{ ft} = 360 \\text{ in}$).\n*   $(KL/r)_x = 360 / 6.28 \\approx 57.3$\n*   $(KL/r)_y = 360 / 3.70 \\approx 97.3$\nThe controlling slenderness ratio is the maximum: $\\lambda = 97.3$.\n\n**3. Critical Stress Calculation ($\\text{F}_{cr}$):**\nCheck the limit for inelastic vs. elastic buckling:\n$4.71 \\sqrt{E/F_y} = 4.71 \\sqrt{29000/50} = 4.71 \\times 24.08 \\approx 113.4$\nSince $KL/r = 97.3 < 113.4$, the column is in the **inelastic buckling** regime.\n\nUsing the AISC formula for inelastic buckling:\n$F_{cr} = [0.658^{F_y/F_e}] F_y$\nFirst, calculate the elastic buckling stress ($F_e$):\n$F_e = \\frac{\\pi^2 E}{(KL/r)^2} = \\frac{\\pi^2 \\times 29000}{(97.3)^2} \\approx \\frac{286217}{9467} \\approx 30.24 \\text{ ksi}$\n\nNow calculate $F_{cr}$:\n$F_{cr} = [0.658^{50/30.24}] \\times 50 = [0.658^{1.653}] \\times 50$\n$0.658^{1.653} \\approx 0.507$\n$F_{cr} = 0.507 \\times 50 = 25.35 \\text{ ksi}$\n\n**4. Design Compressive Strength ($\\phi_c P_n$):**\n$\\phi_c = 0.90$\n$P_n = F_{cr} \\times A_g = 25.35 \\text{ ksi} \\times 38.8 \\text{ in}^2 \\approx 983.6 \\text{ kips}$\n$\\phi_c P_n = 0.90 \\times 983.6 \\approx 885.2 \\text{ kips}$\n\nFINAL ANSWER: 885.2 kip",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 677,
+  "eval_seconds": 24.97,
+  "prompt_eval_count": 177,
+  "usage": {
+    "co2_g": 1.014022,
+    "completion_tokens": 677,
+    "energy_wh": 3.008966,
+    "prompt_tokens": 177,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 854
+  },
+  "wall_seconds": 25.0,
+  "finished_utc": "2026-11-12T01:22:03.043079+00:00"
+}

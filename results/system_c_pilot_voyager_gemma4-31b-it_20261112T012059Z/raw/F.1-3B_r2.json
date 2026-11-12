@@ -1,0 +1,26 @@
+{
+  "id": "F.1-3B",
+  "kind": "strength",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 17.5 ft. Cb = 1.3. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $d = 18.0 \\text{ in}$\n*   $b_f = 7.5 \\text{ in}$\n*   $t_f = 0.570 \\text{ in}$\n*   $t_w = 0.355 \\text{ in}$\n*   $I_x = 889 \\text{ in}^4$\n*   $S_x = 99.1 \\text{ in}^3$\n*   $Z_x = 111 \\text{ in}^3$\n*   $r_y = 1.65 \\text{ in}$\n*   $J = 2.44 \\text{ in}^4$\n*   $C_w = 3,440 \\text{ in}^6$\n\n**2. Plastic Moment ($M_p$):**\n$M_p = F_y Z_x = 50 \\text{ ksi} \\times 111 \\text{ in}^3 = 5,550 \\text{ kip-in} = 462.5 \\text{ kip-ft}$\n\n**3. Lateral Torsional Buckling (LTB) Analysis:**\nUnbraced length $L_b = 17.5 \\text{ ft} = 210 \\text{ in}$.\nCalculate $L_p$ (limiting length for plastic behavior):\n$L_p = 1.76 r_y \\sqrt{E/F_y} = 1.76 \\times 1.65 \\times \\sqrt{29000/50} = 2.904 \\times 24.08 \\approx 69.9 \\text{ in} \\approx 5.8 \\text{ ft}$.\nSince $L_b > L_p$, the beam is subject to LTB.\n\nCalculate $L_r$ (limiting length for inelastic LTB):\n$L_r = 1.95 r_{ts} \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x F_y}}$ where $r_{ts} = \\sqrt{\\frac{\\sqrt{I_x I_y}}{A}}$ or approx $1.4 \\text{ in}$ for this shape.\nAlternatively, using the standard formula for W18x50: $L_r \\approx 14.5 \\text{ ft}$.\nSince $L_p < L_b < L_r$ ($5.8 \\text{ ft} < 17.5 \\text{ ft}$ is false; $L_b$ is actually greater than $L_r$).\n*Correction:* For W18x50, $L_r$ is typically around $14.5\\text{--}15 \\text{ ft}$. Since $L_b = 17.5 \\text{ ft}$, $L_b > L_r$. The beam is in the **elastic LTB** range.\n\n**4. Elastic Critical Moment ($M_{cr}$):**\n$F_{cr} = \\frac{C_b \\pi^2 E}{(L_b/r_{ts})^2} \\sqrt{1 + 0.078 \\frac{J c}{(L_b r_{ts})^2}}$\nUsing the simplified AISC formula for $M_n$ when $L_b > L_r$:\n$M_n = F_{cr} S_x = \\frac{C_b \\pi^2 E}{(L_b/r_{ts})^2} \\sqrt{1 + 0.078 \\frac{J c}{(L_b r_{ts})^2}} S_x$\nFor W18x50 at $L_b = 17.5 \\text{ ft}$, $M_{cr}$ (with $C_b=1.0$) is approx $240 \\text{ kip-ft}$.\nWith $C_b = 1.3$: $M_n = 1.3 \\times 240 \\approx 312 \\text{ kip-ft}$.\n\n**5. Design Strength:**\n$\\phi_b = 0.90$\n$\\phi_b M_n = 0.90 \\times 312 = 280.8 \\text{ kip-ft}$.\n\n(Refining $M_{cr}$ calculation: $r_{ts} \\approx 1.41 \\text{ in}$. $L_b/r_{ts} = 210/1.41 = 148.9$. $F_{cr} \\approx \\frac{1.3 \\times \\pi^2 \\times 29000}{148.9^2} \\times \\sqrt{1.05} \\approx 16.6 \\text{ ksi}$. $M_n = 16.6 \\times 99.1 / 12 \\approx 137 \\text{ kip-ft}$. Wait, re-evaluating $L_r$: for W18x50, $L_r$ is actually $\\approx 14.8 \\text{ ft}$. $L_b=17.5$ is indeed elastic. $M_{cr}$ for $C_b=1$ is $\\approx 110 \\text{ kip-ft}$. $M_n = 1.3 \\times 110 = 143 \\text{ kip-ft}$. $\\phi M_n = 0.9 \\times 143 = 128.7 \\text{ kip-ft}$).\n\nRecalculating $M_{cr}$ more precisely:\n$M_{cr} = \\frac{C_b \\pi^2 E I_x}{L_b^2} \\sqrt{\\frac{1}{1 + \\frac{\\pi^2 E I_x}{L_b^2 G J}}}$ (approx)\n$M_{cr} \\approx 145 \\text{ kip-ft}$ (for $C_b=1.3$).\n$\\phi M_n = 0.9 \\times 145 = 130.5 \\text{ kip-ft}$.\n\nFINAL ANSWER: 130.5 kip-ft",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 1427,
+  "eval_seconds": 38.42,
+  "prompt_eval_count": 187,
+  "usage": {
+    "co2_g": 1.735244,
+    "completion_tokens": 1427,
+    "energy_wh": 5.149093,
+    "prompt_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 128,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1614
+  },
+  "wall_seconds": 38.4,
+  "finished_utc": "2026-11-12T01:30:19.254663+00:00"
+}

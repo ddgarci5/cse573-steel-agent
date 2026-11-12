@@ -1,0 +1,26 @@
+{
+  "id": "F.1-2B",
+  "kind": "strength",
+  "repeat": 1,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 11.667 ft. Cb = 1.01. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $d = 18.0 \\text{ in}$\n*   $b_f = 7.50 \\text{ in}$\n*   $t_f = 0.570 \\text{ in}$\n*   $t_w = 0.355 \\text{ in}$\n*   $I_x = 889 \\text{ in}^4$\n*   $S_x = 99.1 \\text{ in}^3$\n*   $Z_x = 111 \\text{ in}^3$\n*   $r_y = 1.64 \\text{ in}$\n*   $J = 2.44 \\text{ in}^4$\n*   $h_o = d - 2t_f = 18.0 - 2(0.57) = 16.86 \\text{ in}$\n\n**2. Limit States Check:**\n*   **Yielding:** $M_n = M_p = F_y Z_x = 50 \\times 111 / 12 = 462.5 \\text{ kip-ft}$\n*   **Lateral Torsional Buckling (LTB):**\n    *   $L_p = 1.76 r_y \\sqrt{E/F_y} = 1.76(1.64)\\sqrt{29000/50} = 2.886 \\times 24.08 \\approx 69.5 \\text{ in} \\approx 5.79 \\text{ ft}$\n    *   $L_r = 1.95 r_y \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x F_y}} \\approx 17.4 \\text{ ft}$ (Standard value for W18x50)\n    *   Since $L_p < L_b < L_r$ ($5.79 \\text{ ft} < 11.667 \\text{ ft} < 17.4 \\text{ ft}$), the beam is in the **inelastic LTB** range.\n\n**3. Calculate Inelastic LTB Strength ($M_n$):**\nFormula: $M_n = C_b \\left[ M_p - (M_p - 0.7 F_y S_x) \\left( \\frac{L_b - L_p}{L_r - L_p} \\right) \\right] \\leq M_p$\n*   $M_p = 462.5 \\text{ kip-ft}$\n*   $0.7 F_y S_x = 0.7(50)(99.1)/12 = 289.6 \\text{ kip-ft}$\n*   $L_b = 11.667 \\text{ ft}$\n*   $L_p = 5.79 \\text{ ft}$\n*   $L_r = 17.4 \\text{ ft}$\n*   $C_b = 1.01$\n\n$M_n = 1.01 \\left[ 462.5 - (462.5 - 289.6) \\left( \\frac{11.667 - 5.79}{17.4 - 5.79} \\right) \\right]$\n$M_n = 1.01 \\left[ 462.5 - (172.9) \\left( \\frac{5.877}{11.61} \\right) \\right]$\n$M_n = 1.01 \\left[ 462.5 - (172.9)(0.506) \\right]$\n$M_n = 1.01 [ 462.5 - 87.5 ] = 1.01 [ 375 ] = 378.75 \\text{ kip-ft}$\n\n**4. Design Strength:**\n$\\phi_b = 0.90$\n$\\phi_b M_n = 0.90 \\times 378.75 = 340.875 \\text{ kip-ft}$\n\nFINAL ANSWER: 340.88 kip-ft",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 1020,
+  "eval_seconds": 77.48,
+  "prompt_eval_count": 190,
+  "usage": {
+    "co2_g": 3.950952,
+    "completion_tokens": 1020,
+    "energy_wh": 11.723894,
+    "prompt_tokens": 190,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1210
+  },
+  "wall_seconds": 77.5,
+  "finished_utc": "2026-11-12T01:24:06.060630+00:00"
+}

@@ -1,0 +1,26 @@
+{
+  "id": "E.1A",
+  "kind": "selection",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: Lightest W14 column for a factored axial load of 840 kip, effective length 30 ft about both axes. Select the lightest W-shape that satisfies every required strength check.\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: W<depth>X<weight>",
+  "response": "To select the lightest W14 column, we must find the section with the lowest weight per foot that satisfies the required compressive strength $\\phi_c P_n \\ge P_u = 840$ kip.\n\n**1. Determine Slenderness Ratios**\nThe effective length $KL$ is 30 ft for both axes.\n$KL = 30 \\text{ ft} \\times 12 \\text{ in/ft} = 360 \\text{ in}$.\n\nWe need to check the slenderness ratio $\\frac{KL}{r}$ for the governing axis. For W-shapes, the weak axis (y-axis) typically governs because $r_y < r_x$. We will assume the y-axis governs and verify later.\n\nThe critical slenderness limit for the transition from inelastic to elastic buckling is:\n$\\frac{KL}{r} = 4.71 \\sqrt{\\frac{E}{F_y}} = 4.71 \\sqrt{\\frac{29000}{50}} = 4.71 \\sqrt{580} \\approx 113.4$\n\n**2. Estimate Required Section Properties**\nLet's estimate the required area.\nAssume an initial slenderness ratio. For a 30 ft column, $KL/r$ will likely be high.\nLet's try a typical W14 section.\nIf we assume $\\phi_c F_{cr} \\approx 25$ ksi (a conservative estimate for high slenderness),\n$A_{req} = \\frac{840}{25} = 33.6 \\text{ in}^2$.\n\nLooking at standard W14 shapes:\n- W14x120: $A_g = 35.3 \\text{ in}^2$, $r_y = 2.46 \\text{ in}$\n- W14x109: $A_g = 32.0 \\text{ in}^2$, $r_y = 2.45 \\text{ in}$\n- W14x99: $A_g = 29.1 \\text{ in}^2$, $r_y = 2.45 \\text{ in}$\n\nLet's test the lightest plausible candidate first: **W14x99**.\n\n**3. Check W14x99**\nProperties:\n$A_g = 29.1 \\text{ in}^2$\n$r_y = 2.45 \\text{ in}$\n$r_x = 6.11 \\text{ in}$\n\nCalculate slenderness ratios:\n$\\frac{KL}{r_y} = \\frac{360}{2.45} = 146.9$\n$\\frac{KL}{r_x} = \\frac{360}{6.11} = 58.9$\n\nThe y-axis governs ($146.9 > 113.4$). Since $\\frac{KL}{r} > 113.4$, the column is in the elastic buckling range.\n\nCalculate critical stress $F_{cr}$:\n$F_{cr} = \\frac{\\pi^2 E}{(KL/r)^2} = \\frac{\\pi^2 (29000)}{(146.9)^2} = \\frac{286220}{21580} \\approx 13.26 \\text{ ksi}$\n\nCalculate design strength $\\phi_c P_n$:\n$\\phi_c P_n = \\phi_c F_{cr} A_g = 0.90 \\times 13.26 \\text{ ksi} \\times 29.1 \\text{ in}^2$\n$\\phi_c P_n = 0.90 \\times 385.9 \\text{ kip} = 347.3 \\text{ kip}$\n\n$347.3 \\text{ kip} < 840 \\text{ kip}$. **W14x99 is insufficient.**\n\n**4. Check Next Heavier Candidate: W14x109**\nProperties:\n$A_g = 32.0 \\text{ in}^2$\n$r_y = 2.45 \\text{ in}$ (Note: $r_y$ is very similar for these weights)\n\nCalculate slenderness ratio:\n$\\frac{KL}{r_y} = \\frac{360}{2.45} = 146.9$\n\nSince $146.9 > 113.4$, use elastic buckling formula.\n$F_{cr} = \\frac{\\pi^2 E}{(KL/r)^2} = 13.26 \\text{ ksi}$ (Same as above)\n\nCalculate design strength:\n$\\phi_c P_n = 0.90 \\times 13.26 \\text{ ksi} \\times 32.0 \\text{ in}^2$\n$\\phi_c P_n = 0.90 \\times 424.3 \\text{ kip} = 381.9 \\text{ kip}$\n\n$381.9 \\text{ kip} < 840 \\text{ kip}$. **W14x109 is insufficient.**\n\n**5. Check Next Heavier Candidate: W14x120**\nProperties:\n$A_g = 35.3 \\text{ in}^2$\n$r_y = 2.46 \\text{ in}$\n\nCalculate slenderness ratio:\n$\\frac{KL}{r_y} = \\frac{360}{2.46} = 146.3$\n\nSince $146.3 > 113.4$, use elastic buckling formula.\n$F_{cr} = \\frac{\\pi^2 (29000)}{(146.3)^2} = \\frac{286220}{21404} \\approx 13.37 \\text{ ksi}$\n\nCalculate design strength:\n$\\phi_c P_n = 0.90 \\times 13.37 \\text{ ksi} \\times 35.3 \\text{ in}^2$\n$\\phi_c P_n = 0.90 \\times 472.0 \\text{ kip} = 424.8 \\text{ kip}$\n\n$424.8 \\text{ kip} < 840 \\text{ kip}$. **W14x120 is insufficient.**\n\n**6. Re-evaluate Strategy**\nThe slenderness ratio is very high ($\\approx 146$). The capacity is dominated by",
+  "thinking": null,
+  "done_reason": "length",
+  "eval_count": 1500,
+  "eval_seconds": 52.32,
+  "prompt_eval_count": 159,
+  "usage": {
+    "co2_g": 0.395282,
+    "completion_tokens": 1500,
+    "energy_wh": 1.172945,
+    "prompt_tokens": 159,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1659
+  },
+  "wall_seconds": 52.3,
+  "finished_utc": "2026-11-12T01:47:09.982256+00:00"
+}

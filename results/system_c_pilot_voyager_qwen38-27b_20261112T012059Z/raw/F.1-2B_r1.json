@@ -1,0 +1,26 @@
+{
+  "id": "F.1-2B",
+  "kind": "strength",
+  "repeat": 1,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 11.667 ft. Cb = 1.01. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design flexural strength $\\phi_b M_n$ for the W18x50 beam, we follow the procedure outlined in ANSI/AISC 360-22 (Chapter F).\n\n### 1. Section Properties\nFrom standard AISC manual data for a **W18x50**:\n*   Plastic section modulus, $Z_x = 101 \\text{ in}^3$\n*   Elastic section modulus, $S_x = 88.9 \\text{ in}^3$\n*   Radius of gyration about the weak axis, $r_y = 1.99 \\text{ in}$\n*   Flange width, $b_f = 7.50 \\text{ in}$\n*   Flange thickness, $t_f = 0.570 \\text{ in}$\n*   Web thickness, $t_w = 0.335 \\text{ in}$\n*   Depth, $d = 17.99 \\text{ in}$\n\n### 2. Material Properties\n*   Yield strength, $F_y = 50 \\text{ ksi}$\n*   Tensile strength, $F_u = 65 \\text{ ksi}$\n*   Resistance factor for flexure, $\\phi_b = 0.90$\n\n### 3. Limit States and Nominal Strengths\n\n**A. Yielding (Plastic Moment)**\nThe nominal moment due to yielding is:\n$$M_p = F_y Z_x = 50 \\text{ ksi} \\times 101 \\text{ in}^3 = 5050 \\text{ kip-in}$$\nConverting to kip-ft:\n$$M_p = \\frac{5050}{12} = 420.83 \\text{ kip-ft}$$\n\n**B. Lateral-Torsional Buckling (LTB)**\nWe must determine if the beam is in Zone 1 (Yielding), Zone 2 (Inelastic LTB), or Zone 3 (Elastic LTB).\n\nFirst, calculate the limiting unbraced lengths $L_p$ and $L_r$.\n\n**Calculate $L_p$ (Limit for full plastic moment):**\n$$L_p = 1.76 r_y \\sqrt{\\frac{E}{F_y}}$$\n$$L_p = 1.76 (1.99) \\sqrt{\\frac{29000}{50}} = 3.5024 \\times 24.083 = 84.34 \\text{ in} = 7.03 \\text{ ft}$$\n\n**Calculate $L_r$ (Limit for elastic LTB):**\n$$L_r = 1.95 r_y \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x (1 + 0.078 \\frac{J c}{S_x h_o})}}$$\n\nWe need the torsional constant $J$ and the distance between flange centroids $h_o$.\n*   $J \\approx 0.36 \\text{ in}^4$ (Standard value for W18x50)\n*   $h_o = d - t_f = 17.99 - 0.570 = 17.42 \\text{ in}$\n*   $c = 1.0$ (for doubly symmetric I-shapes)\n\nLet's compute the term inside the square root:\n$$\\frac{J c}{S_x} = \\frac{0.36 \\times 1.0}{88.9} = 0.00405$$\n$$\\frac{J c}{S_x h_o} = \\frac{0.00405}{17.42} = 0.000232$$\n$$1 + 0.078(0.000232) \\approx 1.000018 \\approx 1.0$$\n\nSo,\n$$L_r = 1.95 (1.99) \\frac{29000}{0.7(50)} \\sqrt{\\frac{0.36}{88.9}}$$\n$$L_r = 3.8805 \\times 828.57 \\times \\sqrt{0.00405}$$\n$$L_r = 3215.2 \\times 0.06364 = 204.6 \\text{ in} = 17.05 \\text{ ft}$$\n\n**Check Unbraced Length $L_b$:**\nGiven $L_b = 11.667 \\text{ ft}$.\nSince $L_p < L_b < L_r$ ($7.03 < 11.667 < 17.05$), the beam is in **Zone 2 (Inelastic Lateral-Torsional Buckling)**.\n\n**Calculate Nominal Moment $M_n$ for Inelastic LTB:**\n$$M_n = C_b \\left[ M_p - (M_p - 0.7 F_y S_x) \\frac{L_b - L_p}{L_r - L_p} \\right] \\le M_p$$\n\nFirst, calculate $0.7 F_y S_x$:\n$$0.7 F_y S_x = 0.7 (50) (88.9) = 3111.5 \\text{ kip-in} = 259.29 \\text{ kip-ft}$$\n\nNow, substitute values into the LTB equation (using consistent units, e.g., feet for lengths):\n$$M_p = 420.83 \\text{ kip-ft}$$\n$$L_b - L_p = 11.667 - 7.03 = 4.637 \\text{ ft}$$\n$$L_r - L_p = 17.05 - 7.03 = 10.02 \\text{ ft}$$\n\n$$M_n = 1.01 \\left[ 420.83 - (420.83 - 259.29) \\frac{4.637}{10.02} \\right]$$\n$$M_n = 1.01 \\left[ 420.83 - (161.54) (0.4628) \\right]$$\n$$M_n = 1.01 \\left[ 420.83 - 74.76 \\right]$$\n$$M_n = 1.01 [ 346.07 ]$$\n$$M_n = 3",
+  "thinking": null,
+  "done_reason": "length",
+  "eval_count": 1500,
+  "eval_seconds": 43.48,
+  "prompt_eval_count": 185,
+  "usage": {
+    "co2_g": 0.363602,
+    "completion_tokens": 1500,
+    "energy_wh": 1.078937,
+    "prompt_tokens": 185,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1685
+  },
+  "wall_seconds": 43.5,
+  "finished_utc": "2026-11-12T01:23:38.476121+00:00"
+}

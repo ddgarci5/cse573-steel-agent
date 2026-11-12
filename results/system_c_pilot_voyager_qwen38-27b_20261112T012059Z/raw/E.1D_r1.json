@@ -1,0 +1,26 @@
+{
+  "id": "E.1D",
+  "kind": "strength",
+  "repeat": 1,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W14x90 rolled W-shape is used as a column. Effective length about the x axis = 30 ft; about the y axis = 15 ft. What is the LRFD design compressive strength, phi_c*Pn, in kips?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design compressive strength ($\\phi_c P_n$) for the W14x90 column, we follow the procedure outlined in ANSI/AISC 360-22 (Chapter E).\n\n### 1. Section Properties\nFrom standard AISC steel section properties for a **W14x90**:\n*   Gross Area ($A_g$) = $26.5 \\text{ in}^2$\n*   Radius of gyration about x-axis ($r_x$) = $6.11 \\text{ in}$\n*   Radius of gyration about y-axis ($r_y$) = $3.88 \\text{ in}$\n\n### 2. Determine the Controlling Slenderness Ratio\nWe calculate the slenderness ratio $KL/r$ for both axes. The larger value governs the design.\n\n**About the x-axis:**\n$$ \\left(\\frac{KL}{r}\\right)_x = \\frac{30 \\text{ ft} \\times 12 \\text{ in/ft}}{6.11 \\text{ in}} = \\frac{360}{6.11} \\approx 58.92 $$\n\n**About the y-axis:**\n$$ \\left(\\frac{KL}{r}\\right)_y = \\frac{15 \\text{ ft} \\times 12 \\text{ in/ft}}{3.88 \\text{ in}} = \\frac{180}{3.88} \\approx 46.39 $$\n\nSince $58.92 > 46.39$, the **x-axis slenderness ratio controls**.\n$$ \\left(\\frac{KL}{r}\\right)_{max} = 58.92 $$\n\n### 3. Calculate Critical Stress ($F_{cr}$)\nFirst, determine the elastic buckling stress ($F_e$) using the formula:\n$$ F_e = \\frac{\\pi^2 E}{(KL/r)^2} $$\n$$ F_e = \\frac{\\pi^2 (29,000 \\text{ ksi})}{(58.92)^2} = \\frac{286,220}{3471.57} \\approx 82.45 \\text{ ksi} $$\n\nNext, check the limit for inelastic buckling. The transition point is $4.71 \\sqrt{E/F_y}$:\n$$ 4.71 \\sqrt{\\frac{29,000}{50}} = 4.71 \\sqrt{580} \\approx 4.71 \\times 24.08 \\approx 113.4 $$\n\nSince $(KL/r)_{max} = 58.92 < 113.4$, the column is in the **inelastic buckling** range. We use the AISC Equation E3-2:\n$$ F_{cr} = \\left[ 0.658^{F_y / F_e} \\right] F_y $$\n$$ \\frac{F_y}{F_e} = \\frac{50}{82.45} \\approx 0.6064 $$\n$$ F_{cr} = \\left[ 0.658^{0.6064} \\right] \\times 50 \\text{ ksi} $$\n$$ 0.658^{0.6064} \\approx 0.7736 $$\n$$ F_{cr} = 0.7736 \\times 50 \\approx 38.68 \\text{ ksi} $$\n\n### 4. Calculate Nominal Strength ($P_n$)\n$$ P_n = F_{cr} A_g $$\n$$ P_n = 38.68 \\text{ ksi} \\times 26.5 \\text{ in}^2 \\approx 1025.0 \\text{ kips} $$\n\n### 5. Calculate LRFD Design Strength ($\\phi_c P_n$)\nFor compression members, the resistance factor $\\phi_c = 0.90$.\n$$ \\phi_c P_n = 0.90 \\times 1025.0 \\text{ kips} $$\n$$ \\phi_c P_n = 922.5 \\text{ kips} $$\n\nFINAL ANSWER: 922.5 kips",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 974,
+  "eval_seconds": 30.91,
+  "prompt_eval_count": 174,
+  "usage": {
+    "co2_g": 0.240691,
+    "completion_tokens": 974,
+    "energy_wh": 0.714216,
+    "prompt_tokens": 174,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1148
+  },
+  "wall_seconds": 30.9,
+  "finished_utc": "2026-11-12T01:22:27.836724+00:00"
+}
