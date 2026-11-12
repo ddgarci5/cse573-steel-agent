@@ -1,0 +1,23 @@
+{
+  "timestamp_utc": "20261112T000516Z",
+  "git_hash": null,
+  "git_dirty": true,
+  "python": "3.14.7",
+  "platform": "Windows-11-10.0.26300-SP0",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "openpyxl": "3.1.5",
+    "matplotlib": "3.11.2",
+    "pytest": "9.2.0"
+  },
+  "pdftotext": "<home>\\scoop\\shims\\pdftotext.exe :: pdftotext version 26.09.0",
+  "runs": {
+    "dataset_c_pilot": 0,
+    "rescore_shipped_csv": 0,
+    "pytest": 0,
+    "validate_compression": 0,
+    "validate_flexure": 0,
+    "validate_fcr": 0
+  }
+}

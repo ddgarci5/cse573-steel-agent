@@ -1,0 +1,32 @@
+{
+  "dataset": "C_benchmark",
+  "set": "design_examples_selection",
+  "source": "AISC Design Examples v16.0 (published selected sections; problem parameters restated in our own words)",
+  "design_method": "LRFD",
+  "material": "ASTM A992",
+  "units": {"force": "kip", "moment": "kip-ft", "length": "ft", "inertia": "in^4"},
+  "errata_applied": false,
+  "errata_note": "May 2, 2025 errata NOT yet checked; the Design Examples PDF is not in references/design-examples/ yet.",
+  "cases": [
+    {"id": "E.1A", "example": "E.1A", "member_type": "compression",
+     "description": "Lightest W14 column for a factored axial load of 840 kip, effective length 30 ft about both axes",
+     "demands": {"Pu_kip": 840}, "geometry": {"Lcx_ft": 30, "Lcy_ft": 30},
+     "constraints": {"nominal_depth_in": 14},
+     "published": {"section": "W14X132"}},
+    {"id": "F.1-1A", "example": "F.1-1A", "member_type": "flexure",
+     "description": "Lightest beam with nominal depth no more than 18 in., Mu = 266 kip-ft, continuously braced, Ix of at least 746 in^4 for deflection",
+     "demands": {"Mu_kipft": 266}, "geometry": {"Lb_ft": 0},
+     "constraints": {"max_depth_in": 18, "Ix_min_in4": 746},
+     "published": {"section": "W18X50"}},
+    {"id": "F.4", "example": "F.4", "member_type": "flexure",
+     "description": "Lightest beam, Mu = 468 kip-ft, continuously braced, Ix of at least 1260 in^4 for deflection",
+     "demands": {"Mu_kipft": 468}, "geometry": {"Lb_ft": 0},
+     "constraints": {"Ix_min_in4": 1260},
+     "published": {"section": "W24X55"}},
+    {"id": "F.3A", "example": "F.3A", "member_type": "flexure",
+     "description": "Lightest beam, Mu = 396 kip-ft, continuously braced",
+     "demands": {"Mu_kipft": 396}, "geometry": {"Lb_ft": 0},
+     "constraints": {},
+     "published": {"section": "W21X48"}}
+  ]
+}

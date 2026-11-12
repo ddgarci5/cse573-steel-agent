@@ -1,0 +1,8 @@
+$ <repo>\.venv\Scripts\python.exe -m pytest -q -p no:cacheprovider
+returncode: 0
+
+--- stdout
+................                                                         [100%]
+16 passed in 2.60s
+
+--- stderr

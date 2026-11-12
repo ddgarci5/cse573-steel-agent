@@ -1,0 +1,20 @@
+$ <repo>\.venv\Scripts\python.exe -I validation/rescore_shipped_csv.py
+returncode: 0
+
+--- stdout
+Table 4-1a phiPn (W14)             cases   324  mean|err| 0.113%  max|err| 0.446%  within 1%: 100.0%
+Table 3-2 (all 6 quantities)       cases   378  mean|err| 0.129%  max|err| 0.929%  within 1%: 100.0%
+Table 4-14 phiFcr                  cases  1200  mean|err| 0.093%  max|err| 0.433%  within 1%: 100.0%
+
+Table 3-2 by quantity (max |err| %):
+quantity
+BF       0.929
+Lp       0.406
+Lr       0.291
+phiMp    0.139
+phiMr    0.316
+phiVn    0.372
+Table 3-2 shapes: 63  note-flagged: ['W12X65', 'W14X90', 'W14X99', 'W21X48', 'W24X55']
+Table 4-1a shapes: 13  slender-shape cases: 21
+
+--- stderr

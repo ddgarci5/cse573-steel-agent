@@ -1,0 +1,24 @@
+$ <repo>\.venv\Scripts\python.exe -I validation/dataset_c_pilot.py
+returncode: 0
+
+--- stdout
+Example  Check                                                ours   AISC   err%
+D.1      W8x21 tension yielding                              277.2    277   0.07
+D.1      W8x21 tension rupture (An=4.76, U=0.908)            210.7    211  -0.14
+E.1C     W14x132 phiPn, Lc=30 ft both axes                   893.2    892   0.13
+E.1D     W14x90 phiPn, Lcx=30 ft, Lcy=15 ft                  927.5    927   0.05
+F.1-1B   W18x50 phiMn, continuously braced                   378.8    379  -0.07
+F.1-2B   W18x50 phiMn, Lb=11.7 ft, Cb=1.01                   305.4    304   0.47
+F.1-3B   W18x50 phiMn, Lb=17.5 ft, Cb=1.30 (elastic LTB)     287.8    288  -0.06
+F.3B     W21x48 phiMn, noncompact flange (FLB)               397.9    398  -0.03
+G.1B     W24x62 phiVn                                        305.7    306  -0.09
+
+strength checks: 9  max |err| 0.47%
+
+Example  Selection task                                    ours      AISC  match
+E.1A     lightest W14 column, Pu=840 k, Lc=30 ft        W14X132   W14X132  True  (util 0.940, controls compression)
+F.1-1A   lightest W<=18 beam, Mu=266, Ix>=746, braced    W18X50    W18X50  True  (util 0.932, controls deflection)
+F.4      lightest W beam, Mu=468, Ix>=1260, braced       W24X55    W24X55  True  (util 0.933, controls deflection)
+F.3A     lightest W beam, Mu=396, braced                 W21X48    W21X48  True  (util 0.995, controls flexure)
+
+--- stderr

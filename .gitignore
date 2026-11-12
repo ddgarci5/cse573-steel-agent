@@ -1,0 +1,36 @@
+# Copyrighted / third-party material: never commit or redistribute (CLAUDE.md rule 5)
+references/
+*.pptx
+*.potx
+*.docx
+# AISC Shapes Database v16.0 is a free AISC download; document the URL instead of committing it
+steelagent/data/*.xlsx
+aisc-shapes-database-*.xlsx
+# Original delivery archives
+*.zip
+
+# Environments and secrets
+.venv/
+venv/
+.env
+__pycache__/
+*.pyc
+.pytest_cache/
+.ipynb_checkpoints/
+
+# Models
+*.gguf
+models/
+
+# Large generated data
+datasets/B_synthetic/*
+!datasets/B_synthetic/.gitkeep
+
+# OS / editor
+.DS_Store
+Thumbs.db
+desktop.ini
+~$*
+
+# Per-case CSVs embed AISC Manual tabulated values (copyrighted; CLAUDE.md rule 5): keep local, commit only summaries
+*_results.csv
