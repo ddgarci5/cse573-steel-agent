@@ -1,6 +1,8 @@
-﻿# Pinned 2026-11-11 (CPython 3.14.7). External tool needed: pdftotext (poppler) on PATH for validation/parse_tables.py
+﻿# Pinned 2026-11-12 (CPython 3.14.7; transitive deps scipy/joblib/threadpoolctl left to the resolver). External tool needed: pdftotext (poppler) on PATH for validation/parse_tables.py
 numpy==2.5.4
 pandas==3.1.1
 openpyxl==3.1.5
 matplotlib==3.11.2
 pytest==9.2.0
+scikit-learn==1.9.1
+pyarrow==26.0.1

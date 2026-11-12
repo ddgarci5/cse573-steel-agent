@@ -1,0 +1,17 @@
+{
+  "timestamp_utc": "20261112T001158Z",
+  "git_hash": "92bcfa6b2982fcd9bf26e9ee104fcff5a446ee30",
+  "git_dirty": true,
+  "seed": 573,
+  "python": "3.14.7",
+  "packages": {
+    "numpy": "2.5.4",
+    "pandas": "3.1.1",
+    "scikit-learn": "1.9.1",
+    "pyarrow": "26.0.1",
+    "matplotlib": "3.11.2"
+  },
+  "dataset_b_manifest": [
+    "dataset_b_20261112T001016Z"
+  ]
+}

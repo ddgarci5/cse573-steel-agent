@@ -1,0 +1,50 @@
+{
+  "timestamp_utc": "20261112T001016Z",
+  "git_hash": "92bcfa6b2982fcd9bf26e9ee104fcff5a446ee30",
+  "seed": 573,
+  "n_in_range": 10000,
+  "n_ood": 2000,
+  "n_sections": 289,
+  "members": {
+    "compression": {
+      "cases": 12000,
+      "rows": 3468000,
+      "split_counts": {
+        "train": 7000,
+        "ood": 2000,
+        "test": 1500,
+        "val": 1500
+      },
+      "pass_rate_rows": 0.5122808535178778,
+      "frac_rows_util_0.9_1.1": 0.0429878892733564,
+      "cases_with_no_passing_section": 99,
+      "governing_limit_state_rows": {
+        "E3_y": 1943722,
+        "E7_y": 1162226,
+        "E3_x": 312278,
+        "E7_x": 49774
+      },
+      "seconds": 15.5
+    },
+    "flexure": {
+      "cases": 12000,
+      "rows": 3468000,
+      "split_counts": {
+        "train": 7000,
+        "ood": 2000,
+        "test": 1500,
+        "val": 1500
+      },
+      "pass_rate_rows": 0.4958852364475202,
+      "frac_rows_util_0.9_1.1": 0.040889850057670124,
+      "cases_with_no_passing_section": 88,
+      "governing_limit_state_rows": {
+        "F2_yielding": 1378918,
+        "F2_LTB": 1077646,
+        "G2.1_shear": 966328,
+        "F3_FLB": 45108
+      },
+      "seconds": 17.1
+    }
+  }
+}

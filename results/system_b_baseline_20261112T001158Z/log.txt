@@ -1,0 +1,7 @@
+[compression] rows 3,468,000  features ['Pu_kip', 'Lcx_ft', 'Lcy_ft', 'W', 'A', 'd', 'bf', 'tw', 'tf', 'rx', 'ry', 'bf/2tf', 'h/tw', 'Lcx/rx', 'Lcy/ry', 'KLr_max', 'Pu/A']  pass rate train 0.511
+[compression] DecisionTree: trained in 12.0s  test F1 0.9989  ood F1 0.9980  false passes test 252
+[compression] HistGB: trained in 20.6s  test F1 0.9988  ood F1 0.9973  false passes test 280
+[flexure] rows 3,468,000  features ['Mu_kipft', 'Vu_kip', 'Lb_ft', 'Cb', 'W', 'A', 'd', 'bf', 'tw', 'tf', 'Zx', 'Sx', 'ry', 'rts', 'J', 'ho', 'bf/2tf', 'h/tw', 'Lb/ry', 'Lb/rts', 'Mu/Zx', 'Mu/Sx', 'Vu/Aw']  pass rate train 0.495
+[flexure] DecisionTree: trained in 14.8s  test F1 0.9986  ood F1 0.9881  false passes test 333
+[flexure] HistGB: trained in 25.1s  test F1 0.9989  ood F1 0.9958  false passes test 320
+saved to <repo>\results\system_b_baseline_20261112T001158Z
