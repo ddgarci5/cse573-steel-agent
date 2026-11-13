@@ -1,5 +1,24 @@
 # Session summary (newest first)
 
+## Session 2026-11-13 (late): Dataset D, human-written test split (intake kit only; no items yet)
+
+**What exists.** No problem has been written, on purpose: the split is only meaningful if people write the problems, so the kit lets you and your peers add them and checks the result.
+- `datasets/D_instructions/README.md`: roles of the three Dataset D parts (human test / templated / LLM paraphrase), rules, workflow, known schema gaps.
+- `datasets/D_instructions/human_test/WRITER_GUIDE.md`: hard rules (no LLM text, own words only, no AISC/textbook/teaching-module text, writer codes not names, peer consent because the repo is public, freeze after the first model run, test only), column meanings, what makes a good item, proposed targets (at least 40 items, 6 per member type, 10 selections, 8 ask-the-user, 5 out-of-scope, 12 rewritten AISC problems, 12 peer-written from at least 3 people; a proposal, not agreed).
+- `datasets/D_instructions/human_test/intake_template.csv`: 35 columns (problem text, source, expected behavior, tags, flat gold DesignCase fields, optional `L_ft`, `Kx`, `Ky`).
+- `eval/build_dataset_d_human.py`: validates intake CSVs and writes `human_test.json` (with `items_sha256`) and `build_report.txt`. Errors: bad ids, name-like writer codes, unknown source types or tags, gold row not a valid DesignCase, `extract` rows with missing inputs or flags, `ask_user` rows whose listed missing inputs differ from the code-computed ones, `out_of_scope` rows that do not raise the stated flag, text lines identical to the copyrighted reference material (skipped with a warning if `references/` or `pdftotext` is missing). Warnings: a gold number that is not in the text and has no `conversion_note`.
+- `agent/tests/test_dataset_d_human.py`: 19 tests on synthetic rows that live only inside the tests (71 agent tests in total, all passing; the 34 solver tests are untouched).
+**Three expected behaviors per item** (`extract`, `ask_user`, `out_of_scope`), so the split also tests what last night's slice could not: missing-field detection and scope flags.
+
+**Not done / limits.**
+- **There are no items.** `references/design-examples/` is still empty, so I could not point you to the AISC "Given:" problems either; you need the Design Examples PDF (it is also what the errata check needs).
+- The evaluation runner for the split is not built; scoring `ask_user`/`out_of_scope` behavior needs a small extension of `eval/first_slice_eval.py`.
+- The builder's "gold number appears in the text" check is a hint only (it strips section labels like W14x90 so their digits do not count; fractions and spelled-out numbers can still trigger false warnings). I found the W14x90 problem while testing and fixed it; the builder has only been run on synthetic rows.
+- **Schema gap:** real problems give L and K, not effective lengths. The current DesignCase has only Lcx/Lcy (CLAUDE.md section 7 has L, Kx, Ky). The intake stores them as `extra_gold`, unscored. Recommended before scoring extraction on this split: add L_ft, Kx, Ky to DesignCase so the model copies the numbers and code multiplies them.
+- Not pushed.
+
+**Open questions.** 1. Who writes, and how many items by when (the demo window starts Nov 16)? 2. Agree or change the proposed targets. 3. Add L_ft/Kx/Ky to DesignCase now (a schema change, rerun of the 13-problem slice needed to keep versions comparable) or keep them as extra gold for the first pass?
+
 ## Session 2026-11-13 (night): first agent slice, LLM extraction -> validation -> deterministic solver -> compare with AISC
 
 This is the first two steps of System D (Parse, Calculate), not the LangGraph agent. The LLM only fills a DesignCase JSON; every number in a final answer comes from `steelagent/` through plain Python routing. **`steelagent/` was not modified** (34 solver tests still pass; 52 new tests in `agent/tests`, run with `cd agent && python -m pytest`).
