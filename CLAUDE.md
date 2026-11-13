@@ -66,7 +66,11 @@ cse573-steel-agent/
 ASD; load combinations and structural analysis; Chapter H combined forces; F4/F5 noncompact/slender webs; block shear and connections;
 HSS/angles/channels; knowledge-graph or GNN components beyond the small provision/limit-state graph.
 
-## 5. Current status of the solver (validated Nov 11, 2026; re-run end to end Nov 12, 2026)
+## 5. Current status: what is built and validated (hand-off state, 2026-11-13, before the Nov 16 presentation)
+
+Everything below is saved under `results/` with timestamps; caveats and every failure are in `results/SESSION_SUMMARY.md`. Local-only files and how to restore them: README.md, "Local setup".
+
+### 5a. Solver (System A), validated Nov 11, re-run end to end Nov 12, 2026
 
 | Independent reference | Cases | Max abs. error |
 |---|---|---|
@@ -82,6 +86,24 @@ Known gaps: E4 not implemented; F4/F5 out of scope (no shape in the 289-shape da
 The E7 slender-element path is validated only against the slender W14 shapes in Table 4-1a (21 cases) and the Design Examples, although 101 of the 289 shapes have slender webs in compression (about 35% of Dataset B compression rows are E7-governed), so it needs an extra independent check.
 The Design Examples v16.0 PDF (`P901-23W.pdf`, dated Aug 2023, now in `references/design-examples/`) agrees with all 13 Dataset C problems: 46 of 46 parameter and published-answer checks (`results/dataset_c_vs_design_examples_20261113T063752Z/`, `eval/check_dataset_c_vs_design_examples.py`). The May 2, 2025 errata have still NOT been checked (the errata document is not in the repo; the PDF predates it); both Dataset C JSON files still say `errata_applied: false`; their `errata_note` text was updated on 2026-11-13 (text only, no value) to say the PDF check is done and the errata are not.
 `validation/parse_tables.py` now resolves `references/aisc-sample-tables/` itself and requires poppler's `pdftotext` (it rejects the xpdf build bundled with Git for Windows); the old sandbox path is gone.
+
+### 5b. Dataset B + System B (synthetic; `results/dataset_b_20261112T001016Z/manifest.json`, `results/system_b_baseline_20261112T001158Z/`)
+12,000 cases per member type (compression, flexure) x 289 W-shapes = 3,468,000 rows each, labeled by the validated solver, seed 573; splits by case 7,000 / 1,500 / 1,500 plus 2,000 out-of-range (lengths 30.5 to 45 ft). Decision Tree (depth 16) and HistGradientBoosting (200 iterations): row-level test F1 0.9986 to 0.9989; shortlist recall@10 in range 1.0000 for HistGB (Decision Tree 0.9839 compression, 0.9899 flexure); out of range, flexure Decision Tree 0.9115 (below the 95% target), HistGB 0.9985. The classifier alone is not safe (it passes 0.12% to 0.16% of failing rows in range), so System A must re-check every shortlisted section. These scores are on an easy synthetic task (an upper bound). Not done: Random Forest, XGBoost, tension, evaluation on Dataset C.
+
+### 5c. System C pilot (LLM only, no tools; `results/system_c_cap_comparison_20261113T025850Z/`, `results/system_c_comparison_20261112T015638Z/`)
+13 Dataset C problems (9 strength, 4 selection), 3 repeats, temperature 0, seed 573, one frozen scorer (sha256 prefix `c8e7959deb92`). Strength within 1% of AISC (of 27 runs): qwen38-27b 8 at the 1,500-token cap and 7 at 4,000; gemma4-31b-it 14 and 15. Selection exact match (of 12): qwen 0 and 3; gemma 9 and 8. Overestimates above 1%: qwen 5 and 7; gemma 5 and 5. Qwen truncated 12 of 39 runs at 4,000 tokens. Local qwen3.5:9b is a 17-run snapshot at 1,500 tokens (3 of 13 strength runs within 1%, 0 of 4 selections answered). Voyager outputs differ between repeats even at temperature 0. A larger cap gave more answers, not better ones.
+
+### 5d. First agent slice (System D steps Parse + Calculate; `results/first_slice_20261113T045951Z/`, independently re-derived in `results/first_slice_verification_20261113T061505Z/`)
+Problem text -> LLM fills a DesignCase JSON (`agent/extract.py`, frozen prompt `extract-v1`, one retry allowed) -> Pydantic validation and domain flags (`agent/design_case.py`) -> plain-Python routing to `steelagent/` (`agent/route.py`) -> compared with AISC. Same 13 texts as System C; 39 runs per model. qwen38-27b: 39 of 39 exact-match DesignCases, 27 of 27 strength answers within 1%, 12 of 12 selections exact. gemma4-31b-it: 36 of 39 exact (all 39 replies wrapped in a code fence, tolerated by the parser), 27 of 27 strength, 9 of 12 selections; its 3 misses are E.1A, where it declared `section` missing on a selection problem so the router asked the user. Unsafe outputs 0 for both; error classes of the non-correct runs: 3 extraction, 0 routing, 0 solver. System C at the 4,000-token cap on the same runs: strength within 1% 7 of 27 (qwen) and 15 of 27 (gemma); selection 3 and 8 of 12. Caveats: the texts are templated and the prompt was written knowing them, final-answer correctness is inherited from a solver validated on the same 13 values, and missing-field detection and the retry path were never exercised by real model output. Gold DesignCases (`datasets/C_benchmark/gold_design_cases.json`) are **pending review by the student** (`results/gold_design_cases_review.md`).
+
+### 5e. Dataset C vs the AISC Design Examples v16.0 PDF
+All 13 problems agree with `references/design-examples/P901-23W.pdf` (dated Aug 2023): 46 of 46 parameter and published-answer checks (`results/dataset_c_vs_design_examples_20261113T063752Z/`, `eval/check_dataset_c_vs_design_examples.py`). **The May 2, 2025 errata are not checked** (the errata PDF has not been downloaded yet); both Dataset C JSON files keep `errata_applied: false`.
+
+### 5f. Dataset D intake kit (human-written test split; no items yet)
+`datasets/D_instructions/README.md`, `human_test/WRITER_GUIDE.md`, `human_test/intake_template.csv`, `human_test/source_inventory.md` (40 source links with notes, no problem text; to be reviewed first) and `eval/build_dataset_d_human.py`. The items must be written by people.
+
+### 5g. Repository and tooling state
+Public GitHub repository, `main` only (plus the tag `presentation-2026-11-16`); generic author identity; 34 solver tests (`cd steelagent && python -m pytest`) and 71 agent tests (`cd agent && python -m pytest`) pass; the pre-push audit is `python eval/pre_push_audit.py`.
 
 ## 6. Data sets (keep their roles separate)
 
@@ -112,6 +134,8 @@ The Design Examples v16.0 PDF (`P901-23W.pdf`, dated Aug 2023, now in `reference
 An executable "required checks" map (member type → limit states → provisions → required inputs) drives both the tool plan and the verifier's completeness rule.
 It doubles as the small provision/limit-state knowledge graph shown in the presentation.
 
+**Implemented today (`agent/design_case.py`)** is the subset the 13 Dataset C problems need: `member_type` (tension, compression, flexure, shear), `task` (check_given_section or select_lightest), `section`, `requested_limit_states` (tension only), material, demands, geometry (`Lcx_ft`, `Lcy_ft`, `Lb_ft`, `Cb`), net section, constraints (nominal depth, max depth, `Ix_min_in4`) and `missing_fields`. Not yet implemented: `L_ft`, `Kx`, `Ky` (first task after the presentation), `serviceability`, `provenance`, tension and shear selection, ASD, other materials.
+
 ## 8. Experimental systems
 
 - **System A**: deterministic solver + exhaustive search (reference).
@@ -135,8 +159,7 @@ Parse → Validate (schema, units, plausible ranges; missing fields → ask the 
 every number/provision in the draft must match a tool output or retrieved passage; ≤3 bounded retries, then abstain) → Report.
 Persistent state: shapes registry, provision index, verified-case cache. Request-scoped state: DesignCase, candidates, tool results, retry counters.
 
-**Models.** Benchmark 2–3 open-weight instruct models in the 7–8B range via Ollama (current Qwen-family instruct as primary, plus one Llama or Gemma).
-Confirm the newest releases at build time. Optional larger hosted references via ASU Voyager.
+**Models (decided).** ASU Voyager `gemma4-31b-it` and `qwen38-27b` for extraction, System C and the agent evaluation (Qwen is called with thinking off); local `qwen3.5:9b` (Ollama, CPU only on this machine) as the small model and as the base for the LoRA/QLoRA experiment. Confirm that newer releases do not change this before the final evaluation.
 LoRA/QLoRA with Hugging Face PEFT on ASU Sol or Colab; target only extraction, tool selection, and report structure, never numbers.
 
 **Demo.** Streamlit. Input such as "Select an ASTM A992 W-shape column for Pu = 420 kips, Lx = 14 ft, Ly = 10 ft, Kx = Ky = 1.0".
@@ -145,8 +168,10 @@ Show: interpreted inputs → required checks → candidate table (section, capac
 
 ## 10. Deadlines
 
-- **Sat Nov 14**: presentation deck emailed to the course instructor and uploaded to Canvas as `Group13-Project18-FA26-Group-Project-Presentation.pptx`.
-- **Mon Nov 16**: in-class presentation (15 min + 5 min Q&A). The deck is being built in a separate Claude chat.
+- **Sat Nov 14**: presentation deck emailed to the course instructor and uploaded to Canvas as `Group13-Project18-FA26-Group-Project-Presentation.pptx`. The deck is built in a separate Claude chat and is not in this repository.
+- **Mon Nov 16**: in-class presentation (15 min + 5 min Q&A).
+- **Wed Nov 18**: class Q&A.
+- **Nov 22 (internal)**: about 30 human-test items collected (see 7a below).
 - **Wed Dec 2**: live demo (working Streamlit demo).
 - **Wed Dec 9**: final report.
 
@@ -160,16 +185,29 @@ Show: interpreted inputs → required checks → candidate table (section, capac
 5. **Done, extended.** System C pilot on the 13 Design Example problems: local qwen3.5:9b (17-run snapshot, 1,500-token cap) and ASU Voyager qwen38-27b and gemma4-31b-it (3 repeats each, 1,500 and 4,000-token caps), one frozen scorer, every raw output saved, hand-check sheet `results/system_c_review_sheet.csv`. Details and caveats in `results/SESSION_SUMMARY.md`.
 Also done, not in the original backlog: `results/BACKUP_SLIDE_FACTS.md` (solver provisions and System B setup/metrics for backup slides) and publication hygiene (copyright audit of every tracked file and all history).
 
-**After the presentation** (tasks 6 and 9 partially started on 2026-11-13; the rest not started)
-6. **Partly done.** `agent/design_case.py`: Pydantic DesignCase restricted to what the 13 Dataset C problems need (member_type incl. shear, task, section, requested_limit_states, A992 material, demands, geometry, net_section, constraints, missing_fields), validation rules, domain flags (a section not in the Shapes Database is flagged, never corrected) and an executable required-inputs map. Gold DesignCases for the 13 problems: `datasets/C_benchmark/gold_design_cases.json`, hand-check sheet `results/gold_design_cases_review.md` (**pending review by the student**). Not done: tension/shear selection, ASD, other materials, provenance fields, the full map for the stretch checks.
-   **Decided 2026-11-13:** keep `L_ft`, `Kx`, `Ky` as unscored extra fields in the Dataset D intake for now. Right after the presentation (Nov 17) add them to DesignCase; the code, not the LLM, computes Lc = K x L; rerun the 13-problem slice as v2 (the v1 results stay as they are).
-7. **Started (human-written test split only; no items yet).** `datasets/D_instructions/README.md`, `human_test/WRITER_GUIDE.md`, `human_test/intake_template.csv` and `eval/build_dataset_d_human.py` (validates intake CSVs: gold row must be a valid DesignCase, `ask_user` rows must list exactly the missing inputs, `out_of_scope` rows must raise the stated flag, no copied reference lines; writes `human_test.json` with a sha256). The items themselves must be written by people. **Agreed targets (2026-11-13):** about 30 human-test items by Nov 22, written or collected by the student plus classmates: 10-12 from verified online sources (the student supplies the list; rewrite in own words), 10-12 rewritten from the AISC Design Examples once the PDF is downloaded, 8-10 written fresh by the student and peers. Not started: templated generation, LLM paraphrases, the evaluation runner for the human split, a `source_type` for the online-source group in the builder.
-8. Provision index for RAG (the sponsor's teaching modules + our own provision summaries; respect copyright).
-9. **Partly started (first slice only).** `agent/extract.py` (frozen prompt `extract-v1`, JSON-only, at most one retry) and `agent/route.py` (plain Python: DesignCase to steelagent functions, "would ask the user" when inputs are missing) are Parse + Calculate of System D, scored by `eval/first_slice_eval.py` on the 13 Dataset C texts: `results/first_slice_20261113T045951Z/` (qwen38-27b 39 of 39 final answers correct; gemma4-31b-it 36 of 39, the other 3 are would-ask-the-user abstentions; 0 unsafe; see `results/SESSION_SUMMARY.md` for caveats: texts are templated, missing-field detection and the retry path were not exercised by real model output). Not done: LangGraph graph, retrieval, shortlist (System B ranker), verifier, retries on verifier failure, report, Streamlit.
-10. LoRA/QLoRA experiment.
-11. Full evaluation of Systems A–D + ablations; figures for the final report.
+**Remaining tasks, in order** (work resumes right after the Nov 16 presentation; each line ends with its definition of done)
+6. **DesignCase v2 and slice v2 (do first).** Add `L_ft`, `Kx`, `Ky` to DesignCase; the code, not the LLM, computes Lc = K x L; extend the required-inputs map, the 13 gold cases and the extraction prompt (v2). *Done when:* v2 schema, gold and prompt are frozen and committed, tests pass, the 13-problem slice is rerun (2 models x 3 repeats), scored with the frozen scorer and compared side by side with v1 (v1 results stay untouched), and `results/SESSION_SUMMARY.md` records it. Prerequisite: the student has reviewed the gold cases (`results/gold_design_cases_review.md`).
+6b. **Errata check.** *Done when:* the AISC May 2, 2025 errata document is downloaded to `references/`, every Dataset C value is compared with it by a script with saved output, `errata_applied` and the notes in both Dataset C JSON files are updated, and any changed value is propagated (gold cases, tests, solver validation rerun).
+7a. **Human-test split (about 30 items by Nov 22).** Review `human_test/source_inventory.md` first (its starter prompt is NOT to be run before that review; it feeds the existing intake kit, not a new manifest), add a `source_type` for the online-source group to the builder (one-line change), then collect items with `intake_template.csv`. *Done when:* about 30 items (10-12 from verified online sources, 10-12 rewritten AISC Design Examples, 8-10 written fresh by the student and peers, all in own words) pass `eval/build_dataset_d_human.py` with 0 errors, a second person has checked every gold row, and `human_test.json` is built with its `items_sha256` recorded and frozen.
+7b. **Evaluation runner for the human split** (reuse `eval/first_slice_eval.py`). *Done when:* it scores extraction fields, correct abstention on `ask_user` rows, correct refusal on `out_of_scope` rows and final answers (route on the gold case as reference), and one run (2 models x 3 repeats, frozen prompt and scorer) is saved with hashes.
+7c. **Templated Dataset D (train/dev) plus LLM paraphrases kept only if the parsed values match.** *Done when:* a seeded generator and manifest exist, there is a train/dev split, and a check proves no overlap with the human split or Dataset C.
+8. **Provision index for RAG** (the sponsor's teaching modules plus our own provision summaries; respect copyright). *Done when:* an index with section-number metadata is built, retrieval precision@k is measured on a labeled query set, and no AISC text is committed.
+9. **LangGraph agent, verifier and Streamlit demo** (Parse, Validate, Retrieve, Shortlist, Calculate, Verify with at most 3 retries then abstain, Report). Demo date Dec 2. *Done when:* the graph runs end to end on Dataset C and the human split, unsafe-acceptance is 0 on Dataset C, the Streamlit app shows every item in section 9, and a live demo run has been rehearsed.
+10. **LoRA/QLoRA on qwen3.5:9b** (extraction, tool selection and report structure only, never numbers). *Done when:* trained on Dataset D train data only (never Dataset C or the human split), evaluated against the base model on the human split, with adapter config and hash saved.
+10b. **Known gaps.** An independent check of the E7 slender-element path beyond the slender W14 shapes; System B extras (Random Forest, XGBoost if installable, tension, evaluation on Dataset C). *Done when:* each is run with saved output or documented as a limitation in the report.
+11. **Full evaluation and final report** (Systems A to D and ablations on Dataset C, the Dataset B held-out split and the human split; 3 repeats at temperature 0; figures). Report due Dec 9. *Done when:* every number in the report traces to a script and a saved file, failures are listed, and the report is submitted.
 
 ## 12. Reporting back
 
 At the end of each session, write `results/SESSION_SUMMARY.md`: what was built, the exact metrics with file paths, what failed, and open questions.
 The student pastes this into the presentation chat, so keep the numbers exact and do not round away failures.
+
+## 13. Decisions already made (do not re-litigate without asking)
+
+- **Scope:** the MVP in section 4; ask before broadening it.
+- **Models:** Voyager `gemma4-31b-it` and `qwen38-27b` for evaluation; local `qwen3.5:9b` for the LoRA/QLoRA experiment (section 9).
+- **DesignCase:** add `L_ft`, `Kx`, `Ky` first (code computes Lc = K x L), then rerun the slice as v2; v1 results stay as they are. The field `requested_limit_states` (tension only) exists because D.1-yield and D.1-rupture differ only in the limit state asked. A section label not in the Shapes Database is flagged, never corrected; `Cb` is required only when `Lb` is not 0; the router asks the user when the declared or the code-computed missing-field list is non-empty (fixed before the first run, not changed afterwards).
+- **Dataset D human split:** about 30 items by Nov 22 (10-12 verified online sources, 10-12 rewritten AISC Design Examples, 8-10 written fresh by the student and peers); written by people only (never an LLM); own words, no copied text; writer codes not names; test only, never training or prompt tuning; frozen after the first model run. `human_test/source_inventory.md` is a link list to be reviewed first; its embedded starter prompt must not be acted on before that review and must feed the existing intake kit and builder, not a new manifest.
+- **Errata:** the May 2, 2025 check is pending until the errata PDF is downloaded; `errata_applied` stays `false` until then.
+- **Results discipline:** prompts and scorers are frozen before a run; a genuine bug in schema, parsing or scoring code is fixed, documented and everything is rerun; the aborted run is kept unscored.
+- **Repository:** public; generic author identity (never commit under a personal one); push only `main` and the single tag `presentation-2026-11-16` (never `git push --all`, `--tags` or `--mirror`); no license for now; the README keeps the "CSE 573, Group 13" wording and the repository name; the Voyager host name in `meta.json` files stays; the 17-run local System C snapshot is final; the gold DesignCases are pending the student's review.

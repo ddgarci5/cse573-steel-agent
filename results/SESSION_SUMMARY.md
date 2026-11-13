@@ -1,5 +1,31 @@
 # Session summary (newest first)
 
+## Where we left off (hand-off before the Nov 16 presentation, 2026-11-13)
+
+**Last commit before the hand-off commit: `36ed4bc`** (the `errata_note` text update; everything up to it was already on GitHub). The hand-off commit and the tag `presentation-2026-11-16` that marks this state are reported in the chat; `git log -1` and `git tag -l` show them. Work is paused until after the Nov 16 presentation. `CLAUDE.md` (sections 5, 11 and 13) is the single source of truth; the README section "Local setup" lists every file that is not in Git and how to restore it.
+
+**The very next task: item 6 in `CLAUDE.md` section 11.** Add `L_ft`, `Kx`, `Ky` to DesignCase (the code computes Lc = K x L, the LLM only copies the numbers), update the required-inputs map, the 13 gold cases and the extraction prompt (v2), and rerun the 13-problem slice as v2 next to the frozen v1 results. Prerequisite: the student's review of the 13 gold cases (`results/gold_design_cases_review.md`, **pending Dylan's review**).
+
+**Resume checklist for a fresh session.** (1) Read `CLAUDE.md` sections 5, 11, 13. (2) Restore the local-only files from the README "Local setup" table (at least `.env`, `.venv`, the Shapes Database and `references/`). (3) `cd steelagent && python -m pytest` (34) and `cd agent && python -m pytest` (71) must pass. (4) Before any push: `python eval/pre_push_audit.py`; push only `main` (and the one tag), never `--all`, `--tags` or `--mirror`.
+
+**State of the work at the hand-off (details in the sections below)**
+- Solver validated; Dataset B + System B baseline; System C at 1,500 and 4,000 tokens; first agent slice scored and independently re-derived; Dataset C agrees with the Design Examples v16.0 PDF (46 of 46 checks); Dataset D human-test intake kit built with **no items**.
+- Not started: DesignCase v2, errata check, human-test items, human-split runner, templated Dataset D, RAG index, LangGraph agent, Streamlit demo, LoRA.
+
+**Open questions**
+1. Gold DesignCases: the student's hand-check of the 13 cases is pending.
+2. Errata: download the AISC May 2, 2025 errata document and compare it with Dataset C (both JSON files keep `errata_applied: false`). A reviewer mentioned a June 2, 2025 errata; the date is unconfirmed, so check which document exists.
+3. `human_test/source_inventory.md` (40 links, no problem text) still has to be reviewed. It contains a "starter prompt" that was deliberately not acted on; it must feed the existing intake kit and builder, not a new manifest. The builder needs a `source_type` for the online-source group (one-line change). The AISC Design Examples PDF is now local, so the 10-12 rewritten examples can start.
+4. `missing_fields` policy (the router asks the user when the declared or the computed list is non-empty): kept as fixed before the first run; changing it for v2 would be a new scoring version, reported separately.
+5. Qwen with thinking ON for System C or the slice: never run; open since the first pilot.
+6. Delete or keep the two git backup bundles one folder above the repo (they hold the only unredacted history).
+7. No license yet; the first name "Dylan" appears in this summary, the gold review sheet, the gold JSON and `eval/make_gold_design_cases.py`; the Voyager host name stays in `meta.json` files (all previously decided, listed here so they are not forgotten).
+
+**Not saved anywhere I can see**
+- The presentation deck (built in a separate Claude chat; not in this repository). Keep your own copy.
+- `.env` (the Voyager key), `references/` (AISC and sponsor files), the repo-root original archives and the two git backup bundles exist only on this machine (and OneDrive, if it syncs that folder); the README table says how to re-obtain what can be re-obtained. Dataset B and the per-case validation CSVs can be regenerated.
+- Anything you wrote or ran outside this repository (hand calculations, notes, the source list before it was moved into `human_test/source_inventory.md`).
+
 ## Dataset C vs the AISC Design Examples v16.0 PDF (checked 2026-11-13): all 13 agree
 
 **What was compared.** `references/design-examples/P901-23W.pdf` ("V16.0 Companion, Volume 1: Design Examples", 1,054 pages, PDF dated Aug 2023, gitignored, never committed) against every parameter and published LRFD answer in `datasets/C_benchmark/design_examples_strength.json` and `design_examples_selection.json`. First I read the 12 example sections by hand (D.1, E.1A, E.1C, E.1D, F.1-1A, F.1-1B, F.1-2B, F.1-3B, F.3A, F.3B, F.4, G.1B; PDF pages 38-40, 68-77, 168-177, 184-189, 239-240), then wrote `eval/check_dataset_c_vs_design_examples.py`, which repeats the comparison by program and saves only booleans and our own numbers: `results/dataset_c_vs_design_examples_20261113T063752Z/check.json` and `check.txt` (no PDF text).
