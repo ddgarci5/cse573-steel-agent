@@ -1,0 +1,150 @@
+== gemma4-31b-it: independent recompute vs scorer summary.json vs SESSION_SUMMARY claims
+  claim  runs                             recomputed=      39 claimed=      39 MATCH
+  claim  valid_first_try                  recomputed=      39 claimed=      39 MATCH
+  claim  valid_after_retry                recomputed=       0 claimed=       0 MATCH
+  claim  invalid                          recomputed=       0 claimed=       0 MATCH
+  claim  retries_used                     recomputed=       0 claimed=       0 MATCH
+  claim  in_code_fence                    recomputed=      39 claimed=      39 MATCH
+  claim  truncated                        recomputed=       0 claimed=       0 MATCH
+  claim  section_flagged_nonexistent      recomputed=       0 claimed=       0 MATCH
+  claim  exact_match                      recomputed=      36 claimed=      36 MATCH
+  claim  leaves_correct                   recomputed=     855 claimed=     855 MATCH
+  claim  leaves_total                     recomputed=     858 claimed=     858 MATCH
+  claim  tp                               recomputed=     192 claimed=     192 MATCH
+  claim  fp                               recomputed=       3 claimed=       3 MATCH
+  claim  fn                               recomputed=       0 claimed=       0 MATCH
+  claim  strength_runs                    recomputed=      27 claimed=      27 MATCH
+  claim  strength_within_1pct             recomputed=      27 claimed=      27 MATCH
+  claim  selection_runs                   recomputed=      12 claimed=      12 MATCH
+  claim  selection_exact                  recomputed=       9 claimed=       9 MATCH
+  claim  would_ask_user                   recomputed=       3 claimed=       3 MATCH
+  claim  unsafe_total                     recomputed=       0 claimed=       0 MATCH
+  claim  err_extraction                   recomputed=       3 claimed=       3 MATCH
+  claim  err_routing                      recomputed=       0 claimed=       0 MATCH
+  claim  err_solver                       recomputed=       0 claimed=       0 MATCH
+  claim  strength_max_abs_err_pct_3dp     recomputed=   0.466 claimed=   0.466 MATCH
+  claim  mean_completion_tokens_0dp       recomputed=     285 claimed=     285 MATCH
+  claim  max_completion_tokens            recomputed=     298 claimed=     298 MATCH
+  claim  mean_wall_seconds_1dp            recomputed=     9.7 claimed=     9.7 MATCH
+  scorer valid_first_try                  recomputed=      39 summary.json=      39 MATCH
+  scorer valid_after_retry                recomputed=       0 summary.json=       0 MATCH
+  scorer invalid                          recomputed=       0 summary.json=       0 MATCH
+  scorer exact_match                      recomputed=      36 summary.json=      36 MATCH
+  scorer strength_within_1pct             recomputed=      27 summary.json=      27 MATCH
+  scorer selection_exact                  recomputed=       9 summary.json=       9 MATCH
+  scorer unsafe_total                     recomputed=       0 summary.json=       0 MATCH
+  scorer would_ask_user                   recomputed=       3 summary.json=       3 MATCH
+  scorer tp                               recomputed=     192 summary.json=     192 MATCH
+  scorer fp                               recomputed=       3 summary.json=       3 MATCH
+  scorer fn                               recomputed=       0 summary.json=       0 MATCH
+  info   precision                        0.9846
+  info   recall                           1.0
+  info   f1                               0.9922
+  info   field_accuracy                   0.9965
+  info   strength_overstated_gt_1pct      0
+  info   flagged_not_computed             0
+  info   no_answer                        3
+  info   err_unexplained                  0
+  info   strength_max_abs_err_pct         0.46603204219891087
+  info   prompt_in_raw_equals_current_frozen_prompt True
+  info   stored_route_equals_rerouting_stored_case True
+  every wrong or missing field (3): [('E.1A', 1, 'missing_fields', ('section',), ()), ('E.1A', 2, 'missing_fields', ('section',), ()), ('E.1A', 3, 'missing_fields', ('section',), ())]
+  runs that are not correct: [('E.1A', 1, 'no answer', 'err_extraction'), ('E.1A', 2, 'no answer', 'err_extraction'), ('E.1A', 3, 'no answer', 'err_extraction')]
+  extracted case identical to the aborted run: 39 of 39
+== qwen38-27b: independent recompute vs scorer summary.json vs SESSION_SUMMARY claims
+  claim  runs                             recomputed=      39 claimed=      39 MATCH
+  claim  valid_first_try                  recomputed=      39 claimed=      39 MATCH
+  claim  valid_after_retry                recomputed=       0 claimed=       0 MATCH
+  claim  invalid                          recomputed=       0 claimed=       0 MATCH
+  claim  retries_used                     recomputed=       0 claimed=       0 MATCH
+  claim  in_code_fence                    recomputed=       0 claimed=       0 MATCH
+  claim  truncated                        recomputed=       0 claimed=       0 MATCH
+  claim  section_flagged_nonexistent      recomputed=       0 claimed=       0 MATCH
+  claim  exact_match                      recomputed=      39 claimed=      39 MATCH
+  claim  leaves_correct                   recomputed=     858 claimed=     858 MATCH
+  claim  leaves_total                     recomputed=     858 claimed=     858 MATCH
+  claim  tp                               recomputed=     192 claimed=     192 MATCH
+  claim  fp                               recomputed=       0 claimed=       0 MATCH
+  claim  fn                               recomputed=       0 claimed=       0 MATCH
+  claim  strength_runs                    recomputed=      27 claimed=      27 MATCH
+  claim  strength_within_1pct             recomputed=      27 claimed=      27 MATCH
+  claim  selection_runs                   recomputed=      12 claimed=      12 MATCH
+  claim  selection_exact                  recomputed=      12 claimed=      12 MATCH
+  claim  would_ask_user                   recomputed=       0 claimed=       0 MATCH
+  claim  unsafe_total                     recomputed=       0 claimed=       0 MATCH
+  claim  err_extraction                   recomputed=       0 claimed=       0 MATCH
+  claim  err_routing                      recomputed=       0 claimed=       0 MATCH
+  claim  err_solver                       recomputed=       0 claimed=       0 MATCH
+  claim  strength_max_abs_err_pct_3dp     recomputed=   0.466 claimed=   0.466 MATCH
+  claim  mean_completion_tokens_0dp       recomputed=     266 claimed=     266 MATCH
+  claim  max_completion_tokens            recomputed=     281 claimed=     281 MATCH
+  claim  mean_wall_seconds_1dp            recomputed=     7.1 claimed=     7.1 MATCH
+  scorer valid_first_try                  recomputed=      39 summary.json=      39 MATCH
+  scorer valid_after_retry                recomputed=       0 summary.json=       0 MATCH
+  scorer invalid                          recomputed=       0 summary.json=       0 MATCH
+  scorer exact_match                      recomputed=      39 summary.json=      39 MATCH
+  scorer strength_within_1pct             recomputed=      27 summary.json=      27 MATCH
+  scorer selection_exact                  recomputed=      12 summary.json=      12 MATCH
+  scorer unsafe_total                     recomputed=       0 summary.json=       0 MATCH
+  scorer would_ask_user                   recomputed=       0 summary.json=       0 MATCH
+  scorer tp                               recomputed=     192 summary.json=     192 MATCH
+  scorer fp                               recomputed=       0 summary.json=       0 MATCH
+  scorer fn                               recomputed=       0 summary.json=       0 MATCH
+  info   precision                        1.0
+  info   recall                           1.0
+  info   f1                               1.0
+  info   field_accuracy                   1.0
+  info   strength_overstated_gt_1pct      0
+  info   flagged_not_computed             0
+  info   no_answer                        0
+  info   err_unexplained                  0
+  info   strength_max_abs_err_pct         0.46603204219891087
+  info   prompt_in_raw_equals_current_frozen_prompt True
+  info   stored_route_equals_rerouting_stored_case True
+  every wrong or missing field (0): []
+  runs that are not correct: []
+  extracted case identical to the aborted run: 39 of 39
+== System C @ 4,000 tokens, gemma4-31b-it (system_c_pilot_voyager_gemma4-31b-it_cap4000_20261113T021439Z)
+  claim  runs                   recomputed=    39 claimed=    39 MATCH
+  claim  strength_runs          recomputed=    27 claimed=    27 MATCH
+  claim  within_1pct            recomputed=    15 claimed=    15 MATCH
+  claim  no_answer              recomputed=     0 claimed=     0 MATCH
+  claim  overestimate_gt_1pct   recomputed=     5 claimed=     5 MATCH
+  claim  selection_runs         recomputed=    12 claimed=    12 MATCH
+  claim  sel_exact              recomputed=     8 claimed=     8 MATCH
+  claim  sel_no_answer          recomputed=     0 claimed=     0 MATCH
+  claim  sel_unsafe             recomputed=     1 claimed=     1 MATCH
+  claim  sel_not_in_db          recomputed=     1 claimed=     1 MATCH
+  claim  truncated              recomputed=     0 claimed=     0 MATCH
+  claim  mean_tokens_0dp        recomputed=   746 claimed=   746 MATCH
+  scorer within_1pct            recomputed=    15 summary.json=    15 MATCH
+  scorer no_answer              recomputed=     0 summary.json=     0 MATCH
+  scorer overestimate_gt_1pct   recomputed=     5 summary.json=     5 MATCH
+  scorer sel_exact              recomputed=     8 summary.json=     8 MATCH
+  scorer sel_no_answer          recomputed=     0 summary.json=     0 MATCH
+  scorer sel_unsafe             recomputed=     1 summary.json=     1 MATCH
+  scorer sel_not_in_db          recomputed=     1 summary.json=     1 MATCH
+  scorer truncated              recomputed=     0 summary.json=     0 MATCH
+== System C @ 4,000 tokens, qwen38-27b (system_c_pilot_voyager_qwen38-27b_cap4000_20261113T021439Z)
+  claim  runs                   recomputed=    39 claimed=    39 MATCH
+  claim  strength_runs          recomputed=    27 claimed=    27 MATCH
+  claim  within_1pct            recomputed=     7 claimed=     7 MATCH
+  claim  no_answer              recomputed=    10 claimed=    10 MATCH
+  claim  overestimate_gt_1pct   recomputed=     7 claimed=     7 MATCH
+  claim  selection_runs         recomputed=    12 claimed=    12 MATCH
+  claim  sel_exact              recomputed=     3 claimed=     3 MATCH
+  claim  sel_no_answer          recomputed=     2 claimed=     2 MATCH
+  claim  sel_unsafe             recomputed=     0 claimed=     0 MATCH
+  claim  sel_not_in_db          recomputed=     2 claimed=     2 MATCH
+  claim  truncated              recomputed=    12 claimed=    12 MATCH
+  claim  mean_tokens_0dp        recomputed=  2389 claimed=  2389 MATCH
+  scorer within_1pct            recomputed=     7 summary.json=     7 MATCH
+  scorer no_answer              recomputed=    10 summary.json=    10 MATCH
+  scorer overestimate_gt_1pct   recomputed=     7 summary.json=     7 MATCH
+  scorer sel_exact              recomputed=     3 summary.json=     3 MATCH
+  scorer sel_no_answer          recomputed=     2 summary.json=     2 MATCH
+  scorer sel_unsafe             recomputed=     0 summary.json=     0 MATCH
+  scorer sel_not_in_db          recomputed=     2 summary.json=     2 MATCH
+  scorer truncated              recomputed=    12 summary.json=    12 MATCH
+== gold control: max |direct System A error vs AISC| over the 9 strength problems = 0.4675% (as 3 decimals: 0.467); selections route_ok = 4 of 4; all 13 direct_ok/route_ok/route==direct: True
+== MISMATCHES: 0 []

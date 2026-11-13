@@ -1,0 +1,176 @@
+{
+  "run_dir": "first_slice_20261113T045951Z",
+  "slice": {
+    "gemma4-31b-it": {
+      "runs": 39,
+      "valid_first_try": 39,
+      "valid_after_retry": 0,
+      "invalid": 0,
+      "retries_used": 0,
+      "in_code_fence": 39,
+      "truncated": 0,
+      "section_flagged_nonexistent": 0,
+      "exact_match": 36,
+      "leaves_correct": 855,
+      "leaves_total": 858,
+      "tp": 192,
+      "fp": 3,
+      "fn": 0,
+      "strength_runs": 27,
+      "strength_within_1pct": 27,
+      "strength_overstated_gt_1pct": 0,
+      "selection_runs": 12,
+      "selection_exact": 9,
+      "would_ask_user": 3,
+      "flagged_not_computed": 0,
+      "unsafe_total": 0,
+      "err_extraction": 3,
+      "err_routing": 0,
+      "err_solver": 0,
+      "err_unexplained": 0,
+      "no_answer": 3,
+      "precision": 0.9846,
+      "recall": 1.0,
+      "f1": 0.9922,
+      "field_accuracy": 0.9965,
+      "strength_max_abs_err_pct": 0.46603204219891087,
+      "strength_max_abs_err_pct_3dp": 0.466,
+      "mean_completion_tokens": 284.7692307692308,
+      "mean_completion_tokens_0dp": 285,
+      "max_completion_tokens": 298,
+      "mean_wall_seconds": 9.700000000000001,
+      "mean_wall_seconds_1dp": 9.7,
+      "prompt_in_raw_equals_current_frozen_prompt": true,
+      "stored_route_equals_rerouting_stored_case": true,
+      "identical_to_aborted_run": 39,
+      "wrong_fields": [
+        [
+          "E.1A",
+          1,
+          "missing_fields",
+          [
+            "section"
+          ],
+          []
+        ],
+        [
+          "E.1A",
+          2,
+          "missing_fields",
+          [
+            "section"
+          ],
+          []
+        ],
+        [
+          "E.1A",
+          3,
+          "missing_fields",
+          [
+            "section"
+          ],
+          []
+        ]
+      ],
+      "not_correct": [
+        [
+          "E.1A",
+          1,
+          "no answer",
+          "err_extraction"
+        ],
+        [
+          "E.1A",
+          2,
+          "no answer",
+          "err_extraction"
+        ],
+        [
+          "E.1A",
+          3,
+          "no answer",
+          "err_extraction"
+        ]
+      ]
+    },
+    "qwen38-27b": {
+      "runs": 39,
+      "valid_first_try": 39,
+      "valid_after_retry": 0,
+      "invalid": 0,
+      "retries_used": 0,
+      "in_code_fence": 0,
+      "truncated": 0,
+      "section_flagged_nonexistent": 0,
+      "exact_match": 39,
+      "leaves_correct": 858,
+      "leaves_total": 858,
+      "tp": 192,
+      "fp": 0,
+      "fn": 0,
+      "strength_runs": 27,
+      "strength_within_1pct": 27,
+      "strength_overstated_gt_1pct": 0,
+      "selection_runs": 12,
+      "selection_exact": 12,
+      "would_ask_user": 0,
+      "flagged_not_computed": 0,
+      "unsafe_total": 0,
+      "err_extraction": 0,
+      "err_routing": 0,
+      "err_solver": 0,
+      "err_unexplained": 0,
+      "no_answer": 0,
+      "precision": 1.0,
+      "recall": 1.0,
+      "f1": 1.0,
+      "field_accuracy": 1.0,
+      "strength_max_abs_err_pct": 0.46603204219891087,
+      "strength_max_abs_err_pct_3dp": 0.466,
+      "mean_completion_tokens": 265.7692307692308,
+      "mean_completion_tokens_0dp": 266,
+      "max_completion_tokens": 281,
+      "mean_wall_seconds": 7.087179487179487,
+      "mean_wall_seconds_1dp": 7.1,
+      "prompt_in_raw_equals_current_frozen_prompt": true,
+      "stored_route_equals_rerouting_stored_case": true,
+      "identical_to_aborted_run": 39,
+      "wrong_fields": [],
+      "not_correct": []
+    }
+  },
+  "system_c_cap4000": {
+    "gemma4-31b-it": {
+      "dir": "system_c_pilot_voyager_gemma4-31b-it_cap4000_20261113T021439Z",
+      "runs": 39,
+      "strength_runs": 27,
+      "within_1pct": 15,
+      "no_answer": 0,
+      "overestimate_gt_1pct": 5,
+      "selection_runs": 12,
+      "sel_exact": 8,
+      "sel_no_answer": 0,
+      "sel_unsafe": 1,
+      "sel_not_in_db": 1,
+      "truncated": 0,
+      "mean_tokens_0dp": 746
+    },
+    "qwen38-27b": {
+      "dir": "system_c_pilot_voyager_qwen38-27b_cap4000_20261113T021439Z",
+      "runs": 39,
+      "strength_runs": 27,
+      "within_1pct": 7,
+      "no_answer": 10,
+      "overestimate_gt_1pct": 7,
+      "selection_runs": 12,
+      "sel_exact": 3,
+      "sel_no_answer": 2,
+      "sel_unsafe": 0,
+      "sel_not_in_db": 2,
+      "truncated": 12,
+      "mean_tokens_0dp": 2389
+    }
+  },
+  "gold_control_max_abs_err_pct": 0.46748030642481736,
+  "mismatches": []
+}
