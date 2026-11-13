@@ -20,6 +20,15 @@ import zipfile
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
+SELF = "eval/pre_push_audit.py"
+
+# Reviewed on 2026-11-13: standalone short lines of reference material that also occur in our own text as a name, a title or a generic technical phrase,
+# not as copied content. Matches are still printed (as "allowed after review"); anything else is a hard problem. Add to this set only after reading the hit.
+ALLOWED_OVERLAP = {
+    "american institute of steel construction",    # the publisher's name (page footer in the PDFs; we name AISC in the README)
+    "aisc steel construction manual",              # the Manual's title (we cite it by name)
+    "yielding and lateral-torsional buckling",     # generic limit-state phrase in a one-line description in human_test/source_inventory.md
+}
 
 
 def git(*a, binary=False):
@@ -71,7 +80,7 @@ def main():
     pats = {"windows/mac home path": re.compile(r"C:\\\\?Users|/Users/[A-Za-z]|/c/Users", re.I), "OneDrive": re.compile(r"OneDrive", re.I),
             "e-mail domain": re.compile(r"@[A-Za-z0-9.-]*\.edu\b", re.I), "current OS user name": re.compile(rf"\b{user}\b", re.I)}
     for name, rx in pats.items():
-        f = sorted({p for (_, p), t in texts.items() if rx.search(t)})
+        f = sorted({p for (_, p), t in texts.items() if rx.search(t) and p != SELF})   # this file holds the patterns themselves
         print(f"{name}: {f or 'none'}  (review each hit; prose placeholders such as <user> are expected)")
 
     ref = ROOT / "references"
@@ -96,15 +105,20 @@ def main():
                 for n in z.namelist():
                     if n.startswith("ppt/slides/slide") and n.endswith(".xml"):
                         lines |= {norm(m) for m in re.findall(r"<a:t>([^<]*)</a:t>", z.read(n).decode("utf-8", "replace")) if len(norm(m)) >= 30}
-        overlap = {}
+        overlap, allowed = {}, {}
         for (_, p), t in texts.items():
-            if p.endswith(".png"):
+            if p.endswith(".png") or p == SELF:
                 continue
             blob = norm(t)
-            n = sum(1 for l in lines if l in blob)
-            if n:
-                overlap[p] = n
+            hit = [l for l in lines if l in blob]
+            bad = [l for l in hit if l not in ALLOWED_OVERLAP]
+            if bad:
+                overlap[p] = len(bad)
+            if len(hit) > len(bad):
+                allowed[p] = [l for l in hit if l in ALLOWED_OVERLAP]
         print(f"reference lines indexed: {len(lines)}; files with a >=30-character line identical to reference material:", overlap or "none")
+        if allowed:
+            print("allowed after review (names, titles, generic phrases):", allowed)
         problems += bool(overlap)
     print("AUDIT RESULT:", "PROBLEMS FOUND (see above)" if problems else "no hard problems")
     sys.exit(1 if problems else 0)
