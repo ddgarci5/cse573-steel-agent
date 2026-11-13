@@ -8,6 +8,9 @@ Role (CLAUDE.md section 6): prompting, LoRA training and extraction tests. Three
 | templated train/dev | Template-generated problems with varied phrasing, units and omitted fields, labelled by construction | not started |
 | LLM paraphrases | Paraphrases of templated problems, kept only if the parsed values match | not started |
 
+## Agreed targets
+Agreed targets (decided by the student, 2026-11-13; they replace the earlier proposal of 40 items): **about 30 items by Nov 22**, written or collected by the student plus classmates: 10-12 from verified online sources (the student supplies the list; text is always rewritten in the writer's own words, parameters only), 10-12 rewritten from the AISC Design Examples once the student has downloaded the PDF, and 8-10 written fresh by the student and peers. The builder has no `source_type` for the online-source group yet (`aisc_given_rewritten`, `peer_written`, `student_written` only); adding one is a one-line change that is not made yet. Below about 30 items, report counts, not percentages.
+
 ## Rules
 - The human split is never used for prompt tuning, few-shot examples, LoRA data or any training. Prompt development uses the templated dev part only.
 - The 13 Dataset C problems (`datasets/C_benchmark/`) are a separate, templated-text evaluation and are also never training data. A human rewrite of a Dataset C problem is allowed and is reported as an overlap (`source_ref`).
