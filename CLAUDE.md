@@ -66,7 +66,7 @@ cse573-steel-agent/
 ASD; load combinations and structural analysis; Chapter H combined forces; F4/F5 noncompact/slender webs; block shear and connections;
 HSS/angles/channels; knowledge-graph or GNN components beyond the small provision/limit-state graph.
 
-## 5. Current status of the solver (validated Nov 11, 2026)
+## 5. Current status of the solver (validated Nov 11, 2026; re-run end to end Nov 12, 2026)
 
 | Independent reference | Cases | Max abs. error |
 |---|---|---|
@@ -77,8 +77,11 @@ HSS/angles/channels; knowledge-graph or GNN components beyond the small provisio
 | AISC Design Examples v16.0 selection: E.1A, F.1-1A, F.3A, F.4 | 4 | 4/4 exact |
 
 Errors are consistent with AISC's three-significant-figure rounding.
-Known gaps: E4 not implemented; F4/F5 out of scope; block shear and connections out of scope; no pytest suite yet; deflection is checked only as an Ix_min in `search.py`.
-`validation/parse_tables.py` has a hard-coded sandbox path (`/home/claude/ravi/...`); change it to `references/aisc-sample-tables/`.
+Re-run end to end on Nov 12 (poppler pdftotext 26.09.0; `results/validation_20261112T000516Z/validation_summary.json`): Table 4-1a 324 cases, mean 0.113%, max 0.446%; Table 3-2 378 cases, mean 0.129%, max 0.929%; Table 4-14 1,200 cases, mean 0.093%, max 0.433%; Design Examples 9 strength checks, max 0.47%; selection 4/4. The pytest suite exists (`steelagent/tests`, 34 tests, all passing).
+Known gaps: E4 not implemented; F4/F5 out of scope (no shape in the 289-shape database needs them); block shear, connections, Chapter H and ASD out of scope; deflection is checked only as an Ix_min in `search.py`.
+The E7 slender-element path is validated only against the slender W14 shapes in Table 4-1a (21 cases) and the Design Examples, although 101 of the 289 shapes have slender webs in compression (about 35% of Dataset B compression rows are E7-governed), so it needs an extra independent check.
+The May 2, 2025 errata have NOT been checked against the Dataset C values (the Design Examples PDF is not yet in `references/design-examples/`); both Dataset C JSON files say `errata_applied: false`.
+`validation/parse_tables.py` now resolves `references/aisc-sample-tables/` itself and requires poppler's `pdftotext` (it rejects the xpdf build bundled with Git for Windows); the old sandbox path is gone.
 
 ## 6. Data sets (keep their roles separate)
 
@@ -149,14 +152,15 @@ Show: interpreted inputs → required checks → candidate table (section, capac
 
 ## 11. Task backlog (do in order)
 
-**Before Fri Nov 13 evening (feeds the presentation)**
-1. Create the layout in §3, `.gitignore`, venv, `requirements.txt`; `git init`; private GitHub repo (`references/` excluded).
-2. Fix the path in `parse_tables.py`; rerun all four validation scripts; confirm the §5 numbers; save outputs to `results/`.
-3. Convert `dataset_c_pilot.py` cases into `datasets/C_benchmark/*.json` (params + published answers only) and add pytest tests from them.
-4. Dataset B generator (start with compression + flexure) and a quick System B baseline (Decision Tree + HistGradientBoosting); save metrics and a figure.
-5. If Ollama runs locally: System C pilot. Give one 7–8B model the 13 Design Example problems (parameters restated in our own words) with no tools; score against published answers. Save every raw output.
+**Before Fri Nov 13 evening (feeds the presentation)** (status as of 2026-11-13)
+1. **Done locally; GitHub repo not created yet.** Layout, `.gitignore`, venv (CPython 3.14.7 via uv), pinned `requirements.txt`, `git init`, README. The repo is to be **public**; history was scrubbed of raw validation printouts that listed AISC Manual values (backup bundle outside the repo; hash map in `results/git_hash_map_after_history_scrub.json`). Next step: create the empty remote and push (steps in `results/SESSION_SUMMARY.md`).
+2. **Done.** `parse_tables.py` fixed; all validation scripts rerun end to end; §5 numbers confirmed; outputs in `results/validation_20261112T000516Z/`.
+3. **Done.** `datasets/C_benchmark/*.json` (9 strength + 4 selection, params + published answers only) and the pytest suite (34 tests).
+4. **Done.** Dataset B (compression + flexure, 12,000 cases each: 7,000 / 1,500 / 1,500 + 2,000 out-of-range; 3,468,000 rows each) and a System B baseline with Decision Tree + HistGradientBoosting; `results/system_b_baseline_20261112T001158Z/`, figure `presentation/system_b_baseline.png`. Not done: Random Forest, XGBoost, tension.
+5. **Done, extended.** System C pilot on the 13 Design Example problems: local qwen3.5:9b (17-run snapshot, 1,500-token cap) and ASU Voyager qwen38-27b and gemma4-31b-it (3 repeats each, 1,500 and 4,000-token caps), one frozen scorer, every raw output saved, hand-check sheet `results/system_c_review_sheet.csv`. Details and caveats in `results/SESSION_SUMMARY.md`.
+Also done, not in the original backlog: `results/BACKUP_SLIDE_FACTS.md` (solver provisions and System B setup/metrics for backup slides) and publication hygiene (copyright audit of every tracked file and all history).
 
-**After the presentation**
+**After the presentation** (none of these started)
 6. DesignCase Pydantic model + required-checks map.
 7. Dataset D generation (templates + paraphrase + human-written test split).
 8. Provision index for RAG (the sponsor's teaching modules + our own provision summaries; respect copyright).

@@ -1,5 +1,50 @@
 # Session summary (newest first)
 
+## Session 2026-11-13: larger-cap rerun, publication prep, review sheet, slide facts, wrap-up
+
+### What was done (commit hashes are the published, post-scrub ones; the map to the earlier hashes is `results/git_hash_map_after_history_scrub.json`)
+| Task | Result | Commit |
+|---|---|---|
+| 1. System C rerun at 4,000 output tokens | qwen38-27b and gemma4-31b-it, 3 repeats each, scorer unchanged; side-by-side table for both caps (section "System C pilot, 2026-11-13" below) | `98eacd0` |
+| 2. Publication prep | README, `.gitignore` (any PDF, raw validation printouts), statistics-only `validation_summary.json`, audits, clean-clone test | `126999a`, `a2743fd` |
+| (your decision) history scrub | public repo; six raw printouts removed from all history; final tree identical | rewrote commits 1 to 6 |
+| 3. Review sheet | `results/system_c_review_sheet.csv`, 173 rows, F.3B first | `d1718a5` |
+| 4. Backup-slide facts | `results/BACKUP_SLIDE_FACTS.md` (every number read from code or saved results) | `80328c5` |
+| 5. Wrap-up | `CLAUDE.md` sections 5 and 11, this summary | the commit that contains this text |
+Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files after this commit: 271; commits: 9.
+
+### Repository state for publication
+- **Audits.** Run on all 267 files tracked at that time and on every blob in every commit (310 objects after the scrub): no `.env`, `references/`, PDF, xlsx, zip, pptx, docx, parquet, model file or per-case Manual-table CSV; no line from the 26 AISC sample-table PDFs or the sponsor's 29 slide decks; no Voyager API key.
+- **History scrub.** The six raw `validate_*.txt` printouts listed 16 worst-case rows with individual AISC Manual table values (6 + 4 + 6, all from the good validation run; the failed-run printouts hold only a traceback). They are removed from all six earlier commits with `git filter-branch`. After the rewrite none of the 16 rows appears in any object. The final git tree is byte-identical before and after (`bf9d941...`), so only history changed. **All commit hashes changed.**
+- **Backup of the old history** (with those 16 rows) is a git bundle one folder above the repo, outside git. It is not part of the repository and must never be pushed or committed; delete it when you no longer need it.
+- **Hashes in older result files.** `meta.json` files written before the rewrite record pre-scrub hashes (`results/system_b_baseline_20261112T001158Z`: `92bcfa6`; the three 1,500-token System C runs: `9433658`; the two 4,000-token runs: `eb53b69`). Those commits no longer exist under those names; the map file lists old to new.
+- **Not created: the GitHub remote.** `gh` is not installed. Steps: (1) github.com/new, name `cse573-steel-agent`, Public, leave README / .gitignore / license unticked; (2) in the repo folder run `git remote add origin https://github.com/<your-username>/cse573-steel-agent.git` and `git push -u origin main` (Git for Windows opens a browser sign-in); (3) on GitHub check there is no `.env` and no `references/` folder. Do not run `git push --all` or `--mirror`.
+
+### Decisions needed before the first public push
+1. **Personal information that would be published.** `CLAUDE.md` names the instructor, the sponsor and the student and contains the instructor's email address (line 148, deck instructions). All 8 earlier commits carry the author and committer identity `the student <the author's email address>`. Eleven tracked files mention a local Windows path or OneDrive (most contain your user name, for example `<home>\...` in pytest and meta outputs). Redacting any of these means another history rewrite, which is easiest now, before anything is pushed.
+2. **License:** none chosen (the README says so). Without one, all rights are reserved by default.
+3. **Parity plots** `presentation/solver_validation_parity.png` and `steelagent/validation/parity.png` plot our solver against the AISC value for 1,902 comparisons; they show agreement, not readable table values, and are kept. Remove them if you prefer.
+4. **Errata:** the May 2, 2025 AISC errata are still not checked against the Dataset C values.
+
+### Failures, mistakes and surprises (not rounded away)
+- **A larger output cap did not make the models more accurate.** It exposed the runs that truncation had hidden: Qwen's within-1% count fell from 8 to 7 of 27 while its answered count rose from 16 to 17, and its overestimates rose from 5 to 7 of 27. Qwen still truncated 12 of 39 runs at 4,000 tokens (self-correction loops). Full table above.
+- **Gemma's selection got worse at repeat 1 at the larger cap:** one non-existent section (`W24X45` on F.3A) and one that fails the deflection check (`W21X55` on F.4), neither present at 1,500 tokens although those answers were not truncated. Voyager is not deterministic at temperature 0 (identical text across repeats on 0 of 13 problems for Qwen, 1 to 2 of 13 for Gemma), so I report these as run-to-run variation, not a cap effect.
+- **The local qwen3.5:9b was not rerun** at 4,000 tokens (it would not finish within the one-hour limit), so the local column exists only at 1,500 tokens and only as a 17-run snapshot.
+- **My first secret scan silently matched nothing**: the `grep` pattern did not fit how `.env` is formatted, so "no key found" came out empty for the wrong reason. I redid it by parsing `.env` the way the runner does; the key appears in no tracked file and no historical blob.
+- **I first told you 26 AISC rows were in history; the exact count is 16.** The failed-run printouts contain only a traceback. I corrected it before acting on it.
+- **The clean-clone test found a real gap:** a fresh clone had no `steelagent/data/` folder, so the README's instruction to save the Shapes Database there failed. Fixed with a placeholder file (`a2743fd`).
+- **Smaller tool bugs fixed along the way:** the review-sheet quote originally started mid-word (it now quotes the whole original line); a wording glitch in the slide-facts generator ("ranges are:."); the facts generator's first edit pattern did not match and I applied the edits directly.
+- **Rewriting history changed every commit hash** (see "Hashes in older result files"). The content did not change.
+- **Carried over and still true:** the scores in System B are on an easy synthetic task; System C rests on 13 problems and many answers depend on recalled section properties; E7 is validated on few shapes; the Shapes Database is not in the repo, so every command needs it.
+
+### Open questions
+1. Public repo: redact the personal information listed above, or publish as is? Which identity should the commits carry?
+2. Which license, if any?
+3. Create the GitHub repo now (steps above), or have me install `gh` with scoop first (you would still complete its browser login)?
+4. Finish the local System C run (22 more runs, about 1.5 hours of CPU) or keep the 17-run snapshot?
+5. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
+
+
 ## System C pilot, 2026-11-13: does a larger output cap change the answers? (1,500 vs 4,000 output tokens)
 
 **What changed and what did not.** The two Voyager models were rerun with `max_tokens = 4,000` instead of 1,500. Everything else is identical: the same 13 problems (9 strength, 4 selection), the same prompt text, temperature 0, seed 573, 3 repeats, the same thinking setting (qwen38-27b: `enable_thinking=false` sent; gemma4-31b-it: no flag; reasoning output appeared in 0 of 39 runs of each at both caps), and the same scorer. **The scoring/classifier code was not modified**: `eval/system_c_pilot.py` is byte-identical (sha256 prefix `c8e7959deb92`) and every run's `summary.json` records that hash, so the 1,500-token runs did not need re-scoring. No scorer bug was found. The cap was set without editing that file, through the wrapper `eval/system_c_run_cap.py`, which overrides the module constant and calls the same `run()`.
