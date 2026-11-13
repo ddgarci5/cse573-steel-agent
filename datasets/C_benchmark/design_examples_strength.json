@@ -6,7 +6,7 @@
   "material": "ASTM A992",
   "units": {"force": "kip", "moment": "kip-ft", "length": "ft"},
   "errata_applied": false,
-  "errata_note": "May 2, 2025 errata NOT yet checked against these values; the Design Examples PDF is not in references/design-examples/ yet.",
+  "errata_note": "Checked on 2026-11-13 against the AISC Design Examples v16.0 PDF (P901-23W.pdf, dated Aug 2023): every parameter and published answer here agrees (results/dataset_c_vs_design_examples_20261113T063752Z/). The May 2, 2025 errata are NOT checked: the errata document is not in the repo and the PDF predates it.",
   "tolerance_pct": 1.0,
   "tolerance_note": "AISC reports three significant figures; observed max error across these 9 cases is 0.47%.",
   "cases": [

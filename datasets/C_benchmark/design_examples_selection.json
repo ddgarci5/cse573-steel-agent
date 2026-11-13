@@ -6,7 +6,7 @@
   "material": "ASTM A992",
   "units": {"force": "kip", "moment": "kip-ft", "length": "ft", "inertia": "in^4"},
   "errata_applied": false,
-  "errata_note": "May 2, 2025 errata NOT yet checked; the Design Examples PDF is not in references/design-examples/ yet.",
+  "errata_note": "Checked on 2026-11-13 against the AISC Design Examples v16.0 PDF (P901-23W.pdf, dated Aug 2023): every parameter and published section here agrees (results/dataset_c_vs_design_examples_20261113T063752Z/). The May 2, 2025 errata are NOT checked: the errata document is not in the repo and the PDF predates it.",
   "cases": [
     {"id": "E.1A", "example": "E.1A", "member_type": "compression",
      "description": "Lightest W14 column for a factored axial load of 840 kip, effective length 30 ft about both axes",
