@@ -28,6 +28,7 @@ Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files: 271.
 3. **Parity plots** `presentation/solver_validation_parity.png` and `steelagent/validation/parity.png` plot our solver against the AISC value for 1,902 comparisons; they show agreement, not readable table values, and are kept. Remove them if you prefer.
 4. **Errata:** the May 2, 2025 AISC errata are still not checked against the Dataset C values.
 5. **Decided: leave the Voyager host name published.** The four Voyager `meta.json` files under `results/` record `"endpoint_host": "openai.rc.asu.edu"` (the Voyager service address; not a secret, not the API key). It is already public and you chose to leave it; removing it would need another history rewrite and a force-push. It is the only appearance of that host name in the repository.
+6. **Decided: skip the rest of the local System C run; the 17-run snapshot is the final local result.** The local qwen3.5:9b run (`results/system_c_pilot_20261112T004145Z/`, 1,500-token cap, thinking off) stays at 17 runs: repeat 1 is complete (13 runs) plus 4 repeat-2 runs (D.1-yield, D.1-rupture, E.1C, E.1D), which were byte-identical to repeat 1. The remaining 22 runs (about 1.5 hours of CPU at about 262 s per problem) will not be run, and there is no 4,000-token local run. Consequences for reading the tables: the local column is based on 17 runs against 39 for each Voyager model, so its counts (for example 3 of 13 strength runs within 1%, 0 of 4 selections answered) are small and not comparable one-to-one with the Voyager counts; use the repeat-1-only comparison (`results/system_c_comparison_20261112T015639Z/`, 13 runs per model) for a like-for-like view. The run can still be resumed with `eval/system_c_pilot.py run --model qwen3.5:9b --repeats 3 --run-dir results/system_c_pilot_20261112T004145Z` if the decision changes; nothing was deleted.
 
 ### Failures, mistakes and surprises (not rounded away)
 - **A larger output cap did not make the models more accurate.** It exposed the runs that truncation had hidden: Qwen's within-1% count fell from 8 to 7 of 27 while its answered count rose from 16 to 17, and its overestimates rose from 5 to 7 of 27. Qwen still truncated 12 of 39 runs at 4,000 tokens (self-correction loops). Full table above.
@@ -45,8 +46,7 @@ Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files: 271.
 ### Open questions
 1. Which license, if any?
 2. Should the README and repo name keep saying "CSE 573, Group 13", or be made more generic as well?
-3. Finish the local System C run (22 more runs, about 1.5 hours of CPU) or keep the 17-run snapshot?
-4. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
+3. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
 
 
 ## System C pilot, 2026-11-13: does a larger output cap change the answers? (1,500 vs 4,000 output tokens)
@@ -193,7 +193,7 @@ Not validated: the stated-limit-state classifier has not been checked against a 
 ### Open questions
 1. The 1,500-token cap was inherited from the local run and truncates most Qwen and local outputs. Do you want a Voyager rerun with a higher cap (for example 4,000), reported as a separate experiment next to this one?
 2. Run Qwen with thinking ON? It will use far more tokens; the probe showed it does not finish inside 1,500.
-3. Finish the local run (22 more runs, about 1.5 hours of CPU) or accept the 17-run snapshot?
+3. (Resolved 2026-11-13: the 17-run snapshot is kept; the local run is not extended. See "Decisions after the first public push", item 6.)
 4. Dataset C has only 13 problems, so the percentages above rest on 9 strength and 4 selection problems; treat them as pilot evidence.
 
 
