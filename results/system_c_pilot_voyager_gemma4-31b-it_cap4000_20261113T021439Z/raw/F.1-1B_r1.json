@@ -1,0 +1,26 @@
+{
+  "id": "F.1-1B",
+  "kind": "strength",
+  "repeat": 1,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. The beam is continuously braced laterally (Lb = 0). Cb = 1. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $Z_x$ (Plastic Section Modulus) $\\approx 101 \\text{ in}^3$\n*   $S_x$ (Elastic Section Modulus) $\\approx 88.9 \\text{ in}^3$\n*   $F_y = 50 \\text{ ksi}$\n\n**2. Limit State Check:**\nSince the beam is continuously braced ($L_b = 0$), Lateral-Torsional Buckling (LTB) does not govern. The design strength is governed by either yielding or local buckling. For a W18x50, the flanges and web are compact per AISC 360 Table B4.1a.\n\n**3. Nominal Flexural Strength ($M_n$):**\nFor a compact shape where LTB is not a factor, $M_n$ is governed by plastic yielding:\n$$M_n = M_p = F_y Z_x$$\n$$M_n = 50 \\text{ ksi} \\times 101 \\text{ in}^3 = 5,050 \\text{ kip-in}$$\n\n**4. LRFD Design Strength ($\\phi_b M_n$):**\nThe resistance factor for flexure $\\phi_b = 0.90$.\n$$\\phi_b M_n = 0.90 \\times 5,050 \\text{ kip-in} = 4,545 \\text{ kip-in}$$\n\n**5. Conversion to kip-ft:**\n$$\\phi_b M_n = \\frac{4,545 \\text{ kip-in}}{12 \\text{ in/ft}} = 378.75 \\text{ kip-ft}$$\n\nFINAL ANSWER: 378.75 kip-ft",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 413,
+  "eval_seconds": 14.18,
+  "prompt_eval_count": 183,
+  "usage": {
+    "co2_g": 1.011215,
+    "completion_tokens": 413,
+    "energy_wh": 3.000638,
+    "prompt_tokens": 183,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 596
+  },
+  "wall_seconds": 14.2,
+  "finished_utc": "2026-11-13T02:16:13.804795+00:00"
+}

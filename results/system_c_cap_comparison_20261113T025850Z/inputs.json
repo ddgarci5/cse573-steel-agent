@@ -1,0 +1,12 @@
+{
+  "runs": [
+    "local qwen3.5:9b|1500|results/system_c_pilot_20261112T004145Z",
+    "voyager qwen38-27b|1500|results/system_c_pilot_voyager_qwen38-27b_20261112T012059Z",
+    "voyager qwen38-27b|4000|results/system_c_pilot_voyager_qwen38-27b_cap4000_20261113T021439Z",
+    "voyager gemma4-31b-it|1500|results/system_c_pilot_voyager_gemma4-31b-it_20261112T012059Z",
+    "voyager gemma4-31b-it|4000|results/system_c_pilot_voyager_gemma4-31b-it_cap4000_20261113T021439Z"
+  ],
+  "scorer_sha256_prefixes_in_inputs": [
+    "c8e7959deb92"
+  ]
+}

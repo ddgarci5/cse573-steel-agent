@@ -1,0 +1,26 @@
+{
+  "id": "F.1-1A",
+  "kind": "selection",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: Lightest beam with nominal depth no more than 18 in., Mu = 266 kip-ft, continuously braced, Ix of at least 746 in^4 for deflection. Select the lightest W-shape that satisfies every required strength check.\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: W<depth>X<weight>",
+  "response": "To select the lightest W-shape, we must satisfy three criteria:\n1.  **Depth Constraint:** $d \\le 18$ in.\n2.  **Deflection Constraint:** $I_x \\ge 746 \\text{ in}^4$.\n3.  **Strength Constraint:** $\\phi_b M_n \\ge M_u = 266 \\text{ kip-ft}$.\n\n**Step 1: Filter by Deflection and Depth**\nWe look for the lightest W-shapes with $I_x \\ge 746 \\text{ in}^4$ and depth $\\le 18$ in.\nCommon candidates in the AISC Manual (sorted by weight) that meet the $I_x$ requirement:\n*   **W18x35**: $I_x = 510 \\text{ in}^4$ (Fails $I_x$)\n*   **W18x40**: $I_x = 599 \\text{ in}^4$ (Fails $I_x$)\n*   **W18x46**: $I_x = 712 \\text{ in}^4$ (Fails $I_x$)\n*   **W18x50**: $I_x = 800 \\text{ in}^4$ (Passes $I_x$, Depth = 17.9 in $\\le 18$ in)\n*   **W16x40**: $I_x = 518 \\text{ in}^4$ (Fails $I_x$)\n*   **W16x45**: $I_x = 586 \\text{ in}^4$ (Fails $I_x$)\n*   **W16x50**: $I_x = 659 \\text{ in}^4$ (Fails $I_x$)\n*   **W16x57**: $I_x = 758 \\text{ in}^4$ (Passes $I_x$, Depth = 16.4 in $\\le 18$ in)\n*   **W14x53**: $I_x = 541 \\text{ in}^4$ (Fails $I_x$)\n*   **W14x61**: $I_x = 629 \\text{ in}^4$ (Fails $I_x$)\n*   **W14x68**: $I_x = 723 \\text{ in}^4$ (Fails $I_x$)\n*   **W14x74**: $I_x = 795 \\text{ in}^4$ (Passes $I_x$, Depth = 13.9 in $\\le 18$ in)\n\nThe lightest candidates satisfying the geometric and deflection constraints are:\n1.  **W16x57** (57 lb/ft)\n2.  **W18x50** (50 lb/ft)\n3.  **W14x74** (74 lb/ft)\n\nWait, I missed checking lighter W18s and W16s more carefully against the $I_x$ limit.\nLet's re-evaluate the lightest available shapes that *could* potentially meet $I_x \\ge 746$.\n*   W18x35: $I_x=510$\n*   W18x40: $I_x=599$\n*   W18x46: $I_x=712$ (Close, but $712 < 746$)\n*   **W18x50**: $I_x=800$ (Passes)\n*   W16x36: $I_x=428$\n*   W16x40: $I_x=518$\n*   W16x45: $I_x=586$\n*   W16x50: $I_x=659$\n*   **W16x57**: $I_x=758$ (Passes)\n*   W14x30: $I_x=291$\n*   ...\n*   W14x68: $I_x=723$ (Fails)\n*   **W14x74**: $I_x=795$ (Passes)\n\nSo the lightest candidates by weight are:\n1.  **W18x50** (50 lb/ft)\n2.  **W16x57** (57 lb/ft)\n3.  **W14x74** (74 lb/ft)\n\nWe must check the flexural strength of the lightest candidate, **W18x50**, first. If it fails, we move to the next lightest.\n\n**Step 2: Strength Check for W18x50**\nProperties for W18x50 (A992 Steel):\n*   $Z_x = 98.3 \\text{ in}^3$\n*   $S_x = 88.9 \\text{ in}^3$\n*   $L_p = 1.73 \\text{ ft}$ (Limiting length for yielding)\n*   $L_r = 6.32 \\text{ ft}$ (Limiting length for lateral-torsional buckling)\n*   $M_p = F_y Z_x = 50 \\text{ ksi} \\times 98.3 \\text{ in}^3 = 4915 \\text{ kip-in} = 409.6 \\text{ kip-ft}$\n*   $M_y = F_y S_x = 50 \\text{ ksi} \\times 88.9 \\text{ in}^3 = 4445 \\text{ kip-in} = 370.4 \\text{ kip-ft}$\n\nThe beam is **continuously braced**, which implies $L_b = 0$ (or effectively very small, less than $L_p$).\nTherefore, the nominal moment capacity is governed by yielding:\n$$M_n = M_p = 409.6 \\text{ kip-ft}$$\n\nThe design moment capacity is:\n$$\\phi_b M_n = 0.90 \\times 409.6 \\text{ kip-ft} = 368.6 \\text{ kip-ft}$$\n\nRequired moment:\n$$M_u = 266 \\text{ kip-ft}$$\n\nCheck:\n$$368.6 \\text{ kip-ft} \\ge 266 \\text{ kip-ft}$$\nThe W18x50 satisfies the strength requirement.\n\n**Step 3: Verify if a lighter shape exists**\nAre there any W-shapes lighter than 50 lb/ft that satisfy $I_x \\ge 746 \\text{ in}^4$ and $d \\le 18$ in?\n*   W18x46: $I_x = 712 \\text{ in}^4 < 746 \\text{ in}^4$ (Fails deflection)\n*   W16x50: $I_x = 659 \\text{ in}^4 < 746 \\text{ in}^4$ (Fails deflection)\n*   W14x68: $I_x = 723 \\text{ in}^4 < 746 \\text{ in}^4$ (Fails deflection)\n*   W12x53: $I_x = 428 \\text{ in}^4$ (Fails deflection)\n\nNo lighter standard W-shape meets the moment of inertia requirement. The W18x50 is the lightest shape that meets the deflection criteria, and it also meets the strength criteria.\n\n**Conclusion:**\nThe W18x50 is the lightest beam satisfying:\n1.  Depth: $17.9 \\text{ in} \\le 18 \\text{ in}$\n2.  Deflection: $I_x = 800 \\text{ in}^4 \\ge 746 \\text{ in}^4$\n3.  Strength: $\\phi_b M_n = 368.6 \\text{ kip-ft} \\ge 266 \\text{ kip-ft}$\n\nFINAL ANSWER: W18X50",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 1917,
+  "eval_seconds": 43.38,
+  "prompt_eval_count": 173,
+  "usage": {
+    "co2_g": 0.662308,
+    "completion_tokens": 1917,
+    "energy_wh": 1.965305,
+    "prompt_tokens": 173,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 2090
+  },
+  "wall_seconds": 43.4,
+  "finished_utc": "2026-11-13T02:56:07.630205+00:00"
+}

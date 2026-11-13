@@ -1,0 +1,40 @@
+id,kind,repeat,truncated,eval_tokens,wall_seconds,reasoning_present,published,parsed,unit,no_answer,unit_ok,err_pct,within_1pct,within_5pct,overestimate_gt_1pct,refusal,wrong_limit_state,exact_match,exists,system_a_pass,unsafe,hallucinated,weight,weight_gap_lb_ft,system_a_reasons,expected_limit_state,stated_limit_state,wrong_limit_state_stated
+D.1-rupture,strength,1,False,481,10.0,False,211,210.7,kips,False,True,-0.14218009478673524,True,True,False,False,,,,,,,,,,,,
+D.1-rupture,strength,2,False,491,13.6,False,211,210.7,kips,False,True,-0.14218009478673524,True,True,False,False,,,,,,,,,,,,
+D.1-rupture,strength,3,False,491,16.0,False,211,210.7,kips,False,True,-0.14218009478673524,True,True,False,False,,,,,,,,,,,,
+D.1-yield,strength,1,False,360,7.5,False,277,281.7,kips,False,True,1.6967509025270717,False,True,True,False,,,,,,,,,,,,
+D.1-yield,strength,2,False,371,14.4,False,277,281.7,kips,False,True,1.6967509025270717,False,True,True,False,,,,,,,,,,,,
+D.1-yield,strength,3,False,371,11.9,False,277,281.7,kips,False,True,1.6967509025270717,False,True,True,False,,,,,,,,,,,,
+E.1A,selection,1,False,2624,64.0,False,W14X132,W14X130,,False,,,,,,False,,False,False,False,False,True,,,section not in AISC database,,,
+E.1A,selection,2,False,3073,73.3,False,W14X132,W14X233,,False,,,,,,False,,False,True,True,False,False,233.0,101.0,,,,
+E.1A,selection,3,False,2758,84.0,False,W14X132,W14X136,,False,,,,,,False,,False,False,False,False,True,,,section not in AISC database,,,
+E.1C,strength,1,False,980,27.7,False,892,914.0,kips,False,True,2.4663677130044843,False,True,True,False,,,,,,,,,,,,
+E.1C,strength,2,False,1004,21.2,False,892,897.0,kips,False,True,0.5605381165919282,True,True,False,False,,,,,,,,,,,,
+E.1C,strength,3,False,988,29.3,False,892,897.0,kips,False,True,0.5605381165919282,True,True,False,False,,,,,,,,,,,,
+E.1D,strength,1,False,1025,24.4,False,927,923.0,kips,False,True,-0.43149946062567424,True,True,False,False,,,,,,,,,,,,
+E.1D,strength,2,False,944,30.2,False,927,922.5,kips,False,True,-0.4854368932038835,True,True,False,False,,,,,,,,,,,,
+E.1D,strength,3,False,1015,22.2,False,927,911.0,kips,False,True,-1.725997842502697,False,True,False,False,,,,,,,,,,,,
+F.1-1A,selection,1,True,4000,89.6,False,W18X50,,,True,,,,,,False,,,,,,,,,,,,
+F.1-1A,selection,2,False,2157,69.5,False,W18X50,W18X50,,False,,,,,,False,,True,True,True,False,False,50.0,0.0,,,,
+F.1-1A,selection,3,False,1917,43.4,False,W18X50,W18X50,,False,,,,,,False,,True,True,True,False,False,50.0,0.0,,,,
+F.1-1B,strength,1,False,2175,70.5,False,379,325.9,kip-ft,False,True,-14.010554089709768,False,False,False,False,,,,,,,,,,plastic yielding,plastic yielding,False
+F.1-1B,strength,2,False,2175,80.7,False,379,325.9,kip-ft,False,True,-14.010554089709768,False,False,False,False,,,,,,,,,,plastic yielding,plastic yielding,False
+F.1-1B,strength,3,True,4000,91.7,False,379,,,True,,,,,,False,,,,,,,,,,plastic yielding,plastic yielding,False
+F.1-2B,strength,1,False,1852,47.5,False,304,314.6,kip-ft,False,True,3.4868421052631655,False,True,True,False,,,,,,,,,,inelastic LTB,inelastic LTB,False
+F.1-2B,strength,2,True,4000,101.6,False,304,,,True,,,,,,False,,,,,,,,,,inelastic LTB,elastic LTB,True
+F.1-2B,strength,3,True,4000,89.3,False,304,,,True,,,,,,False,,,,,,,,,,inelastic LTB,inelastic LTB,False
+F.1-3B,strength,1,True,4000,104.9,False,288,,,True,,,,,,False,,,,,,,,,,elastic LTB,elastic LTB,False
+F.1-3B,strength,2,False,1909,43.3,False,288,337.2,kip-ft,False,True,17.08333333333333,False,False,True,False,,,,,,,,,,elastic LTB,inelastic LTB,True
+F.1-3B,strength,3,False,1316,38.3,False,288,378.7,kip-ft,False,True,31.49305555555555,False,False,True,False,plastic moment (yielding; ignores LTB/FLB),,,,,,,,,elastic LTB,elastic LTB,False
+F.3A,selection,1,False,3140,105.1,False,W21X48,W21X50,,False,,,,,,False,,False,True,True,False,False,50.0,2.0,,,,
+F.3A,selection,2,False,3232,103.0,False,W21X48,W21X50,,False,,,,,,False,,False,True,True,False,False,50.0,2.0,,,,
+F.3A,selection,3,False,2938,76.6,False,W21X48,W21X50,,False,,,,,,False,,False,True,True,False,False,50.0,2.0,,,,
+F.3B,strength,1,True,4000,96.0,False,398,,,True,,,,,,False,,,,,,,,,,flange local buckling,plastic yielding,True
+F.3B,strength,2,True,4000,242.8,False,398,,,True,,,,,,False,,,,,,,,,,flange local buckling,plastic yielding,True
+F.3B,strength,3,True,4000,126.3,False,398,,,True,,,,,,False,,,,,,,,,,flange local buckling,plastic yielding,True
+F.4,selection,1,False,3030,66.8,False,W24X55,W24X55,,False,,,,,,False,,True,True,True,False,False,55.0,0.0,,,,
+F.4,selection,2,True,4000,86.8,False,W24X55,,,True,,,,,,False,,,,,,,,,,,,
+F.4,selection,3,False,2353,72.5,False,W24X55,W21X62,,False,,,,,,False,,False,True,True,False,False,62.0,7.0,,,,
+G.1B,strength,1,True,4000,103.7,False,306,,,True,,,,,,False,,,,,,,,,,,,
+G.1B,strength,2,True,4000,107.5,False,306,,,True,,,,,,False,,,,,,,,,,,,
+G.1B,strength,3,True,4000,126.0,False,306,,,True,,,,,,False,,,,,,,,,,,,

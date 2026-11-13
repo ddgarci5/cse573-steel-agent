@@ -1,0 +1,81 @@
+{
+  "runs": 39,
+  "problems": 13,
+  "repeats": 3,
+  "truncated_outputs": 12,
+  "mean_eval_tokens": 2388.974358974359,
+  "mean_wall_seconds": 67.51538461538462,
+  "refusals": 0,
+  "no_final_answer": 12,
+  "runs_with_reasoning_output": 0,
+  "strength": {
+    "runs": 27,
+    "no_final_answer": 10,
+    "within_1pct": 7,
+    "within_5pct": 13,
+    "overestimate_gt_1pct": 7,
+    "unit_mismatch": 0,
+    "median_abs_err_pct": 1.6967509025270717,
+    "mean_abs_err_pct": 5.401853547531388,
+    "max_abs_err_pct": 31.49305555555555,
+    "wrong_limit_state": 1,
+    "limit_state_applicable_runs": 12,
+    "limit_state_stated_runs": 12,
+    "wrong_limit_state_stated": 5,
+    "wrong_limit_state_by_problem": {
+      "F.1-3B": 1
+    }
+  },
+  "selection": {
+    "runs": 12,
+    "no_final_answer": 2,
+    "exact_match_published": 3,
+    "hallucinated_section": 2,
+    "system_a_pass": 8,
+    "unsafe_recommendation": 0,
+    "mean_weight_gap_lb_ft_when_exists": 14.25
+  },
+  "problems_with_identical_text_across_repeats": 0,
+  "problems_with_2plus_repeats": 13,
+  "scorer_sha256": "c8e7959deb9291e4116ac77dd7235d47a24a2897c33d1e12fc04635b0aa20100"
+}
+         id  repeat published  parsed  err_pct unit_ok                          wrong_limit_state  expected_limit_state stated_limit_state  refusal exact_match exists system_a_pass             system_a_reasons
+D.1-rupture       1       211   210.7    -0.14    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+D.1-rupture       2       211   210.7    -0.14    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+D.1-rupture       3       211   210.7    -0.14    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+  D.1-yield       1       277   281.7     1.70    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+  D.1-yield       2       277   281.7     1.70    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+  D.1-yield       3       277   281.7     1.70    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       E.1A       1   W14X132 W14X130      NaN     NaN                                        NaN                   NaN                NaN    False       False  False         False section not in AISC database
+       E.1A       2   W14X132 W14X233      NaN     NaN                                        NaN                   NaN                NaN    False       False   True          True                             
+       E.1A       3   W14X132 W14X136      NaN     NaN                                        NaN                   NaN                NaN    False       False  False         False section not in AISC database
+       E.1C       1       892   914.0     2.47    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       E.1C       2       892   897.0     0.56    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       E.1C       3       892   897.0     0.56    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       E.1D       1       927   923.0    -0.43    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       E.1D       2       927   922.5    -0.49    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       E.1D       3       927   911.0    -1.73    True                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+     F.1-1A       1    W18X50    None      NaN     NaN                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+     F.1-1A       2    W18X50  W18X50      NaN     NaN                                        NaN                   NaN                NaN    False        True   True          True                             
+     F.1-1A       3    W18X50  W18X50      NaN     NaN                                        NaN                   NaN                NaN    False        True   True          True                             
+     F.1-1B       1       379   325.9   -14.01    True                                        NaN      plastic yielding   plastic yielding    False         NaN    NaN           NaN                          NaN
+     F.1-1B       2       379   325.9   -14.01    True                                        NaN      plastic yielding   plastic yielding    False         NaN    NaN           NaN                          NaN
+     F.1-1B       3       379    None      NaN     NaN                                        NaN      plastic yielding   plastic yielding    False         NaN    NaN           NaN                          NaN
+     F.1-2B       1       304   314.6     3.49    True                                        NaN         inelastic LTB      inelastic LTB    False         NaN    NaN           NaN                          NaN
+     F.1-2B       2       304    None      NaN     NaN                                        NaN         inelastic LTB        elastic LTB    False         NaN    NaN           NaN                          NaN
+     F.1-2B       3       304    None      NaN     NaN                                        NaN         inelastic LTB      inelastic LTB    False         NaN    NaN           NaN                          NaN
+     F.1-3B       1       288    None      NaN     NaN                                        NaN           elastic LTB        elastic LTB    False         NaN    NaN           NaN                          NaN
+     F.1-3B       2       288   337.2    17.08    True                                        NaN           elastic LTB      inelastic LTB    False         NaN    NaN           NaN                          NaN
+     F.1-3B       3       288   378.7    31.49    True plastic moment (yielding; ignores LTB/FLB)           elastic LTB        elastic LTB    False         NaN    NaN           NaN                          NaN
+       F.3A       1    W21X48  W21X50      NaN     NaN                                        NaN                   NaN                NaN    False       False   True          True                             
+       F.3A       2    W21X48  W21X50      NaN     NaN                                        NaN                   NaN                NaN    False       False   True          True                             
+       F.3A       3    W21X48  W21X50      NaN     NaN                                        NaN                   NaN                NaN    False       False   True          True                             
+       F.3B       1       398    None      NaN     NaN                                        NaN flange local buckling   plastic yielding    False         NaN    NaN           NaN                          NaN
+       F.3B       2       398    None      NaN     NaN                                        NaN flange local buckling   plastic yielding    False         NaN    NaN           NaN                          NaN
+       F.3B       3       398    None      NaN     NaN                                        NaN flange local buckling   plastic yielding    False         NaN    NaN           NaN                          NaN
+        F.4       1    W24X55  W24X55      NaN     NaN                                        NaN                   NaN                NaN    False        True   True          True                             
+        F.4       2    W24X55    None      NaN     NaN                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+        F.4       3    W24X55  W21X62      NaN     NaN                                        NaN                   NaN                NaN    False       False   True          True                             
+       G.1B       1       306    None      NaN     NaN                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       G.1B       2       306    None      NaN     NaN                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN
+       G.1B       3       306    None      NaN     NaN                                        NaN                   NaN                NaN    False         NaN    NaN           NaN                          NaN

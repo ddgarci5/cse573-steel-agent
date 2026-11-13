@@ -1,5 +1,53 @@
 # Session summary (newest first)
 
+## System C pilot, 2026-11-13: does a larger output cap change the answers? (1,500 vs 4,000 output tokens)
+
+**What changed and what did not.** The two Voyager models were rerun with `max_tokens = 4,000` instead of 1,500. Everything else is identical: the same 13 problems (9 strength, 4 selection), the same prompt text, temperature 0, seed 573, 3 repeats, the same thinking setting (qwen38-27b: `enable_thinking=false` sent; gemma4-31b-it: no flag; reasoning output appeared in 0 of 39 runs of each at both caps), and the same scorer. **The scoring/classifier code was not modified**: `eval/system_c_pilot.py` is byte-identical (sha256 prefix `c8e7959deb92`) and every run's `summary.json` records that hash, so the 1,500-token runs did not need re-scoring. No scorer bug was found. The cap was set without editing that file, through the wrapper `eval/system_c_run_cap.py`, which overrides the module constant and calls the same `run()`.
+- New run folders (the 1,500-token folders were not touched): `results/system_c_pilot_voyager_qwen38-27b_cap4000_20261113T021439Z/` (39 runs, 43.9 min) and `results/system_c_pilot_voyager_gemma4-31b-it_cap4000_20261113T021439Z/` (39 runs, 20.3 min).
+- Side-by-side table: `results/system_c_cap_comparison_20261113T025850Z/` (`cap_comparison.csv`, `.md`, `inputs.json`), produced by `eval/system_c_cap_comparison.py` from the runs' `summary.json` files.
+- **Local qwen3.5:9b was NOT rerun.** At the 1,500 cap it averaged 262 s per problem (about 1,290 output tokens, 9 of 13 first-repeat outputs truncated). Outputs that were cut at 1,500 tokens could run up to 2.7x longer at a 4,000 cap on this CPU-only machine, so even one repeat of 13 problems would very likely exceed the one-hour limit. Its 1,500-token numbers (17-run snapshot) are kept as they were.
+
+### Side-by-side, both caps (exact counts)
+Strength = 9 problems x 3 repeats = 27 runs; selection = 4 x 3 = 12 runs; truncation and repeats-agreed are per model. The local column is the 17-run snapshot (13 strength + 4 selection).
+| Metric | local qwen3.5:9b @ 1,500 | qwen38-27b @ 1,500 | qwen38-27b @ 4,000 | gemma4-31b-it @ 1,500 | gemma4-31b-it @ 4,000 |
+|---|---|---|---|---|---|
+| Strength runs answered (parsed numeric answer) | 6 of 13 | 16 of 27 | 17 of 27 | 24 of 27 | 27 of 27 |
+| Strength: within 1% of AISC | 3 of 13 | 8 of 27 | 7 of 27 | 14 of 27 | 15 of 27 |
+| Strength: within 5% of AISC | 3 of 13 | 14 of 27 | 13 of 27 | 15 of 27 | 15 of 27 |
+| Strength: overestimate > 1% (unsafe direction) | 0 of 13 | 5 of 27 | 7 of 27 | 5 of 27 | 5 of 27 |
+| Selection: matches AISC section | 0 of 4 | 0 of 12 | 3 of 12 | 9 of 12 | 8 of 12 |
+| Selection: answered (parsed section) | 0 of 4 | 1 of 12 | 10 of 12 | 12 of 12 | 12 of 12 |
+| Selection: proposed section fails a System A check (unsafe) | 0 of 4 | 0 of 12 | 0 of 12 | 0 of 12 | 1 of 12 |
+| Selection: section not in AISC database | 0 of 4 | 0 of 12 | 2 of 12 | 0 of 12 | 1 of 12 |
+| Truncated outputs (hit the cap) | 11 of 17 | 22 of 39 | 12 of 39 | 3 of 39 | 0 of 39 |
+| Repeats agreed (identical text, problems with 2+ repeats) | 4 of 4 | 0 of 13 | 0 of 13 | 1 of 13 | 2 of 13 |
+| Strength median absolute error, answered runs | 4.06% | 1.13% | 1.70% | 0.53% | 0.81% |
+| Strength max absolute error, answered runs | 11.19% | 46.63% | 31.49% | 54.69% | 34.20% |
+| Mean output tokens | 1,247 | 1,215 | 2,389 | 774 | 746 |
+
+### What the larger cap did and did not change
+- **More answers, not better answers.** Gemma now answers all 27 strength runs (24 before) and its within-1% count moves 14 to 15 of 27. Qwen answers 17 of 27 (16 before) but its within-1% count moves 8 to 7 of 27 and its overestimates rise from 5 to 7 of 27: the runs that were hidden by truncation are mostly wrong ones. The previous error statistics were therefore computed on a flattering subset.
+- **Qwen still truncates 12 of 39 runs at 4,000 tokens** (F.3B 3, G.1B 3, F.1-2B 2, and one each on F.1-1A, F.1-1B, F.1-3B, F.4). The two long outputs I read (G.1B and F.3B, repeat 1) are self-correction loops: the same wrong formula restated up to 8 times and 6 to 7 "Wait / re-check / Actually" markers, ending mid-calculation at the cap. A larger cap will not fix that; the model does not converge on those problems.
+- **Qwen selection became visible and is poor:** 3 of 12 match (F.1-1A twice, F.4 once), 10 of 12 answered, and 2 of the answers are not AISC sections (E.1A repeat 1 `W14X130`, repeat 3 `W14X136`); E.1A repeat 2 is W14X233 (exists, passes System A, 101 lb/ft heavier). F.3A is W21X50 in all 3 repeats (passes, 2 lb/ft heavier than W21X48). No Qwen section failed a System A check, but 2 do not exist.
+- **Gemma selection got worse at repeat 1 only:** F.3A repeat 1 proposed `W24X45` (not an AISC section; the working uses Zx = 107 in^3 for it) and F.4 repeat 1 proposed `W21X55`, which fails the deflection check (Ix utilization 1.105). The 1,500-token runs of the same model had neither failure and those answers were not truncated, so this is run-to-run variation at temperature 0 (Voyager outputs are not deterministic), not an effect of the cap. Gemma's other 10 selection runs passed System A.
+- **Repeats still disagree:** identical text across repeats on 0 of 13 problems for Qwen at both caps; Gemma 1 of 13 at 1,500 and 2 of 13 at 4,000. The repeat-to-repeat spread is why single-run differences in the table (for example Gemma 9 vs 8 of 12 selection matches) should not be read as a cap effect.
+- **Large errors that remain** are on the beam-flexure problems: Gemma F.1-3B at 4,000 tokens answers -10.6%, -34.2% and +23.2% (previously one answer, -54.7%); Gemma F.1-2B answers -15.1%, +14.8%, -13.6%. Gemma's F.3B (+7.41% x3) and G.1B (-19.02% x3) are identical at both caps. Qwen's largest overestimates are F.1-3B +17.1% and +31.5% (378.7 kip-ft equals phi*Mp, the LTB-ignoring value; it is the one run per cap that the value-based check labels a wrong limit state, F.1-3B repeat 3 at 4,000 and repeat 2 at 1,500).
+- Refusals: 0 for both models at both caps (regex flagged none). Secondary (heuristic text classifier, 12 beam runs per model, every run states a limit state): wrong in Qwen 3 of 12 at 1,500 vs 5 of 12 at 4,000; Gemma 5 of 12 vs 4 of 12.
+
+Median absolute error by strength problem, answered runs `(answered/3 repeats)`:
+| Problem | qwen38 @ 1,500 | qwen38 @ 4,000 | gemma4 @ 1,500 | gemma4 @ 4,000 |
+|---|---|---|---|---|
+| D.1-yield | 1.70% (3/3) | 1.70% (3/3) | 0.23% (3/3) | 0.23% (3/3) |
+| D.1-rupture | 0.14% (3/3) | 0.14% (3/3) | 0.14% (3/3) | 0.14% (3/3) |
+| E.1C | 0.56% (3/3) | 0.56% (3/3) | 0.76% (3/3) | 0.81% (3/3) |
+| E.1D | 0.49% (3/3) | 0.49% (3/3) | 0.17% (3/3) | 0.30% (3/3) |
+| F.1-1B | 2.74% (1/3) | 14.01% (2/3) | 0.07% (3/3) | 0.07% (3/3) |
+| F.1-2B | no answer (0/3) | 3.49% (1/3) | 15.75% (2/3) | 14.77% (3/3) |
+| F.1-3B | 39.06% (2/3) | 24.29% (2/3) | 54.69% (1/3) | 23.23% (3/3) |
+| F.3B | 4.52% (1/3) | no answer (0/3) | 7.41% (3/3) | 7.41% (3/3) |
+| G.1B | no answer (0/3) | no answer (0/3) | 19.02% (3/3) | 19.02% (3/3) |
+
+
 ## System C pilot, 2026-11-12: local qwen3.5:9b vs ASU Voyager qwen38-27b and gemma4-31b-it
 
 **What was run.** The same 13 Dataset C problems (9 strength checks, 4 section selections), the same prompt text, parser, token cap (1,500 output tokens), temperature 0 and seed 573, no tools and no retrieval. Raw outputs are saved separately per model:

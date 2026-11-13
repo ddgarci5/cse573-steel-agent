@@ -1,0 +1,26 @@
+{
+  "id": "F.1-2B",
+  "kind": "strength",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 11.667 ft. Cb = 1.01. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $d = 18.0 \\text{ in}$\n*   $b_f = 7.50 \\text{ in}$\n*   $t_f = 0.570 \\text{ in}$\n*   $t_w = 0.355 \\text{ in}$\n*   $I_x = 889 \\text{ in}^4$\n*   $S_x = 99.1 \\text{ in}^3$\n*   $Z_x = 118 \\text{ in}^3$\n*   $r_y = 1.64 \\text{ in}$\n*   $J = 2.45 \\text{ in}^4$\n*   $h_o = d - 2t_f = 18.0 - 1.14 = 16.86 \\text{ in}$\n\n**2. Yielding Limit State:**\n$M_n = M_p = F_y Z_x = 50 \\text{ ksi} \\times 118 \\text{ in}^3 = 5,900 \\text{ kip-in}$\n\n**3. Lateral-Torsional Buckling (LTB) Limit State:**\n*   Unbraced length $L_b = 11.667 \\text{ ft} = 140 \\text{ in}$\n*   Calculate $L_p$:\n    $L_p = 1.76 r_y \\sqrt{E/F_y} = 1.76 \\times 1.64 \\times \\sqrt{29000/50} = 2.886 \\times 24.08 \\approx 69.5 \\text{ in}$\n*   Calculate $L_r$:\n    $L_r = 1.95 r_y \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x h_o} \\frac{\\sqrt{1 + \\frac{1}{24} \\frac{h_o^2}{r_y^2}}}{1}}$ (Simplified for rolled shapes)\n    Alternatively, using the standard formula for $L_r$:\n    $L_r \\approx 1.95 \\times 1.64 \\times \\frac{29000}{35} \\sqrt{\\frac{2.45 \\times 1}{99.1 \\times 16.86} \\times \\sqrt{1 + \\frac{16.86^2}{24 \\times 1.64^2}}} \\approx 273 \\times \\sqrt{0.00147 \\times 2.6} \\approx 16.8 \\text{ ft} \\approx 202 \\text{ in}$\n*   Since $L_p < L_b < L_r$ ($69.5 < 140 < 202$), the beam is in the **inelastic LTB** region.\n\n**4. Calculate $M_n$ for Inelastic LTB:**\n$M_n = C_b \\left[ M_p - (M_p - 0.7 F_y S_x) \\left( \\frac{L_b - L_p}{L_r - L_p} \\right) \\right] \\leq M_p$\n$0.7 F_y S_x = 0.7 \\times 50 \\times 99.1 = 3,468.5 \\text{ kip-in}$\n$M_p - 0.7 F_y S_x = 5,900 - 3,468.5 = 2,431.5 \\text{ kip-in}$\n$\\frac{L_b - L_p}{L_r - L_p} = \\frac{140 - 69.5}{202 - 69.5} = \\frac{70.5}{132.5} \\approx 0.532$\n$M_n = 1.01 \\times [5,900 - (2,431.5 \\times 0.532)] = 1.01 \\times [5,900 - 1,293.6] = 1.01 \\times 4,606.4 = 4,652.5 \\text{ kip-in}$\n\n**5. Design Strength:**\n$\\phi_b = 0.90$\n$\\phi_b M_n = 0.90 \\times 4,652.5 = 4,187.25 \\text{ kip-in}$\nConvert to kip-ft: $4,187.25 / 12 = 348.9 \\text{ kip-ft}$\n\nFINAL ANSWER: 348.9 kip-ft",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 1149,
+  "eval_seconds": 36.92,
+  "prompt_eval_count": 190,
+  "usage": {
+    "co2_g": 1.320891,
+    "completion_tokens": 1149,
+    "energy_wh": 3.919557,
+    "prompt_tokens": 190,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1339
+  },
+  "wall_seconds": 36.9,
+  "finished_utc": "2026-11-13T02:22:58.726015+00:00"
+}

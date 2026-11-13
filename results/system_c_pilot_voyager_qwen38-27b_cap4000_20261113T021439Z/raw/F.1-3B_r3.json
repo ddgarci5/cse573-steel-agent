@@ -1,0 +1,26 @@
+{
+  "id": "F.1-3B",
+  "kind": "strength",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 17.5 ft. Cb = 1.3. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design flexural strength $\\phi_b M_n$ for the W18x50 beam, we must evaluate the limit states of yielding, lateral-torsional buckling (LTB), and flange local buckling.\n\n**1. Section Properties (W18x50)**\nFrom standard AISC section properties for a W18x50:\n*   Plastic section modulus, $Z_x = 101 \\text{ in}^3$\n*   Elastic section modulus, $S_x = 88.9 \\text{ in}^3$\n*   Radius of gyration for torsion, $r_{ts} = 1.73 \\text{ in}$\n*   Torsional constant factor, $J = 0.489 \\text{ in}^4$\n*   Flange width, $b_f = 7.50 \\text{ in}$\n*   Flange thickness, $t_f = 0.510 \\text{ in}$\n*   Web thickness, $t_w = 0.335 \\text{ in}$\n*   Depth, $d = 17.99 \\text{ in}$\n*   Lateral-torsional buckling limit, $L_p = 5.02 \\text{ ft}$\n*   Lateral-torsional buckling limit, $L_r = 13.4 \\text{ ft}$\n*   Yield moment, $M_p = F_y Z_x = 50 \\times 101 = 5050 \\text{ kip-in} = 420.8 \\text{ kip-ft}$\n*   Yield stress, $F_y = 50 \\text{ ksi}$\n\n**2. Check Flange Local Buckling**\nCalculate the slenderness ratio $\\lambda = b_f / (2t_f)$:\n$$ \\lambda = \\frac{7.50}{2(0.510)} = 7.35 $$\nLimit for non-slender flange (AISC Table B4.1b):\n$$ \\lambda_p = 0.38 \\sqrt{\\frac{E}{F_y}} = 0.38 \\sqrt{\\frac{29000}{50}} = 9.15 $$\nSince $\\lambda < \\lambda_p$ ($7.35 < 9.15$), the flange is **non-slender**. Local buckling does not govern.\n\n**3. Determine Lateral-Torsional Buckling (LTB) Limit State**\nGiven:\n*   $L_b = 17.5 \\text{ ft}$\n*   $L_p = 5.02 \\text{ ft}$\n*   $L_r = 13.4 \\text{ ft}$\n*   $C_b = 1.3$\n\nSince $L_b > L_r$ ($17.5 > 13.4$), the beam is in the **elastic LTB** range. The nominal moment $M_n$ is calculated using AISC Equation F2-4:\n\n$$ M_n = C_b \\left[ F_r L_r - F_y \\left( \\frac{L_b - L_p}{L_r - L_p} \\right) \\right] S_x \\le M_p $$\n\nFirst, calculate the term in the brackets (effective stress):\n$$ \\text{Stress Term} = 1.3 \\left[ 50(13.4) - 50 \\left( \\frac{17.5 - 5.02}{13.4 - 5.02} \\right) \\right] $$\n$$ \\text{Stress Term} = 1.3 \\left[ 670 - 50 \\left( \\frac{12.48}{8.38} \\right) \\right] $$\n$$ \\text{Stress Term} = 1.3 \\left[ 670 - 50(1.4893) \\right] $$\n$$ \\text{Stress Term} = 1.3 \\left[ 670 - 74.46 \\right] $$\n$$ \\text{Stress Term} = 1.3 [ 595.54 ] = 774.2 \\text{ ksi} $$\n\nNow, calculate $M_n$:\n$$ M_n = 774.2 \\text{ ksi} \\times 88.9 \\text{ in}^3 = 68,826 \\text{ kip-in} $$\nConvert to kip-ft:\n$$ M_n = \\frac{68,826}{12} = 5735.5 \\text{ kip-ft} $$\n\n**4. Apply Upper Limit**\nThe nominal moment $M_n$ cannot exceed the plastic moment capacity $M_p$.\n$$ M_p = 420.8 \\text{ kip-ft} $$\nSince $5735.5 \\text{ kip-ft} > 420.8 \\text{ kip-ft}$, the nominal moment is capped at $M_p$.\n$$ M_n = M_p = 420.8 \\text{ kip-ft} $$\n\n*Note: The high $C_b$ factor significantly increases the elastic LTB capacity, pushing it well above the yield capacity. Therefore, the beam yields before it buckles laterally.*\n\n**5. Calculate Design Strength**\n$$ \\phi_b M_n = 0.90 \\times M_n $$\n$$ \\phi_b M_n = 0.90 \\times 420.8 \\text{ kip-ft} $$\n$$ \\phi_b M_n = 378.72 \\text{ kip-ft} $$\n\nRounding to one decimal place:\n$$ \\phi_b M_n = 378.7 \\text{ kip-ft} $$\n\nFINAL ANSWER: 378.7 kip-ft",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 1316,
+  "eval_seconds": 38.28,
+  "prompt_eval_count": 182,
+  "usage": {
+    "co2_g": 0.595693,
+    "completion_tokens": 1316,
+    "energy_wh": 1.767636,
+    "prompt_tokens": 182,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 0,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1498
+  },
+  "wall_seconds": 38.3,
+  "finished_utc": "2026-11-13T02:49:47.878399+00:00"
+}

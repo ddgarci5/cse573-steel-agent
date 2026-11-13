@@ -1,0 +1,39 @@
+{
+  "runs": 39,
+  "problems": 13,
+  "repeats": 3,
+  "truncated_outputs": 0,
+  "mean_eval_tokens": 746.4615384615385,
+  "mean_wall_seconds": 31.256410256410255,
+  "refusals": 0,
+  "no_final_answer": 0,
+  "runs_with_reasoning_output": 0,
+  "strength": {
+    "runs": 27,
+    "no_final_answer": 0,
+    "within_1pct": 15,
+    "within_5pct": 15,
+    "overestimate_gt_1pct": 5,
+    "unit_mismatch": 0,
+    "median_abs_err_pct": 0.8071748878923818,
+    "mean_abs_err_pct": 7.25369116157691,
+    "max_abs_err_pct": 34.201388888888886,
+    "wrong_limit_state": 0,
+    "limit_state_applicable_runs": 12,
+    "limit_state_stated_runs": 12,
+    "wrong_limit_state_stated": 4,
+    "wrong_limit_state_by_problem": {}
+  },
+  "selection": {
+    "runs": 12,
+    "no_final_answer": 0,
+    "exact_match_published": 8,
+    "hallucinated_section": 1,
+    "system_a_pass": 10,
+    "unsafe_recommendation": 1,
+    "mean_weight_gap_lb_ft_when_exists": 0.36363636363636365
+  },
+  "problems_with_identical_text_across_repeats": 2,
+  "problems_with_2plus_repeats": 13,
+  "scorer_sha256": "c8e7959deb9291e4116ac77dd7235d47a24a2897c33d1e12fc04635b0aa20100"
+}

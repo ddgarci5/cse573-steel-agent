@@ -1,0 +1,26 @@
+{
+  "id": "F.1-3B",
+  "kind": "strength",
+  "repeat": 3,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 17.5 ft. Cb = 1.3. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W18x50):**\n*   $d = 18.0 \\text{ in}$\n*   $b_f = 7.5 \\text{ in}$\n*   $t_f = 0.570 \\text{ in}$\n*   $t_w = 0.355 \\text{ in}$\n*   $I_x = 889 \\text{ in}^4$\n*   $S_x = 99.1 \\text{ in}^3$\n*   $Z_x = 111 \\text{ in}^3$\n*   $r_y = 1.65 \\text{ in}$\n*   $J = 2.44 \\text{ in}^4$\n*   $C_w = 3,440 \\text{ in}^6$\n\n**2. Limit States Check:**\n*   **Yielding:** $M_n = M_p = F_y Z_x = 50 \\times 111 / 12 = 462.5 \\text{ kip-ft}$\n*   **Lateral Torsional Buckling (LTB):**\n    *   $L_p = 1.76 r_y \\sqrt{E/F_y} = 1.76 \\times 1.65 \\times \\sqrt{29000/50} = 2.904 \\times 24.08 \\approx 69.9 \\text{ in} \\approx 5.8 \\text{ ft}$\n    *   $L_r = 1.95 r_{ts} \\frac{E}{0.7 F_y} \\sqrt{\\frac{J c}{S_x F_y}}$ (or simplified for W-shapes): $L_r \\approx 18.5 \\text{ ft}$\n    *   Since $L_p < L_b < L_r$ ($5.8 \\text{ ft} < 17.5 \\text{ ft} < 18.5 \\text{ ft}$), the beam is in the **inelastic LTB** region.\n\n**3. Inelastic LTB Calculation:**\nThe nominal strength $M_n$ is the minimum of:\n$M_n = C_b \\left[ M_p - (M_p - 0.7 F_y S_x) \\left( \\frac{L_b - L_p}{L_r - L_p} \\right) \\right] \\leq M_p$\n*   $M_p = 462.5 \\text{ kip-ft}$\n*   $0.7 F_y S_x = 0.7 \\times 50 \\times 99.1 / 12 = 289.6 \\text{ kip-ft}$\n*   $\\frac{L_b - L_p}{L_r - L_p} = \\frac{17.5 - 5.8}{18.5 - 5.8} = \\frac{11.7}{12.7} \\approx 0.921$\n*   $M_n = 1.3 \\times [462.5 - (462.5 - 289.6) \\times 0.921]$\n*   $M_n = 1.3 \\times [462.5 - (172.9 \\times 0.921)] = 1.3 \\times [462.5 - 159.2] = 1.3 \\times 303.3 = 394.3 \\text{ kip-ft}$\n\n**4. Design Strength:**\nSince $M_n \\leq M_p$ (394.3 < 462.5), $M_n = 394.3 \\text{ kip-ft}$.\n$\\phi_b M_n = 0.9 \\times 394.3 = 354.9 \\text{ kip-ft}$\n\nFINAL ANSWER: 354.9 kip-ft",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 952,
+  "eval_seconds": 40.79,
+  "prompt_eval_count": 187,
+  "usage": {
+    "co2_g": 1.176113,
+    "completion_tokens": 952,
+    "energy_wh": 3.48995,
+    "prompt_tokens": 187,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 1139
+  },
+  "wall_seconds": 40.8,
+  "finished_utc": "2026-11-13T02:31:06.478708+00:00"
+}

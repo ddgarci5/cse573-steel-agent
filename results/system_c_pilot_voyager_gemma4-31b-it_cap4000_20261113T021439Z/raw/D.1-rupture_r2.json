@@ -1,0 +1,26 @@
+{
+  "id": "D.1-rupture",
+  "kind": "strength",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W8x21 rolled W-shape is used as a tension member. Net area An = 4.76 in^2 and shear lag factor U = 0.908. What is the LRFD design tensile strength for rupture on the effective net area, phi_t*Pn, in kips?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "To determine the LRFD design tensile strength for rupture on the effective net area ($\\phi_t P_n$), we follow the provisions of ANSI/AISC 360-22, Chapter D.\n\n**1. Given Data:**\n*   Shape: W8x21\n*   Material: ASTM A992 ($F_y = 50 \\text{ ksi}$, $F_u = 65 \\text{ ksi}$)\n*   Net Area ($A_n$): $4.76 \\text{ in}^2$\n*   Shear Lag Factor ($U$): $0.908$\n*   Resistance Factor for Rupture ($\\phi_t$): $0.75$\n\n**2. Calculate Effective Net Area ($A_e$):**\nThe effective net area accounts for shear lag in tension members:\n$$A_e = A_n \\times U$$\n$$A_e = 4.76 \\text{ in}^2 \\times 0.908$$\n$$A_e \\approx 4.322 \\text{ in}^2$$\n\n**3. Calculate Nominal Tensile Strength for Rupture ($P_n$):**\nAccording to AISC 360-22, Section D2, the nominal strength for rupture is:\n$$P_n = F_u \\times A_e$$\n$$P_n = 65 \\text{ ksi} \\times 4.322 \\text{ in}^2$$\n$$P_n \\approx 280.93 \\text{ kips}$$\n\n**4. Calculate Design Tensile Strength ($\\phi_t P_n$):**\n$$\\phi_t P_n = 0.75 \\times 280.93 \\text{ kips}$$\n$$\\phi_t P_n \\approx 210.70 \\text{ kips}$$\n\nFINAL ANSWER: 210.70 kips",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 437,
+  "eval_seconds": 23.76,
+  "prompt_eval_count": 186,
+  "usage": {
+    "co2_g": 1.21994,
+    "completion_tokens": 437,
+    "energy_wh": 3.619999,
+    "prompt_tokens": 186,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 623
+  },
+  "wall_seconds": 23.8,
+  "finished_utc": "2026-11-13T02:21:36.615163+00:00"
+}

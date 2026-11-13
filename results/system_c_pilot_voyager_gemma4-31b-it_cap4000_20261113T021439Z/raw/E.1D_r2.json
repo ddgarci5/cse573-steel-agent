@@ -1,0 +1,26 @@
+{
+  "id": "E.1D",
+  "kind": "strength",
+  "repeat": 2,
+  "prompt": "You are a structural engineer. Use ANSI/AISC 360-22, LRFD, ASTM A992 steel (Fy = 50 ksi, Fu = 65 ksi, E = 29,000 ksi), U.S. customary units. You have no tables or software; work from your own knowledge.\n\nProblem: A W14x90 rolled W-shape is used as a column. Effective length about the x axis = 30 ft; about the y axis = 15 ft. What is the LRFD design compressive strength, phi_c*Pn, in kips?\n\nShow brief working, then end with one final line exactly of the form:\nFINAL ANSWER: <number> <unit>",
+  "response": "**1. Section Properties (W14x90):**\n*   Area ($A_g$) = $26.5 \\text{ in}^2$\n*   Radius of gyration $r_x \\approx 6.14 \\text{ in}$\n*   Radius of gyration $r_y \\approx 3.70 \\text{ in}$\n\n**2. Slenderness Ratios:**\n*   $KL_x / r_x = (1.0 \\times 30 \\times 12) / 6.14 \\approx 58.63$\n*   $KL_y / r_y = (1.0 \\times 15 \\times 12) / 3.70 \\approx 48.65$\n*   Governing slenderness ratio $\\lambda = \\max(58.63, 48.65) = 58.63$\n\n**3. Critical Stress ($F_{cr}$):**\n*   Elastic buckling stress $F_e = \\frac{\\pi^2 E}{(KL/r)^2} = \\frac{\\pi^2 \\times 29,000}{(58.63)^2} \\approx \\frac{286,217}{3,437.48} \\approx 83.26 \\text{ ksi}$\n*   Check limit for inelastic buckling: $4.71 \\sqrt{E/F_y} = 4.71 \\sqrt{29,000/50} = 4.71 \\times 24.08 \\approx 113.4$\n*   Since $58.63 \\le 113.4$, the column is in the inelastic buckling regime.\n*   $F_{cr} = [0.658^{F_y/F_e}] F_y = [0.658^{50/83.26}] \\times 50 = [0.658^{0.600}] \\times 50$\n*   $0.658^{0.6} \\approx 0.782$\n*   $F_{cr} = 0.782 \\times 50 = 39.1 \\text{ ksi}$\n\n**4. Design Compressive Strength ($\\phi_c P_n$):**\n*   $\\phi_c = 0.90$\n*   $P_n = F_{cr} A_g = 39.1 \\text{ ksi} \\times 26.5 \\text{ in}^2 \\approx 1,036.15 \\text{ kips}$\n*   $\\phi_c P_n = 0.90 \\times 1,036.15 \\approx 932.5 \\text{ kips}$\n\nFINAL ANSWER: 932.5 kip",
+  "thinking": null,
+  "done_reason": "stop",
+  "eval_count": 667,
+  "eval_seconds": 17.22,
+  "prompt_eval_count": 176,
+  "usage": {
+    "co2_g": 0.975107,
+    "completion_tokens": 667,
+    "energy_wh": 2.893492,
+    "prompt_tokens": 176,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "created_cache_tokens": 128,
+      "multimodal_tokens": null
+    },
+    "total_tokens": 843
+  },
+  "wall_seconds": 17.2,
+  "finished_utc": "2026-11-13T02:22:08.101766+00:00"
+}

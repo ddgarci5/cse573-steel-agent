@@ -1,0 +1,22 @@
+{
+  "timestamp_utc": "20261113T021443Z",
+  "git_hash": "eb53b69d3c98749754bbdc7fc84b7be43ee06bba",
+  "model": "qwen38-27b",
+  "options": {
+    "temperature": 0,
+    "seed": 573,
+    "max_tokens": 4000
+  },
+  "repeats": 3,
+  "n_problems": 13,
+  "tools": null,
+  "retrieval": null,
+  "backend": "voyager",
+  "endpoint_host": "openai.rc.asu.edu",
+  "extra_request_fields": {
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    }
+  },
+  "thinking_request": "chat_template_kwargs.enable_thinking=false sent"
+}
