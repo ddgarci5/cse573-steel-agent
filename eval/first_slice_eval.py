@@ -232,7 +232,7 @@ def score_run(rec, gold, strength, selection, ctrl):
            "n_leaves_correct": sum(res.values()), "n_leaves": len(LEAVES), "exact_match": got is not None and all(res.values()),
            "n_wrong_fields": len(errs), "wrong_fields": "; ".join(f"{e['field']}: got {e['got']!r} expected {e['expected']!r}" for e in errs),
            "first_attempt_error": next((a["error"] for a in rec["attempts"] if not a["valid"]), None),
-           "flags": ",".join(f["code"] for f in (rt or {}).get("flags", [])), "section_flagged_nonexistent": any(f["code"] == "section_not_in_database" for f in (rt or {}).get("flags", [])),
+           "flag_codes": ",".join(f["code"] for f in (rt or {}).get("flags", [])), "section_flagged_nonexistent": any(f["code"] == "section_not_in_database" for f in (rt or {}).get("flags", [])),
            "route_status": (rt or {}).get("status", "no_valid_case"), "missing": ",".join((rt or {}).get("missing", []))}
     tp = fp = fn = 0
     for p in LEAVES:
@@ -289,7 +289,7 @@ def summarize_model(df, model_dir, ctrl):
         "validity": {"valid_first_try": int((df.extraction_status == "valid_first_try").sum()), "valid_after_retry": int((df.extraction_status == "valid_after_retry").sum()),
                      "invalid": int((df.extraction_status == "invalid").sum()), "responses_in_code_fence": int(df.fenced.sum()),
                      "truncated_responses": int(df.truncated.sum()), "section_flagged_not_in_database": int(df.section_flagged_nonexistent.sum()),
-                     "runs_with_any_domain_flag": int((df.flags.fillna("") != "").sum())},
+                     "runs_with_any_domain_flag": int((df["flag_codes"].fillna("") != "").sum())},
         "extraction": {"exact_match_runs": int(df.exact_match.sum()), "exact_match_of_valid": f"{int(valid.exact_match.sum())} of {len(valid)}",
                        "field_accuracy_all_runs": float(df.n_leaves_correct.sum() / df.n_leaves.sum()),
                        "field_accuracy_valid_runs": float(valid.n_leaves_correct.sum() / valid.n_leaves.sum()) if len(valid) else None,
@@ -351,7 +351,7 @@ def score(args):
         (mdir / "summary.json").write_text(json.dumps(summ, indent=2), encoding="utf-8")
         ferr = df[df.n_wrong_fields > 0][["id", "repeat", "extraction_status", "n_wrong_fields", "wrong_fields", "first_attempt_error"]]
         ferr.to_csv(mdir / "field_errors.csv", index=False)
-        df[~df.correct].reindex(columns=["id", "repeat", "kind", "outcome", "published", "final", "err_pct", "error_class", "route_status", "missing", "flags", "wrong_fields"]).to_csv(mdir / "error_trace.csv", index=False)
+        df[~df.correct].reindex(columns=["id", "repeat", "kind", "outcome", "published", "final", "err_pct", "error_class", "route_status", "missing", "flag_codes", "wrong_fields"]).to_csv(mdir / "error_trace.csv", index=False)
         all_summ[model], all_rows[model] = summ, df
         md += [f"## {model}", "", "```json", json.dumps(summ, indent=2), "```", ""]
         md += ["### Every run with a wrong or missing field", ""]

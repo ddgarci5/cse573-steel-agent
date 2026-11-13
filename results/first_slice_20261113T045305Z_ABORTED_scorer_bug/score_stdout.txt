@@ -1,0 +1,10 @@
+Traceback (most recent call last):
+  File "<repo>\eval\first_slice_eval.py", line 381, in <module>
+    {"run": run, "score": score}[a.cmd](a)
+    ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~^^^
+  File "<repo>\eval\first_slice_eval.py", line 348, in score
+    summ = summarize_model(df, mdir, ctrl)
+  File "<repo>\eval\first_slice_eval.py", line 292, in summarize_model
+    "runs_with_any_domain_flag": int((df.flags.fillna("") != "").sum())},
+                                      ^^^^^^^^^^^^^^^
+AttributeError: 'Flags' object has no attribute 'fillna'

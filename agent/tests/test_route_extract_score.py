@@ -170,3 +170,28 @@ def test_max_depth_selection_searches_all_allowed_nominal_depths():
 def test_tension_with_unspecified_limit_state_needs_an_and_u():
     case = DesignCase.model_validate({"member_type": "tension", "task": "check_given_section", "section": "W8X21", "missing_fields": ["An_in2", "U"]})
     assert route(case)["status"] == "would_ask_user"
+
+
+def test_score_command_end_to_end_on_a_synthetic_run(tmp_path, monkeypatch):
+    """The full `score` path (scores.csv, summary.json, SCORES.md) on synthetic raw records: oracle on 13 problems plus a few failure types.
+    This is the test that would have caught the 'flags' column name clashing with pandas' DataFrame.flags."""
+    mdir = tmp_path / "fake-model"
+    (mdir / "raw").mkdir(parents=True)
+    (tmp_path / "gold_control.json").write_text(json.dumps(CTRL, default=str), encoding="utf-8")
+    cases = {"E.1D": lambda d: d["geometry"].update(Lcx_ft=10), "G.1B": lambda d: d.update(section="W24X63"), "F.3A": lambda d: d["demands"].update(Mu_kipft=100)}
+    for pid in GOLD:
+        rec = run_record(pid, oracle_for(pid, cases.get(pid)))
+        rec.update(model="fake-model", problem_text=TEXTS[pid], wall_seconds=1.0, finished_utc="x")
+        (mdir / "raw" / f"{pid}_r1.json").write_text(json.dumps(rec, default=str), encoding="utf-8")
+    bad = run_record("E.1C", lambda m: {"response": "no json", "finish_reason": "length", "completion_tokens": 1000})
+    bad.update(model="fake-model", problem_text=TEXTS["E.1C"], wall_seconds=1.0, finished_utc="x", repeat=2)
+    (mdir / "raw" / "E.1C_r2.json").write_text(json.dumps(bad, default=str), encoding="utf-8")
+
+    import argparse
+    E.score(argparse.Namespace(run_dir=str(tmp_path)))
+    summ = json.loads((mdir / "summary.json").read_text(encoding="utf-8"))
+    assert summ["runs"] == 14 and summ["validity"]["invalid"] == 1 and summ["validity"]["valid_first_try"] == 13
+    assert summ["validity"]["section_flagged_not_in_database"] == 1 and summ["validity"]["truncated_responses"] == 1
+    assert summ["strength"]["unsafe_overstated_gt_1pct"] == 1 and summ["selection"]["unsafe_fails_system_a"] == 1
+    assert summ["final_correct_total"] == 10 and summ["error_trace_of_runs_not_correct"] == {"extraction error": 4}
+    assert (tmp_path / "SCORES.md").exists() and (mdir / "scores.csv").exists() and (mdir / "field_errors.csv").exists()

@@ -1,0 +1,150 @@
+{
+  "D.1-yield": {
+    "kind": "strength",
+    "published": 277,
+    "direct_system_a": 277.2,
+    "route_gold": 277.2,
+    "route_status": "computed",
+    "direct_err_pct": 0.07220216606497784,
+    "route_err_pct": 0.07220216606497784,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "D.1-rupture": {
+    "kind": "strength",
+    "published": 211,
+    "direct_system_a": 210.70139999999998,
+    "route_gold": 210.70139999999998,
+    "route_status": "computed",
+    "direct_err_pct": -0.14151658767773542,
+    "route_err_pct": -0.14151658767773542,
+    "direct_ok": true,
+    "route_ok": true,
+    "route_equals_direct": true
+  },
+  "E.1C": {
+    "kind": "strength",
+    "published": 892,
+    "direct_system_a": 893.2026716211915,
+    "route_gold": 893.2026716211915,
+    "route_status": "computed",
+    "direct_err_pct": 0.13482865708424716,
+    "route_err_pct": 0.13482865708424716,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "E.1D": {
+    "kind": "strength",
+    "published": 927,
+    "direct_system_a": 927.4619955048255,
+    "route_gold": 927.4619955048255,
+    "route_status": "computed",
+    "direct_err_pct": 0.049837702785921804,
+    "route_err_pct": 0.049837702785921804,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "F.1-1B": {
+    "kind": "strength",
+    "published": 379,
+    "direct_system_a": 378.75,
+    "route_gold": 378.75,
+    "route_status": "computed",
+    "direct_err_pct": -0.06596306068601583,
+    "route_err_pct": -0.06596306068601583,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "F.1-2B": {
+    "kind": "strength",
+    "published": 304,
+    "direct_system_a": 305.42114013153144,
+    "route_gold": 305.42114013153144,
+    "route_status": "computed",
+    "direct_err_pct": 0.46748030642481736,
+    "route_err_pct": 0.46748030642481736,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "F.1-3B": {
+    "kind": "strength",
+    "published": 288,
+    "direct_system_a": 287.83809418037197,
+    "route_gold": 287.83809418037197,
+    "route_status": "computed",
+    "direct_err_pct": -0.056217298481955585,
+    "route_err_pct": -0.056217298481955585,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "F.3B": {
+    "kind": "strength",
+    "published": 398,
+    "direct_system_a": 397.8996015495816,
+    "route_gold": 397.8996015495816,
+    "route_status": "computed",
+    "direct_err_pct": -0.025225741311161946,
+    "route_err_pct": -0.025225741311161946,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "G.1B": {
+    "kind": "strength",
+    "published": 306,
+    "direct_system_a": 305.72999999999996,
+    "route_gold": 305.72999999999996,
+    "route_status": "computed",
+    "direct_err_pct": -0.0882352941176597,
+    "route_err_pct": -0.0882352941176597,
+    "direct_ok": "True",
+    "route_ok": true,
+    "route_equals_direct": "True"
+  },
+  "E.1A": {
+    "kind": "selection",
+    "published": "W14X132",
+    "direct_system_a": "W14X132",
+    "route_gold": "W14X132",
+    "route_status": "computed",
+    "direct_ok": true,
+    "route_ok": true,
+    "route_equals_direct": true
+  },
+  "F.1-1A": {
+    "kind": "selection",
+    "published": "W18X50",
+    "direct_system_a": "W18X50",
+    "route_gold": "W18X50",
+    "route_status": "computed",
+    "direct_ok": true,
+    "route_ok": true,
+    "route_equals_direct": true
+  },
+  "F.4": {
+    "kind": "selection",
+    "published": "W24X55",
+    "direct_system_a": "W24X55",
+    "route_gold": "W24X55",
+    "route_status": "computed",
+    "direct_ok": true,
+    "route_ok": true,
+    "route_equals_direct": true
+  },
+  "F.3A": {
+    "kind": "selection",
+    "published": "W21X48",
+    "direct_system_a": "W21X48",
+    "route_gold": "W21X48",
+    "route_status": "computed",
+    "direct_ok": true,
+    "route_ok": true,
+    "route_equals_direct": true
+  }
+}
