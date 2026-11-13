@@ -1,0 +1,59 @@
+example D.1: PDF pages 38-40
+example E.1A: PDF pages 68-69
+example E.1C: PDF pages 72-73
+example E.1D: PDF pages 74-77
+example F.1-1A: PDF pages 168-169
+example F.1-1B: PDF pages 170-170
+example F.1-2B: PDF pages 172-173
+example F.1-3B: PDF pages 176-177
+example F.3A: PDF pages 184-185
+example F.3B: PDF pages 186-187
+example F.4: PDF pages 188-189
+example G.1B: PDF pages 240-240
+OK   D.1-yield    shape W8X21                                expected W8X21
+OK   D.1-yield    published phiPn (LRFD)                     expected 277 kip
+OK   D.1-rupture  shape W8X21                                expected W8X21
+OK   D.1-rupture  published phiPn (LRFD)                     expected 211 kip
+OK   D.1-rupture  An (in^2)                                  expected 4.76
+OK   D.1-rupture  U                                          expected 0.908
+OK   E.1C         shape W14X132                              expected W14X132
+OK   E.1C         published phiPn (LRFD)                     expected 892 kip
+OK   E.1C         effective length x (ft)                    expected 30
+OK   E.1C         effective length y (ft)                    expected 30
+OK   E.1D         shape W14X90                               expected W14X90
+OK   E.1D         published phiPn (LRFD)                     expected 927 kip
+OK   E.1D         effective length x (ft)                    expected 30
+OK   E.1D         effective length y (ft)                    expected 15
+OK   F.1-1B       shape W18X50                               expected W18X50
+OK   F.1-1B       published phiMn (LRFD)                     expected 379 kip-ft
+OK   F.1-1B       continuously braced                        expected Lb = 0
+OK   F.1-2B       shape W18X50                               expected W18X50
+OK   F.1-2B       published phiMn (LRFD)                     expected 304 kip-ft
+OK   F.1-2B       Cb                                         expected 1.01
+OK   F.1-2B       Lb = 11.7 ft in the PDF (ours 35/3 = 11.667) expected 11.6667
+OK   F.1-3B       shape W18X50                               expected W18X50
+OK   F.1-3B       published phiMn (LRFD)                     expected 288 kip-ft
+OK   F.1-3B       Cb                                         expected 1.3
+OK   F.1-3B       Lb (ft)                                    expected 17.5
+OK   F.3B         shape W21X48                               expected W21X48
+OK   F.3B         published phiMn (LRFD)                     expected 398 kip-ft
+OK   F.3B         continuously braced                        expected Lb = 0
+OK   G.1B         shape W24X62                               expected W24X62
+OK   G.1B         published phiVn (LRFD)                     expected 306 kip
+OK   E.1A         published section W14X132                  expected W14X132
+OK   E.1A         Pu (kip)                                   expected 840
+OK   E.1A         effective length (ft)                      expected 30
+OK   E.1A         nominal depth 14 in.                       expected 14
+OK   F.1-1A       published section W18X50                   expected W18X50
+OK   F.1-1A       Mu (kip-ft)                                expected 266
+OK   F.1-1A       continuously braced (Lb = 0)               expected 0
+OK   F.1-1A       Ix required (in^4)                         expected 746
+OK   F.1-1A       maximum nominal depth (in.)                expected 18
+OK   F.4          published section W24X55                   expected W24X55
+OK   F.4          Mu (kip-ft)                                expected 468
+OK   F.4          continuously braced (Lb = 0)               expected 0
+OK   F.4          Ix required (in^4)                         expected 1260
+OK   F.3A         published section W21X48                   expected W21X48
+OK   F.3A         Mu (kip-ft)                                expected 396
+OK   F.3A         continuously braced (Lb = 0)               expected 0
+46 of 46 checks found in the PDF

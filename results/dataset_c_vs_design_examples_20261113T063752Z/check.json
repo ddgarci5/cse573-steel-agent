@@ -1,0 +1,332 @@
+{
+  "pdf": "P901-23W.pdf",
+  "pdf_bytes": 19699680,
+  "errata_applied_or_checked": false,
+  "note": "booleans and our own stored numbers only; no PDF text; the May 2, 2025 errata are not checked here",
+  "n_checks": 46,
+  "n_found": 46,
+  "checks": [
+    {
+      "id": "D.1-yield",
+      "example": "D.1",
+      "check": "shape W8X21",
+      "expected": "W8X21",
+      "found_in_pdf": true
+    },
+    {
+      "id": "D.1-yield",
+      "example": "D.1",
+      "check": "published phiPn (LRFD)",
+      "expected": "277 kip",
+      "found_in_pdf": true
+    },
+    {
+      "id": "D.1-rupture",
+      "example": "D.1",
+      "check": "shape W8X21",
+      "expected": "W8X21",
+      "found_in_pdf": true
+    },
+    {
+      "id": "D.1-rupture",
+      "example": "D.1",
+      "check": "published phiPn (LRFD)",
+      "expected": "211 kip",
+      "found_in_pdf": true
+    },
+    {
+      "id": "D.1-rupture",
+      "example": "D.1",
+      "check": "An (in^2)",
+      "expected": 4.76,
+      "found_in_pdf": true
+    },
+    {
+      "id": "D.1-rupture",
+      "example": "D.1",
+      "check": "U",
+      "expected": 0.908,
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1C",
+      "example": "E.1C",
+      "check": "shape W14X132",
+      "expected": "W14X132",
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1C",
+      "example": "E.1C",
+      "check": "published phiPn (LRFD)",
+      "expected": "892 kip",
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1C",
+      "example": "E.1C",
+      "check": "effective length x (ft)",
+      "expected": 30,
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1C",
+      "example": "E.1C",
+      "check": "effective length y (ft)",
+      "expected": 30,
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1D",
+      "example": "E.1D",
+      "check": "shape W14X90",
+      "expected": "W14X90",
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1D",
+      "example": "E.1D",
+      "check": "published phiPn (LRFD)",
+      "expected": "927 kip",
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1D",
+      "example": "E.1D",
+      "check": "effective length x (ft)",
+      "expected": 30,
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1D",
+      "example": "E.1D",
+      "check": "effective length y (ft)",
+      "expected": 15,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1B",
+      "example": "F.1-1B",
+      "check": "shape W18X50",
+      "expected": "W18X50",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1B",
+      "example": "F.1-1B",
+      "check": "published phiMn (LRFD)",
+      "expected": "379 kip-ft",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1B",
+      "example": "F.1-1B",
+      "check": "continuously braced",
+      "expected": "Lb = 0",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-2B",
+      "example": "F.1-2B",
+      "check": "shape W18X50",
+      "expected": "W18X50",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-2B",
+      "example": "F.1-2B",
+      "check": "published phiMn (LRFD)",
+      "expected": "304 kip-ft",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-2B",
+      "example": "F.1-2B",
+      "check": "Cb",
+      "expected": 1.01,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-2B",
+      "example": "F.1-2B",
+      "check": "Lb = 11.7 ft in the PDF (ours 35/3 = 11.667)",
+      "expected": 11.6667,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-3B",
+      "example": "F.1-3B",
+      "check": "shape W18X50",
+      "expected": "W18X50",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-3B",
+      "example": "F.1-3B",
+      "check": "published phiMn (LRFD)",
+      "expected": "288 kip-ft",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-3B",
+      "example": "F.1-3B",
+      "check": "Cb",
+      "expected": 1.3,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-3B",
+      "example": "F.1-3B",
+      "check": "Lb (ft)",
+      "expected": 17.5,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.3B",
+      "example": "F.3B",
+      "check": "shape W21X48",
+      "expected": "W21X48",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.3B",
+      "example": "F.3B",
+      "check": "published phiMn (LRFD)",
+      "expected": "398 kip-ft",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.3B",
+      "example": "F.3B",
+      "check": "continuously braced",
+      "expected": "Lb = 0",
+      "found_in_pdf": true
+    },
+    {
+      "id": "G.1B",
+      "example": "G.1B",
+      "check": "shape W24X62",
+      "expected": "W24X62",
+      "found_in_pdf": true
+    },
+    {
+      "id": "G.1B",
+      "example": "G.1B",
+      "check": "published phiVn (LRFD)",
+      "expected": "306 kip",
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1A",
+      "example": "E.1A",
+      "check": "published section W14X132",
+      "expected": "W14X132",
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1A",
+      "example": "E.1A",
+      "check": "Pu (kip)",
+      "expected": 840,
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1A",
+      "example": "E.1A",
+      "check": "effective length (ft)",
+      "expected": 30,
+      "found_in_pdf": true
+    },
+    {
+      "id": "E.1A",
+      "example": "E.1A",
+      "check": "nominal depth 14 in.",
+      "expected": 14,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1A",
+      "example": "F.1-1A",
+      "check": "published section W18X50",
+      "expected": "W18X50",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1A",
+      "example": "F.1-1A",
+      "check": "Mu (kip-ft)",
+      "expected": 266,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1A",
+      "example": "F.1-1A",
+      "check": "continuously braced (Lb = 0)",
+      "expected": 0,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1A",
+      "example": "F.1-1A",
+      "check": "Ix required (in^4)",
+      "expected": 746,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.1-1A",
+      "example": "F.1-1A",
+      "check": "maximum nominal depth (in.)",
+      "expected": 18,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.4",
+      "example": "F.4",
+      "check": "published section W24X55",
+      "expected": "W24X55",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.4",
+      "example": "F.4",
+      "check": "Mu (kip-ft)",
+      "expected": 468,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.4",
+      "example": "F.4",
+      "check": "continuously braced (Lb = 0)",
+      "expected": 0,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.4",
+      "example": "F.4",
+      "check": "Ix required (in^4)",
+      "expected": 1260,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.3A",
+      "example": "F.3A",
+      "check": "published section W21X48",
+      "expected": "W21X48",
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.3A",
+      "example": "F.3A",
+      "check": "Mu (kip-ft)",
+      "expected": 396,
+      "found_in_pdf": true
+    },
+    {
+      "id": "F.3A",
+      "example": "F.3A",
+      "check": "continuously braced (Lb = 0)",
+      "expected": 0,
+      "found_in_pdf": true
+    }
+  ]
+}
