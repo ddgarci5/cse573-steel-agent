@@ -1,5 +1,85 @@
 # Session summary (newest first)
 
+## Session 2026-11-13 (night): first agent slice, LLM extraction -> validation -> deterministic solver -> compare with AISC
+
+This is the first two steps of System D (Parse, Calculate), not the LangGraph agent. The LLM only fills a DesignCase JSON; every number in a final answer comes from `steelagent/` through plain Python routing. **`steelagent/` was not modified** (34 solver tests still pass; 52 new tests in `agent/tests`, run with `cd agent && python -m pytest`).
+
+### What was built (commit hashes as pushed; the docs commit that contains this text is the one after `13575cb`)
+| Step | What | Commit |
+|---|---|---|
+| 1 | `agent/design_case.py`: Pydantic DesignCase (types, plausible ranges, unknown keys rejected, `missing_fields` consistency), domain flags, executable required-inputs map; `pydantic==2.14.3` pinned | `db2cc1c` |
+| 2 | `datasets/C_benchmark/gold_design_cases.json` (13 gold cases, generated mechanically from the Dataset C JSON by `eval/make_gold_design_cases.py`, no Dataset C value changed); `results/gold_design_cases_review.md` | `01e3149` |
+| 3 | `agent/extract.py` (frozen prompt `extract-v1`, JSON only, at most one retry with the validation error shown), `agent/route.py` (DesignCase to steelagent functions), `eval/first_slice_eval.py` (run + score) | `20282ec` |
+| 3b | Scorer bug fix (see "What failed") | `bceb3d0` |
+| 4 | Run and score: `results/first_slice_20261113T045951Z/` | `13575cb` |
+**Gold DesignCases are pending Dylan's review.** `results/gold_design_cases_review.md` lists each gold case under its exact problem text with a checkbox. Nothing in it has been hand-checked yet; if you change a gold value, rerun `eval/first_slice_eval.py score` (no model calls needed) and `python -m pytest` in `agent/` (the gold-vs-generator test will tell you to regenerate).
+
+### Design decisions fixed before any model call
+- **Same problem texts as System C.** `problem_texts()` takes each System C prompt and removes the shared header and the answer-format tail, so the model sees exactly the "Problem: ..." statement. The harness sets `problem_id`; the model never sees it (problem ids such as F.3B would identify the AISC example).
+- **One field added to the brief's list: `requested_limit_states`** (tension only). D.1-yield and D.1-rupture differ only in which limit state the question asks for, and the schema as listed cannot say that. With it empty, a tension check needs An and U (CLAUDE.md: the agent asks for them). Also added `shear` as a member type, as requested.
+- **Required-inputs map** (executable, in `design_case.py`): tension check = section (+ An, U unless only yielding is asked); compression check = section, Lcx, Lcy; flexure check = section, Lb (+ Cb unless Lb = 0); shear check = section; compression selection = Pu, Lcx, Lcy; flexure selection = Mu, Lb (+ Cb unless Lb = 0). Cb is not required at Lb = 0 because LTB cannot reduce Mn there; the router then passes Cb = 1.0 to the solver without writing it into the case. Tension selection and shear selection are flagged unsupported.
+- **`missing_fields`**: the model declares it; code computes the required-but-null inputs independently; the schema rejects a case if a required null input is not declared or a declared one has a value; the router asks the user when the **union** of the two lists is non-empty. A nonexistent section label is flagged (never corrected; only case and spacing of the label are normalized), triggers no retry, and the case is not computed.
+- **Scoring frozen** in the docstring of `eval/first_slice_eval.py` (also in meta.json as `scorer_sha256`): numeric fields within 0.5%, 22 leaf fields per case, exact match = all 22, strength correct within 1% of AISC, selection correct = same section as AISC, unsafe = capacity overstated by more than 1% or a recommended section that fails System A **on the true Dataset C case**, error trace = solver / routing / extraction decided by a gold control (below).
+- **Gold control (no model, run before every model run, aborts the run if it fails):** route(gold case) equals System A applied directly to the Dataset C parameters on all 13, and both agree with AISC (strength max error 0.466%, 4 of 4 selections exact). Saved as `gold_control.json`.
+- Run settings: Voyager, temperature 0, seed 573, max output tokens 1,000, 3 repeats, Qwen with `enable_thinking=false` (as in System C), Gemma no flag, no tools, no retrieval. Prompt sha256 prefix `2f011000976b`, scorer `cc06b06bdda4`.
+
+### Results (`results/first_slice_20261113T045951Z/`; 39 runs per model = 13 problems x 3 repeats; `SCORES.md`, `<model>/summary.json`, `scores.csv`, `field_errors.csv`, `error_trace.csv`, raw outputs in `<model>/raw/`)
+| Metric | gemma4-31b-it | qwen38-27b |
+|---|---|---|
+| JSON valid on first try (after my parser strips a surrounding code fence) | 39 of 39 | 39 of 39 |
+| ...of which wrapped in a markdown code fence despite "no code fences" | **39 of 39** (strictly bare JSON: 0 of 39) | 0 of 39 |
+| Valid after retry / invalid after retry | 0 / 0 | 0 / 0 |
+| Retries used (of 78 attempts) | 0 | 0 |
+| Truncated responses (cap 1,000; longest answer 298 tokens) | 0 | 0 |
+| Nonexistent section labels flagged | 0 | 0 |
+| Exact-match DesignCase | 36 of 39 | 39 of 39 |
+| Field accuracy (22 leaves per case) | 855 of 858 = 99.65% | 858 of 858 = 100% |
+| Field micro P / R / F1 (constants excluded; 192 gold non-null fields) | 0.985 / 1.000 / 0.992 (192 TP, 3 FP, 0 FN) | 1.000 / 1.000 / 1.000 |
+| Strength final answer within 1% of AISC | 27 of 27 (max error 0.466%) | 27 of 27 (max error 0.466%) |
+| Selection exact match with AISC | 9 of 12 | 12 of 12 |
+| Runs that would ask the user (no answer) | 3 of 39 | 0 of 39 |
+| Unsafe output (overstated capacity > 1%, or recommended section fails System A) | 0 | 0 |
+| Error trace of the runs that are not correct | extraction 3, routing 0, solver 0 | none |
+| Mean output tokens / mean seconds per run | 285 / 9.7 | 266 / 7.1 |
+**Every wrong or missing field (complete list):** Gemma E.1A repeats 1, 2 and 3: `missing_fields` = ["section"], gold []. The task is `select_lightest`, so no section is needed and the prompt's list says so; the model asked for one anyway, and because the router asks the user when `missing_fields` is non-empty, all three E.1A runs became "would ask the user" instead of W14X132. This is a model error (the schema, parser and router behaved as designed), and it is the conservative direction (asks, does not guess). Gemma got F.3A, F.1-1A and F.4, which have the same structure, right in all repeats. Qwen: no wrong or missing field in 39 runs. The extracted cases of both models were identical between this run and the aborted first run (39 of 39 each).
+
+### System C at the 4,000-token cap vs this slice (same 27 strength and 12 selection runs per model; exact counts)
+| Metric | gemma System C @ 4,000 | gemma slice | qwen System C @ 4,000 | qwen slice |
+|---|---|---|---|---|
+| Strength: within 1% of AISC | 15 of 27 | 27 of 27 | 7 of 27 | 27 of 27 |
+| Strength: no answer | 0 of 27 | 0 of 27 | 10 of 27 | 0 of 27 |
+| Strength: overestimate > 1% (unsafe direction) | 5 of 27 | 0 of 27 | 7 of 27 | 0 of 27 |
+| Selection: exact match to AISC | 8 of 12 | 9 of 12 | 3 of 12 | 12 of 12 |
+| Selection: no answer | 0 of 12 | 3 of 12 | 2 of 12 | 0 of 12 |
+| Selection: recommended section fails a System A check | 1 of 12 | 0 of 12 | 0 of 12 | 0 of 12 |
+| Selection: section not in AISC database | 1 of 12 | 0 of 12 (cannot occur: the search returns database sections only) | 2 of 12 | 0 of 12 (same) |
+| Truncated at the cap (4,000 / 1,000 tokens) | 0 of 39 | 0 of 39 | 12 of 39 | 0 of 39 |
+| Mean output tokens | 746 | 285 | 2,389 | 266 |
+Source: the same `summary.json` files as the earlier cap comparison and `SCORES.md` of this run.
+
+### What this does and does not show (read before quoting the numbers)
+- **The extraction task is easy by construction.** All 13 texts are generated by our own template from the Dataset C fields (`eval/system_c_pilot.py`), so every number is stated plainly in one fixed sentence pattern. A model reading them is close to copying. Qwen's 39 of 39 says nothing about messy, human-written problems (Dataset D's real-world split, not built yet).
+- **The prompt was written knowing these 13 problems.** Its field notes use the examples `"W14"` and `"no more than 18 in."`, which mirror E.1A and F.1-1A. I did not read any model output before freezing it, but the 100% should not be read as generalization.
+- **The correctness of the final numbers is inherited from the solver**, which was validated against these same 13 AISC values (max error 0.47%, and the May 2, 2025 errata are still unchecked). On Dataset C the slice's final-answer score is therefore essentially the extraction score. This supports "the LLM does not need to compute" (RQ2), but it is weak evidence for RQ3.
+- **Missing-field detection was not tested by any model**: all 13 gold cases are complete. The behavior (ask, do not compute, never default) is covered only by unit tests with synthetic cases. Gemma's three E.1A abstentions are over-asking, the opposite error.
+- **The retry path never ran on real output** (0 of 78 first attempts invalid); it is covered only by tests with a fake LLM. Gemma's code fences are tolerated by the parser and counted as valid first try; I report the strict count above (0 of 39).
+- **The abstentions are a consequence of a policy I fixed before running** (ask when the union of declared and computed missing fields is non-empty). Trusting only the code-computed list would have turned Gemma's three abstentions into correct answers (39 of 39), but I chose that policy before seeing outputs and did not change it afterwards. Which policy is right is an open question below.
+- The System C and slice columns do different jobs (end-to-end calculation by the model vs. extraction only), so the table shows the benefit of moving the numbers into deterministic code, not that one model is better than the other at engineering.
+
+### What failed or went wrong (not rounded away)
+- **A scorer bug, found at the first scoring attempt, before any number was produced.** A result column named `flags` collided with pandas' `DataFrame.flags` attribute and `score` crashed. My tests covered `score_run` but not the summary and report path, which is why it got through. Per your rule I fixed it (column renamed to `flag_codes`), added a test that runs the whole `score` command on a synthetic run (`test_score_command_end_to_end_on_a_synthetic_run`), and **reran everything** from the fixed, committed code. The aborted run's raw outputs are kept, unscored, in `results/first_slice_20261113T045305Z_ABORTED_scorer_bug/` (with a README). The rerun's extractions were identical to the aborted run's (39 of 39 for each model), so the bug did not change any model output.
+- **My first version of the new test also had a wrong expectation** (truncated responses are counted per run, not per attempt); the test was wrong, not the scorer, and was corrected before the rerun.
+- **I rewrote the three newest local commits once before the first push** (nothing had been pushed): the audit found my local Windows user path in the crash traceback of the aborted run (`score_stdout.txt`), the kind of string earlier sessions removed from history. It is now `<repo>` / `<home>` in all versions. Hashes changed: `1e26638` to `bceb3d0`, `fe11123` to `13575cb`, `8cf1238` to the docs commit that contains this text. `meta.json` of the scored run still records `git_hash` `1e26638...` (the code at that hash is unchanged; only the commit id changed). The three older commits of this session are untouched (`db2cc1c`, `01e3149`, `20282ec`; the aborted run's `meta.json` records `20282ec`).
+- **`git_tree_dirty: true` in the new `meta.json` files** is only because the empty run folder itself was untracked when the run started; the tracked code was clean at the commit recorded as `git_hash` (`1e26638` in the file; that commit was later rewritten, see the next item, and is now `bceb3d0`).
+- **Voyager host name again in four new `meta.json` files** (two in the scored run, two in the aborted run): `"endpoint_host": "openai.rc.asu.edu"`, consistent with your earlier decision to leave it published.
+- **"Dylan" now appears by name** in this summary (as you asked) and, because I wrote the same status line there, in `results/gold_design_cases_review.md`, `datasets/C_benchmark/gold_design_cases.json` (`review_status`), and `eval/make_gold_design_cases.py` (`CLAUDE.md` says "the student"). The repo is public; earlier sessions redacted personal names except the `dylan_verdict` column. Say if you want those three replaced by "the student" (a text-only change, but the commits already made would still contain it unless history is rewritten again).
+- **Not done tonight:** tension and shear selection, ASD, other materials, any retrieval, shortlist, verifier, Streamlit, LangGraph; System B has not been run through this slice.
+
+### Open questions
+1. Please hand-check `results/gold_design_cases_review.md` (13 cases).
+2. `missing_fields` policy: keep "ask when declared or computed is non-empty" (safer, over-asks when a model invents a missing field) or trust only the code-computed list? Changing it after seeing Gemma's result would be a post-hoc choice; if you switch, report it as a new scoring version and rerun.
+3. Next evidence worth having before claiming anything about extraction: Dataset D, especially the human-written messy prompts with missing assumptions, and a probe set where inputs are truly missing (missing-field detection), and the retry path with real output.
+
 ## Session 2026-11-13: larger-cap rerun, publication prep, review sheet, slide facts, wrap-up
 
 ### What was done (commit hashes are the final published ones, after all three history rewrites; the map to the original hashes is `results/git_hash_map_after_history_scrub.json`)
