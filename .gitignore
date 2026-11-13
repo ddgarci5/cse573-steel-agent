@@ -34,3 +34,10 @@ desktop.ini
 
 # Per-case CSVs embed AISC Manual tabulated values (copyrighted; CLAUDE.md rule 5): keep local, commit only summaries
 *_results.csv
+
+# Any PDF: AISC Manual excerpts, Design Examples, teaching material (copyrighted; CLAUDE.md rule 5)
+*.pdf
+
+# Raw validation printouts list worst-case rows with individual AISC Manual table values.
+# Publish results/validation_*/validation_summary.json (counts, mean / max error only) instead; regenerate with eval/summarize_validation.py.
+results/validation_*/validate_*.txt

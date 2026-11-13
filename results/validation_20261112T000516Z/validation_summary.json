@@ -1,0 +1,96 @@
+{
+  "source_run_dir": "validation_20261112T000516Z",
+  "note": "summary statistics only; per-case AISC Manual values are not reproduced",
+  "meta": {
+    "timestamp_utc": "20261112T000516Z",
+    "git_hash": null,
+    "git_dirty": true,
+    "python": "3.14.7",
+    "platform": "Windows-11-10.0.26300-SP0",
+    "packages": {
+      "numpy": "2.5.4",
+      "pandas": "3.1.1",
+      "openpyxl": "3.1.5",
+      "matplotlib": "3.11.2",
+      "pytest": "9.2.0"
+    },
+    "pdftotext": "<home>\\scoop\\shims\\pdftotext.exe :: pdftotext version 26.09.0",
+    "runs": {
+      "dataset_c_pilot": 0,
+      "rescore_shipped_csv": 0,
+      "pytest": 0,
+      "validate_compression": 0,
+      "validate_flexure": 0,
+      "validate_fcr": 0
+    }
+  },
+  "manual_table_4-1a_W14_phiPn": {
+    "cases": 324,
+    "shapes": 13,
+    "slender_shape_cases": 21,
+    "mean_abs_err_pct": 0.113,
+    "max_abs_err_pct": 0.446,
+    "within_1pct_of_cases": 100.0,
+    "within_2pct_of_cases": 100.0,
+    "max_abs_err_pct_by_shape": {
+      "W14X109": 0.385,
+      "W14X120": 0.381,
+      "W14X132": 0.438,
+      "W14X145": 0.337,
+      "W14X43": 0.436,
+      "W14X48": 0.316,
+      "W14X53": 0.347,
+      "W14X61": 0.335,
+      "W14X68": 0.378,
+      "W14X74": 0.357,
+      "W14X82": 0.446,
+      "W14X90": 0.424,
+      "W14X99": 0.314
+    }
+  },
+  "manual_table_3-2_flexure_shear": {
+    "shapes": 63,
+    "comparisons": 378,
+    "mean_abs_err_pct": 0.129,
+    "max_abs_err_pct": 0.929,
+    "within_1pct_of_cases": 100.0,
+    "within_2pct_of_cases": 100.0,
+    "by_quantity": {
+      "BF": {
+        "mean_abs_err_pct": 0.308,
+        "max_abs_err_pct": 0.929
+      },
+      "Lp": {
+        "mean_abs_err_pct": 0.075,
+        "max_abs_err_pct": 0.406
+      },
+      "Lr": {
+        "mean_abs_err_pct": 0.109,
+        "max_abs_err_pct": 0.291
+      },
+      "phiMp": {
+        "mean_abs_err_pct": 0.049,
+        "max_abs_err_pct": 0.139
+      },
+      "phiMr": {
+        "mean_abs_err_pct": 0.096,
+        "max_abs_err_pct": 0.316
+      },
+      "phiVn": {
+        "mean_abs_err_pct": 0.138,
+        "max_abs_err_pct": 0.372
+      }
+    }
+  },
+  "manual_table_4-14_phiFcr": {
+    "cases": 1200,
+    "Lc_r_range": [
+      1,
+      200
+    ],
+    "steel_grades": 6,
+    "mean_abs_err_pct": 0.093,
+    "max_abs_err_pct": 0.433,
+    "within_1pct_of_cases": 100.0
+  }
+}
