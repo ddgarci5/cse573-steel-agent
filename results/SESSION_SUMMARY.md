@@ -20,13 +20,14 @@ Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files: 271.
 - **Redaction and identity (second and third rewrites).** Names (instructor, sponsor, student), the instructor's email address and the local Windows user path were removed from every text file and from all older versions. Rules, applied in order: specific `CLAUDE.md` sentences reworded to roles ("the course instructor", "the sponsor", "the student"); `C:\Users\<user>\OneDrive\Documents\CSE573-steel-agent` became `<repo>`; any other `C:\Users\<user>` became `<home>`; leftover names and emails became role phrases. Twelve files changed in the final tree (`CLAUDE.md`, this summary, `BACKUP_SLIDE_FACTS.md`, `system_b_baseline_*/log.txt`, and the command-log, `pytest`, `meta.json` and summary files of the two validation runs); only text changed, no number. The rule set was dry-run on a throwaway clone and reviewed first, and the real rewrite produced a tree identical to that dry run. After it, a scan of all 322 text files in history and every commit message finds none of the redacted strings. The column name `dylan_verdict` in the review sheet and its generator was kept on purpose because it was requested by name. Then author and committer on all commits were set to `Steel Agent Project <noreply@steel-agent.invalid>` (the `.invalid` domain can never resolve; a `users.noreply.github.com` address was avoided so the commits cannot be attributed to another GitHub account). The repo-local git identity uses the same value; no global identity is set.
 - **Backups of earlier history** are two git bundles one folder above the repo, outside git: one from before the scrub (it contains the 16 AISC rows) and one from before the redaction (it contains the personal information). They are not part of the repository and must never be pushed or committed; delete them when you no longer need them.
 - **Hashes in older result files.** `meta.json` files written before the rewrite record pre-scrub hashes (`results/system_b_baseline_20261112T001158Z`: `92bcfa6`; the three 1,500-token System C runs: `9433658`; the two 4,000-token runs: `eb53b69`). Those commits no longer exist under those names; the map file lists old to new.
-- **Not created: the GitHub remote.** `gh` is not installed. Steps: (1) github.com/new, name `cse573-steel-agent`, Public, leave README / .gitignore / license unticked; (2) in the repo folder run `git remote add origin https://github.com/<your-username>/cse573-steel-agent.git` and `git push -u origin main` (Git for Windows opens a browser sign-in); (3) on GitHub check there is no `.env` and no `references/` folder. Do not run `git push --all` or `--mirror`.
+- **Published (2026-11-13): a public GitHub repository named `cse573-steel-agent`, created with the GitHub CLI after you logged in; only `main` was pushed (first push at commit `b1c2715`).** A fresh clone from GitHub was audited: 10 commits, 330 text files, no names, emails, Windows paths, API key, AISC printout rows or forbidden paths; all commits show the generic identity with no linked account; 34 tests pass. Never use `git push --all` or `--mirror` (the backup bundles are outside the repo, but keep it that way).
 
-### Decisions still open before the first public push
+### Decisions after the first public push
 1. **Resolved: personal information.** Redacted and verified as described above; commits use a generic identity. Consequences you should know: because the author email is not linked to any GitHub account, the commits will show the name "Steel Agent Project" with no profile link and will not count toward your GitHub contribution graph. `README.md` and the suggested repository name (`cse573-steel-agent`) still say that this is an ASU CSE 573 course project (Group 13, Project 18); only personal names, emails and paths were redacted, as requested.
 2. **License:** none chosen (the README says so). Without one, all rights are reserved by default.
 3. **Parity plots** `presentation/solver_validation_parity.png` and `steelagent/validation/parity.png` plot our solver against the AISC value for 1,902 comparisons; they show agreement, not readable table values, and are kept. Remove them if you prefer.
 4. **Errata:** the May 2, 2025 AISC errata are still not checked against the Dataset C values.
+5. **Decided: leave the Voyager host name published.** The four Voyager `meta.json` files under `results/` record `"endpoint_host": "openai.rc.asu.edu"` (the Voyager service address; not a secret, not the API key). It is already public and you chose to leave it; removing it would need another history rewrite and a force-push. It is the only appearance of that host name in the repository.
 
 ### Failures, mistakes and surprises (not rounded away)
 - **A larger output cap did not make the models more accurate.** It exposed the runs that truncation had hidden: Qwen's within-1% count fell from 8 to 7 of 27 while its answered count rose from 16 to 17, and its overestimates rose from 5 to 7 of 27. Qwen still truncated 12 of 39 runs at 4,000 tokens (self-correction loops). Full table above.
@@ -43,10 +44,9 @@ Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files: 271.
 
 ### Open questions
 1. Which license, if any?
-2. Create the GitHub repo now (steps above), or have me install `gh` with scoop first (you would still complete its browser login)?
-3. Should the README and repo name keep saying "CSE 573, Group 13", or be made more generic as well?
-4. Finish the local System C run (22 more runs, about 1.5 hours of CPU) or keep the 17-run snapshot?
-5. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
+2. Should the README and repo name keep saying "CSE 573, Group 13", or be made more generic as well?
+3. Finish the local System C run (22 more runs, about 1.5 hours of CPU) or keep the 17-run snapshot?
+4. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
 
 
 ## System C pilot, 2026-11-13: does a larger output cap change the answers? (1,500 vs 4,000 output tokens)
