@@ -1,0 +1,547 @@
+{
+  "dataset": "C_benchmark",
+  "set": "gold_design_cases",
+  "purpose": "gold DesignCase per Dataset C problem; extraction ground truth for System D step 1 (evaluation only, never training)",
+  "generated_by": "eval/make_gold_design_cases.py",
+  "review_status": "pending Dylan's review",
+  "n_cases": 13,
+  "cases": [
+    {
+      "problem_id": "D.1-yield",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W8x21 rolled W-shape is used as a tension member. What is the LRFD design tensile strength for yielding on the gross section, phi_t*Pn, in kips?",
+      "design_case": {
+        "problem_id": "D.1-yield",
+        "member_type": "tension",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W8X21",
+        "requested_limit_states": [
+          "tension_yield"
+        ],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": null,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "D.1-rupture",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W8x21 rolled W-shape is used as a tension member. Net area An = 4.76 in^2 and shear lag factor U = 0.908. What is the LRFD design tensile strength for rupture on the effective net area, phi_t*Pn, in kips?",
+      "design_case": {
+        "problem_id": "D.1-rupture",
+        "member_type": "tension",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W8X21",
+        "requested_limit_states": [
+          "tension_rupture"
+        ],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": null,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": 4.76,
+          "U": 0.908
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "E.1C",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W14x132 rolled W-shape is used as a column. Effective length about the x axis = 30 ft; about the y axis = 30 ft. What is the LRFD design compressive strength, phi_c*Pn, in kips?",
+      "design_case": {
+        "problem_id": "E.1C",
+        "member_type": "compression",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W14X132",
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": 30.0,
+          "Lcy_ft": 30.0,
+          "Lb_ft": null,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "E.1D",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W14x90 rolled W-shape is used as a column. Effective length about the x axis = 30 ft; about the y axis = 15 ft. What is the LRFD design compressive strength, phi_c*Pn, in kips?",
+      "design_case": {
+        "problem_id": "E.1D",
+        "member_type": "compression",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W14X90",
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": 30.0,
+          "Lcy_ft": 15.0,
+          "Lb_ft": null,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "F.1-1B",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W18x50 rolled W-shape is used as a beam bent about its major axis. The beam is continuously braced laterally (Lb = 0). Cb = 1. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?",
+      "design_case": {
+        "problem_id": "F.1-1B",
+        "member_type": "flexure",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W18X50",
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": 0.0,
+          "Cb": 1.0
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "F.1-2B",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 11.667 ft. Cb = 1.01. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?",
+      "design_case": {
+        "problem_id": "F.1-2B",
+        "member_type": "flexure",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W18X50",
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": 11.666666666666666,
+          "Cb": 1.01
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "F.1-3B",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W18x50 rolled W-shape is used as a beam bent about its major axis. Unbraced length Lb = 17.5 ft. Cb = 1.3. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?",
+      "design_case": {
+        "problem_id": "F.1-3B",
+        "member_type": "flexure",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W18X50",
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": 17.5,
+          "Cb": 1.3
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "F.3B",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W21x48 rolled W-shape is used as a beam bent about its major axis. The beam is continuously braced laterally (Lb = 0). Cb = 1. What is the LRFD design flexural strength about the major axis, phi_b*Mn, in kip-ft?",
+      "design_case": {
+        "problem_id": "F.3B",
+        "member_type": "flexure",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W21X48",
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": 0.0,
+          "Cb": 1.0
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "G.1B",
+      "kind": "strength",
+      "source_file": "design_examples_strength.json",
+      "problem_text": "Problem: A W24x62 rolled W-shape is used as a beam. What is the LRFD design shear strength of the web, phi_v*Vn, in kips?",
+      "design_case": {
+        "problem_id": "G.1B",
+        "member_type": "shear",
+        "task": "check_given_section",
+        "design_method": "LRFD",
+        "section": "W24X62",
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": null,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "E.1A",
+      "kind": "selection",
+      "source_file": "design_examples_selection.json",
+      "problem_text": "Problem: Lightest W14 column for a factored axial load of 840 kip, effective length 30 ft about both axes. Select the lightest W-shape that satisfies every required strength check.",
+      "design_case": {
+        "problem_id": "E.1A",
+        "member_type": "compression",
+        "task": "select_lightest",
+        "design_method": "LRFD",
+        "section": null,
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": 840.0,
+          "Mu_kipft": null,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": 30.0,
+          "Lcy_ft": 30.0,
+          "Lb_ft": null,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": 14,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "F.1-1A",
+      "kind": "selection",
+      "source_file": "design_examples_selection.json",
+      "problem_text": "Problem: Lightest beam with nominal depth no more than 18 in., Mu = 266 kip-ft, continuously braced, Ix of at least 746 in^4 for deflection. Select the lightest W-shape that satisfies every required strength check.",
+      "design_case": {
+        "problem_id": "F.1-1A",
+        "member_type": "flexure",
+        "task": "select_lightest",
+        "design_method": "LRFD",
+        "section": null,
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": 266.0,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": 0.0,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": 18,
+          "Ix_min_in4": 746.0
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "F.4",
+      "kind": "selection",
+      "source_file": "design_examples_selection.json",
+      "problem_text": "Problem: Lightest beam, Mu = 468 kip-ft, continuously braced, Ix of at least 1260 in^4 for deflection. Select the lightest W-shape that satisfies every required strength check.",
+      "design_case": {
+        "problem_id": "F.4",
+        "member_type": "flexure",
+        "task": "select_lightest",
+        "design_method": "LRFD",
+        "section": null,
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": 468.0,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": 0.0,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": 1260.0
+        },
+        "missing_fields": []
+      }
+    },
+    {
+      "problem_id": "F.3A",
+      "kind": "selection",
+      "source_file": "design_examples_selection.json",
+      "problem_text": "Problem: Lightest beam, Mu = 396 kip-ft, continuously braced. Select the lightest W-shape that satisfies every required strength check.",
+      "design_case": {
+        "problem_id": "F.3A",
+        "member_type": "flexure",
+        "task": "select_lightest",
+        "design_method": "LRFD",
+        "section": null,
+        "requested_limit_states": [],
+        "material": {
+          "grade": "ASTM A992",
+          "Fy_ksi": 50.0,
+          "Fu_ksi": 65.0,
+          "E_ksi": 29000.0
+        },
+        "demands": {
+          "Pu_kip": null,
+          "Mu_kipft": 396.0,
+          "Vu_kip": null
+        },
+        "geometry": {
+          "Lcx_ft": null,
+          "Lcy_ft": null,
+          "Lb_ft": 0.0,
+          "Cb": null
+        },
+        "net_section": {
+          "An_in2": null,
+          "U": null
+        },
+        "constraints": {
+          "nominal_depth_in": null,
+          "max_depth_in": null,
+          "Ix_min_in4": null
+        },
+        "missing_fields": []
+      }
+    }
+  ]
+}
