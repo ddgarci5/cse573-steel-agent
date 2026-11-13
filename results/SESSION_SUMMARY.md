@@ -24,11 +24,12 @@ Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files: 271.
 
 ### Decisions after the first public push
 1. **Resolved: personal information.** Redacted and verified as described above; commits use a generic identity. Consequences you should know: because the author email is not linked to any GitHub account, the commits will show the name "Steel Agent Project" with no profile link and will not count toward your GitHub contribution graph. `README.md` and the suggested repository name (`cse573-steel-agent`) still say that this is an ASU CSE 573 course project (Group 13, Project 18); only personal names, emails and paths were redacted, as requested.
-2. **License:** none chosen (the README says so). Without one, all rights are reserved by default.
+2. **Decided: no license for now.** The repository has no license file and the README says "No license has been chosen yet", which stays accurate. Default copyright applies (all rights reserved): the code can be viewed and forked on GitHub but not reused, modified or redistributed without permission. A license can be added later; the option discussed was MIT with the generic holder "Steel Agent Project contributors". Before opening the code up, check with the Group 13 teammates and, if the course or sponsor has IP rules, with the instructor or sponsor. No license on the code would cover the AISC-derived values in `datasets/C_benchmark`.
 3. **Parity plots** `presentation/solver_validation_parity.png` and `steelagent/validation/parity.png` plot our solver against the AISC value for 1,902 comparisons; they show agreement, not readable table values, and are kept. Remove them if you prefer.
 4. **Errata:** the May 2, 2025 AISC errata are still not checked against the Dataset C values.
 5. **Decided: leave the Voyager host name published.** The four Voyager `meta.json` files under `results/` record `"endpoint_host": "openai.rc.asu.edu"` (the Voyager service address; not a secret, not the API key). It is already public and you chose to leave it; removing it would need another history rewrite and a force-push. It is the only appearance of that host name in the repository.
 6. **Decided: skip the rest of the local System C run; the 17-run snapshot is the final local result.** The local qwen3.5:9b run (`results/system_c_pilot_20261112T004145Z/`, 1,500-token cap, thinking off) stays at 17 runs: repeat 1 is complete (13 runs) plus 4 repeat-2 runs (D.1-yield, D.1-rupture, E.1C, E.1D), which were byte-identical to repeat 1. The remaining 22 runs (about 1.5 hours of CPU at about 262 s per problem) will not be run, and there is no 4,000-token local run. Consequences for reading the tables: the local column is based on 17 runs against 39 for each Voyager model, so its counts (for example 3 of 13 strength runs within 1%, 0 of 4 selections answered) are small and not comparable one-to-one with the Voyager counts; use the repeat-1-only comparison (`results/system_c_comparison_20261112T015639Z/`, 13 runs per model) for a like-for-like view. The run can still be resumed with `eval/system_c_pilot.py run --model qwen3.5:9b --repeats 3 --run-dir results/system_c_pilot_20261112T004145Z` if the decision changes; nothing was deleted.
+7. **Decided: keep "CSE 573, Group 13" in the README and keep the repository name `cse573-steel-agent`.** Only personal names, emails and paths were redacted.
 
 ### Failures, mistakes and surprises (not rounded away)
 - **A larger output cap did not make the models more accurate.** It exposed the runs that truncation had hidden: Qwen's within-1% count fell from 8 to 7 of 27 while its answered count rose from 16 to 17, and its overestimates rose from 5 to 7 of 27. Qwen still truncated 12 of 39 runs at 4,000 tokens (self-correction loops). Full table above.
@@ -44,9 +45,8 @@ Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files: 271.
 - **Carried over and still true:** the scores in System B are on an easy synthetic task; System C rests on 13 problems and many answers depend on recalled section properties; E7 is validated on few shapes; the Shapes Database is not in the repo, so every command needs it.
 
 ### Open questions
-1. Which license, if any?
-2. Should the README and repo name keep saying "CSE 573, Group 13", or be made more generic as well?
-3. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
+1. Keep or delete the two backup bundles one folder above the repo (pre-scrub and pre-redact history)? They are outside git and not published; deleting them removes the last unredacted copies, keeping them allows an undo.
+2. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
 
 
 ## System C pilot, 2026-11-13: does a larger output cap change the answers? (1,500 vs 4,000 output tokens)
