@@ -1,0 +1,31 @@
+{
+  "timestamp_utc": "20261113T045957Z",
+  "git_hash": "1e266388d00ccac260a7639978558793d9ffc274",
+  "git_tree_dirty": true,
+  "model": "qwen38-27b",
+  "repeats": 3,
+  "n_problems": 13,
+  "prompt_version": "extract-v1",
+  "prompt_sha256": "2f011000976bbdf78b7f670177bf8b5a3ab9a20bbce1d563b2525c9519248830",
+  "scorer_sha256": "cc06b06bdda4407618585f156734b9d30d5dee05fb03644cd91d9c5543e6b8ae",
+  "design_case_sha256": "c9bb7f7b20eab51b94ba6f0497904a2aad13620e535a38397110973b32d831c8",
+  "extract_sha256": "1a8930dbb10e28250bef6ccc76fe728dc65074148383c193f9a9e35f191f6ba6",
+  "route_sha256": "090a1a3790af06076bbe152035989f7542e2fd63b35dbf9de83c6b3c6836628f",
+  "gold_sha256": "993833703e908a3c7cf2dcbb83cf1206315cc8537cd9aa22253fc28ac48c1120",
+  "max_retries": 1,
+  "tools": null,
+  "retrieval": null,
+  "backend": "voyager",
+  "endpoint_host": "openai.rc.asu.edu",
+  "extra_request_fields": {
+    "chat_template_kwargs": {
+      "enable_thinking": false
+    }
+  },
+  "options": {
+    "temperature": 0,
+    "seed": 573,
+    "max_tokens": 1000
+  },
+  "thinking_request": "chat_template_kwargs.enable_thinking=false sent"
+}

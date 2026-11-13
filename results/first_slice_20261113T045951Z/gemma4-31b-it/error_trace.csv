@@ -1,0 +1,4 @@
+id,repeat,kind,outcome,published,final,err_pct,error_class,route_status,missing,flag_codes,wrong_fields
+E.1A,1,selection,no answer,W14X132,,,extraction error,would_ask_user,section,,missing_fields: got ['section'] expected []
+E.1A,2,selection,no answer,W14X132,,,extraction error,would_ask_user,section,,missing_fields: got ['section'] expected []
+E.1A,3,selection,no answer,W14X132,,,extraction error,would_ask_user,section,,missing_fields: got ['section'] expected []

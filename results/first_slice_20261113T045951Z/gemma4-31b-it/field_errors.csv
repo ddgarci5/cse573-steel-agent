@@ -1,0 +1,4 @@
+id,repeat,extraction_status,n_wrong_fields,wrong_fields,first_attempt_error
+E.1A,1,valid_first_try,1,missing_fields: got ['section'] expected [],
+E.1A,2,valid_first_try,1,missing_fields: got ['section'] expected [],
+E.1A,3,valid_first_try,1,missing_fields: got ['section'] expected [],
