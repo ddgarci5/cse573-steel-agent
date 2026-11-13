@@ -1,38 +1,36 @@
 {
-  "note": "History was rewritten on 2026-11-13 (before the first push) to remove six raw validation printouts that listed 16 worst-case rows with individual AISC Manual table values. Content at the last rewritten commit is byte-identical (same git tree). Hashes recorded in results/*/meta.json before the rewrite refer to the 'before_scrub' commits; use this map to find them. Commits made after the rewrite are not listed.",
-  "tree_before_scrub_at_last_old_commit": "bf9d9415d2c3f713d4a38c73fea55093eb20f674",
-  "tree_after_scrub_at_same_commit": "bf9d9415d2c3f713d4a38c73fea55093eb20f674",
-  "trees_identical": true,
+  "note": "The repository history was rewritten three times on 2026-11-13, all before the first push: (1) six raw validation printouts that listed 16 worst-case rows with individual AISC Manual table values were removed (git tree unchanged); (2) names, the instructor's email and the local Windows user path were redacted from 12 text files in the final tree and from older versions (the final tree equals a reviewed dry run); (3) author and committer were set to a generic project identity (git tree unchanged). Hashes recorded in results/*/meta.json before the rewrites are the 'before_scrub' values; 'published' is the same commit in the history that is pushed. Only the first six commits existed before the rewrites; later commits are not listed.",
+  "published_tree_after_last_rewrite_at_commit_9": "0a7fafaeead941f7df4c1a6d0fbe918e869ad48d",
   "commits": [
     {
       "subject": "Initial repo: layout, validated solver, Dataset C pilot, tests",
       "before_scrub": "92bcfa6b2982fcd9bf26e9ee104fcff5a446ee30",
-      "after_scrub": "fdea519785da8227166b7a84dc84b64a3c11c8bf"
+      "published": "674f29712112fb26e8aa95cde755d04dc9f37c0b"
     },
     {
       "subject": "Add Dataset B generator and System B quick baseline (backlog task 4)",
       "before_scrub": "94336581683b85f75254a241bcec23ee1084d5a5",
-      "after_scrub": "b26534cafe8ccf38fbab120f25e47fc0650a85bd"
+      "published": "f8a0454b1f11c733248dd60223fedc8adb34bcb7"
     },
     {
       "subject": "Add System C pilot: local qwen3.5:9b vs Voyager qwen38-27b and gemma4-31b-it",
       "before_scrub": "eb53b69d3c98749754bbdc7fc84b7be43ee06bba",
-      "after_scrub": "8732ebf1eea7d8e8840365da8b433965dd421ad5"
+      "published": "1ec56396682415e6bebc3e2bd60450781cb63ada"
     },
     {
       "subject": "Rerun System C pilot on Voyager at a 4,000-token output cap",
       "before_scrub": "61fb599acb4eb08f3101a3ae71fa777a4901b052",
-      "after_scrub": "98eacd013bf57dfb07841311e859f1d68035b800"
+      "published": "c11b4516d8d2d3cf4eeff705282c84dee01c2e27"
     },
     {
       "subject": "Prepare repository for publication: README, copyright hygiene, summary-only validation",
       "before_scrub": "58f6297e5890af5a254c78cb74767b8fe71da9b6",
-      "after_scrub": "126999a05de091f41a3253047d12700bc037706d"
+      "published": "032c5b0e9e4297df01b30dfa20ce17029e16a099"
     },
     {
       "subject": "Keep steelagent/data/ in git so a fresh clone has the folder for the AISC Shapes Database",
       "before_scrub": "1a7f43bc396c14fa513b0634dde436d18178e475",
-      "after_scrub": "a2743fdec3e7b6ed8dbb346470356bb673c77ebf"
+      "published": "497515827321689b095a3a44f012798dde391ae2"
     }
   ]
 }

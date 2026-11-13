@@ -81,7 +81,7 @@ AISC Design Examples v16.0 (Dataset C): 9 strength checks, max abs. error 0.47%;
 
 ## 2. System B: classical ML baseline (Dataset B)
 
-Run: `results/system_b_baseline_20261112T001158Z` (seed 573, python 3.14.7, scikit-learn 1.9.1, git hash recorded in meta.json: 92bcfa6b2982fcd9bf26e9ee104fcff5a446ee30 (that commit is `fdea519` in the published history; map in `results/git_hash_map_after_history_scrub.json`), working tree dirty: True). Dataset: `results/dataset_b_20261112T001016Z/manifest.json`.
+Run: `results/system_b_baseline_20261112T001158Z` (seed 573, python 3.14.7, scikit-learn 1.9.1, git hash recorded in meta.json: 92bcfa6b2982fcd9bf26e9ee104fcff5a446ee30 (that commit is `674f297` in the published history; map in `results/git_hash_map_after_history_scrub.json`), working tree dirty: True). Dataset: `results/dataset_b_20261112T001016Z/manifest.json`.
 
 ### Dataset B and the splits
 

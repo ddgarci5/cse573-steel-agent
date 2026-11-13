@@ -2,26 +2,28 @@
 
 ## Session 2026-11-13: larger-cap rerun, publication prep, review sheet, slide facts, wrap-up
 
-### What was done (commit hashes are the published, post-scrub ones; the map to the earlier hashes is `results/git_hash_map_after_history_scrub.json`)
+### What was done (commit hashes are the final published ones, after all three history rewrites; the map to the original hashes is `results/git_hash_map_after_history_scrub.json`)
 | Task | Result | Commit |
 |---|---|---|
-| 1. System C rerun at 4,000 output tokens | qwen38-27b and gemma4-31b-it, 3 repeats each, scorer unchanged; side-by-side table for both caps (section "System C pilot, 2026-11-13" below) | `98eacd0` |
-| 2. Publication prep | README, `.gitignore` (any PDF, raw validation printouts), statistics-only `validation_summary.json`, audits, clean-clone test | `126999a`, `a2743fd` |
+| 1. System C rerun at 4,000 output tokens | qwen38-27b and gemma4-31b-it, 3 repeats each, scorer unchanged; side-by-side table for both caps (section "System C pilot, 2026-11-13" below) | `c11b451` |
+| 2. Publication prep | README, `.gitignore` (any PDF, raw validation printouts), statistics-only `validation_summary.json`, audits, clean-clone test | `032c5b0`, `4975158` |
 | (your decision) history scrub | public repo; six raw printouts removed from all history; final tree identical | rewrote commits 1 to 6 |
-| 3. Review sheet | `results/system_c_review_sheet.csv`, 173 rows, F.3B first | `d1718a5` |
-| 4. Backup-slide facts | `results/BACKUP_SLIDE_FACTS.md` (every number read from code or saved results) | `80328c5` |
-| 5. Wrap-up | `CLAUDE.md` sections 5 and 11, this summary | the commit that contains this text |
-Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files after this commit: 271; commits: 9.
+| (your decision) redaction + generic identity | names, instructor email and Windows username path removed from files and history; author and committer set to a generic project identity | rewrote all 9 commits |
+| 3. Review sheet | `results/system_c_review_sheet.csv`, 173 rows, F.3B first | `de24a69` |
+| 4. Backup-slide facts | `results/BACKUP_SLIDE_FACTS.md` (every number read from code or saved results) | `02a73cf` |
+| 5. Wrap-up | `CLAUDE.md` sections 5 and 11, this summary | `b696d51` (corrections after the redaction are in the commit after it) |
+Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files: 271.
 
 ### Repository state for publication
 - **Audits.** Run on all 267 files tracked at that time and on every blob in every commit (310 objects after the scrub): no `.env`, `references/`, PDF, xlsx, zip, pptx, docx, parquet, model file or per-case Manual-table CSV; no line from the 26 AISC sample-table PDFs or the sponsor's 29 slide decks; no Voyager API key.
 - **History scrub.** The six raw `validate_*.txt` printouts listed 16 worst-case rows with individual AISC Manual table values (6 + 4 + 6, all from the good validation run; the failed-run printouts hold only a traceback). They are removed from all six earlier commits with `git filter-branch`. After the rewrite none of the 16 rows appears in any object. The final git tree is byte-identical before and after (`bf9d941...`), so only history changed. **All commit hashes changed.**
-- **Backup of the old history** (with those 16 rows) is a git bundle one folder above the repo, outside git. It is not part of the repository and must never be pushed or committed; delete it when you no longer need it.
+- **Redaction and identity (second and third rewrites).** Names (instructor, sponsor, student), the instructor's email address and the local Windows user path were removed from every text file and from all older versions. Rules, applied in order: specific `CLAUDE.md` sentences reworded to roles ("the course instructor", "the sponsor", "the student"); `C:\Users\<user>\OneDrive\Documents\CSE573-steel-agent` became `<repo>`; any other `C:\Users\<user>` became `<home>`; leftover names and emails became role phrases. Twelve files changed in the final tree (`CLAUDE.md`, this summary, `BACKUP_SLIDE_FACTS.md`, `system_b_baseline_*/log.txt`, and the command-log, `pytest`, `meta.json` and summary files of the two validation runs); only text changed, no number. The rule set was dry-run on a throwaway clone and reviewed first, and the real rewrite produced a tree identical to that dry run. After it, a scan of all 322 text files in history and every commit message finds none of the redacted strings. The column name `dylan_verdict` in the review sheet and its generator was kept on purpose because it was requested by name. Then author and committer on all commits were set to `Steel Agent Project <noreply@steel-agent.invalid>` (the `.invalid` domain can never resolve; a `users.noreply.github.com` address was avoided so the commits cannot be attributed to another GitHub account). The repo-local git identity uses the same value; no global identity is set.
+- **Backups of earlier history** are two git bundles one folder above the repo, outside git: one from before the scrub (it contains the 16 AISC rows) and one from before the redaction (it contains the personal information). They are not part of the repository and must never be pushed or committed; delete them when you no longer need them.
 - **Hashes in older result files.** `meta.json` files written before the rewrite record pre-scrub hashes (`results/system_b_baseline_20261112T001158Z`: `92bcfa6`; the three 1,500-token System C runs: `9433658`; the two 4,000-token runs: `eb53b69`). Those commits no longer exist under those names; the map file lists old to new.
 - **Not created: the GitHub remote.** `gh` is not installed. Steps: (1) github.com/new, name `cse573-steel-agent`, Public, leave README / .gitignore / license unticked; (2) in the repo folder run `git remote add origin https://github.com/<your-username>/cse573-steel-agent.git` and `git push -u origin main` (Git for Windows opens a browser sign-in); (3) on GitHub check there is no `.env` and no `references/` folder. Do not run `git push --all` or `--mirror`.
 
-### Decisions needed before the first public push
-1. **Personal information that would be published.** `CLAUDE.md` names the instructor, the sponsor and the student and contains the instructor's email address (line 148, deck instructions). All 8 earlier commits carry the author and committer identity `the student <the author's email address>`. Eleven tracked files mention a local Windows path or OneDrive (most contain your user name, for example `<home>\...` in pytest and meta outputs). Redacting any of these means another history rewrite, which is easiest now, before anything is pushed.
+### Decisions still open before the first public push
+1. **Resolved: personal information.** Redacted and verified as described above; commits use a generic identity. Consequences you should know: because the author email is not linked to any GitHub account, the commits will show the name "Steel Agent Project" with no profile link and will not count toward your GitHub contribution graph. `README.md` and the suggested repository name (`cse573-steel-agent`) still say that this is an ASU CSE 573 course project (Group 13, Project 18); only personal names, emails and paths were redacted, as requested.
 2. **License:** none chosen (the README says so). Without one, all rights are reserved by default.
 3. **Parity plots** `presentation/solver_validation_parity.png` and `steelagent/validation/parity.png` plot our solver against the AISC value for 1,902 comparisons; they show agreement, not readable table values, and are kept. Remove them if you prefer.
 4. **Errata:** the May 2, 2025 AISC errata are still not checked against the Dataset C values.
@@ -34,13 +36,15 @@ Tests: 34 passing (`cd steelagent && python -m pytest`). Tracked files after thi
 - **I first told you 26 AISC rows were in history; the exact count is 16.** The failed-run printouts contain only a traceback. I corrected it before acting on it.
 - **The clean-clone test found a real gap:** a fresh clone had no `steelagent/data/` folder, so the README's instruction to save the Shapes Database there failed. Fixed with a placeholder file (`a2743fd`).
 - **Smaller tool bugs fixed along the way:** the review-sheet quote originally started mid-word (it now quotes the whole original line); a wording glitch in the slide-facts generator ("ranges are:."); the facts generator's first edit pattern did not match and I applied the edits directly.
-- **Rewriting history changed every commit hash** (see "Hashes in older result files"). The content did not change.
+- **Rewriting history changed every commit hash, three times** (scrub, redaction, author identity; see "Hashes in older result files"). Content changed only in the redaction step, and only in text.
+- **The automatic redaction garbled one sentence** in this summary (the paragraph that described the personal information, which contained the very strings being replaced). I caught it in review and rewrote it by hand in the next commit; no other redacted file needed a manual fix.
+- **Redacting saved outputs edits files that other rules call "saved outputs".** Only path and name strings changed in the command logs, `meta.json` and `log.txt` files, never a number, and the scorer file and every `summary.json` hash are unchanged (sha256 prefix `c8e7959deb92`).
 - **Carried over and still true:** the scores in System B are on an easy synthetic task; System C rests on 13 problems and many answers depend on recalled section properties; E7 is validated on few shapes; the Shapes Database is not in the repo, so every command needs it.
 
 ### Open questions
-1. Public repo: redact the personal information listed above, or publish as is? Which identity should the commits carry?
-2. Which license, if any?
-3. Create the GitHub repo now (steps above), or have me install `gh` with scoop first (you would still complete its browser login)?
+1. Which license, if any?
+2. Create the GitHub repo now (steps above), or have me install `gh` with scoop first (you would still complete its browser login)?
+3. Should the README and repo name keep saying "CSE 573, Group 13", or be made more generic as well?
 4. Finish the local System C run (22 more runs, about 1.5 hours of CPU) or keep the 17-run snapshot?
 5. Qwen with thinking ON, or a different prompt that asks for a shorter working? Qwen's long outputs are what truncate.
 

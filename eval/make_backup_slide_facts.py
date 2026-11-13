@@ -152,7 +152,7 @@ HMAP = ROOT / "results" / "git_hash_map_after_history_scrub.json"
 hnote = ""
 if HMAP.exists():
     hm = json.loads(HMAP.read_text(encoding="utf-8"))
-    cur = next((c["after_scrub"] for c in hm["commits"] if c["before_scrub"] == meta["git_hash"]), None)
+    cur = next((c["published"] for c in hm["commits"] if c["before_scrub"] == meta["git_hash"]), None)
     hnote = f" (that commit is `{cur[:7]}` in the published history; map in `{rel(HMAP)}`)" if cur else ""
 w(f"Run: `{rel(SB_DIR)}` (seed {meta['seed']}, python {meta['python']}, scikit-learn {meta['packages']['scikit-learn']}, git hash recorded in meta.json: {meta['git_hash']}{hnote}, working tree dirty: {meta['git_dirty']}). Dataset: `{rel(DB_DIR / 'manifest.json')}`.\n")
 
